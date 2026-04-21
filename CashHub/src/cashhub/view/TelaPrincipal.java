@@ -112,6 +112,13 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setBorder(null);
+		btnNewButton.setBackground(new Color(31, 33, 38));
+		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\search (2).png"));
+		btnNewButton.setBounds(331, 8, 36, 23);
+		panel_1.add(btnNewButton);
+		
 		JLabel lblNomeSistema = new JLabel("CA$H HUB");
 		lblNomeSistema.setBounds(36, 12, 90, 15);
 		panel_1.add(lblNomeSistema);
@@ -126,23 +133,44 @@ public class TelaPrincipal extends JFrame {
 		
 		JPanel panelTranasacoes = new JPanel();
 		panelTranasacoes.setBackground(new Color(31, 33, 38));
-		panelTranasacoes.setBounds(28, 340, 484, 100);
+		panelTranasacoes.setBounds(28, 326, 484, 114);
 		panel_1.add(panelTranasacoes);
 		panelTranasacoes.setLayout(null);
 		
-		JLabel lbltransacoes = new JLabel("Ultimas Transações");
-		lbltransacoes.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-		lbltransacoes.setForeground(new Color(216, 216, 216));
-		lbltransacoes.setBounds(10, 11, 139, 14);
-		panelTranasacoes.add(lbltransacoes);
+		JLabel lblTituloTransacoes = new JLabel("Ultimas Transações");
+		lblTituloTransacoes.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+		lblTituloTransacoes.setForeground(new Color(216, 216, 216));
+		lblTituloTransacoes.setBounds(10, 11, 139, 14);
+		panelTranasacoes.add(lblTituloTransacoes);
+		
+		JLabel lblArrrow = new JLabel("");
+		lblArrrow.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\arrow-right (2).png"));
+		lblArrrow.setBounds(451, 13, 22, 14);
+		panelTranasacoes.add(lblArrrow);
 		
 		JButton btnVisualizarExtratoCompleto = new JButton("Visualizar extrato completo");
 		btnVisualizarExtratoCompleto.setForeground(new Color(216, 216, 216));
 		btnVisualizarExtratoCompleto.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btnVisualizarExtratoCompleto.setBorder(null);
 		btnVisualizarExtratoCompleto.setBackground(new Color(31, 33, 38));
-		btnVisualizarExtratoCompleto.setBounds(306, 11, 168, 30);
+		btnVisualizarExtratoCompleto.setBounds(295, 4, 168, 30);
 		panelTranasacoes.add(btnVisualizarExtratoCompleto);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(216, 216, 216));
+		panel_2.setBounds(10, 36, 453, 30);
+		panelTranasacoes.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel lblTransacoes = new JLabel("Salário - Itau");
+		lblTransacoes.setBounds(38, 9, 146, 14);
+		panel_2.add(lblTransacoes);
+		
+		JPanel panel_2_1 = new JPanel();
+		panel_2_1.setBackground(new Color(216, 216, 216));
+		panel_2_1.setBounds(10, 77, 453, 30);
+		panelTranasacoes.add(panel_2_1);
+		panel_2_1.setLayout(null);
 		
 		JPanel panelSaldo = new JPanel();
 		panelSaldo.setBackground(new Color(31, 33, 38));
@@ -152,7 +180,7 @@ public class TelaPrincipal extends JFrame {
 		
 		txtR = new JTextField();
 		txtR.setBorder(null);
-		txtR.setFont(new Font("ABeeZee", Font.PLAIN, 20));
+		txtR.setFont(new Font("ABeeZee", Font.PLAIN, 23));
 		txtR.setText("R$ 8.372,10");
 		txtR.setForeground(new Color(216, 216, 216));
 		txtR.setBackground(new Color(31, 33, 38));
@@ -168,32 +196,52 @@ public class TelaPrincipal extends JFrame {
 		panelSaldo.add(btnAlterarSaldo);
 		
 		JPanel panelGanhos = new JPanel();
-		panelGanhos.setBackground(new Color(192, 192, 192));
-		panelGanhos.setBounds(28, 191, 126, 114);
+		panelGanhos.setBackground(new Color(31, 33, 38));
+		panelGanhos.setBounds(28, 179, 168, 124);
 		panel_1.add(panelGanhos);
+		panelGanhos.setLayout(null);
 		
 		JLabel lblTituloGanhosMes = new JLabel("Ganhos do mês:");
-		lblTituloGanhosMes.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblTituloGanhosMes.setBounds(10, 48, 136, 16);
+		lblTituloGanhosMes.setForeground(new Color(216, 216, 216));
+		lblTituloGanhosMes.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		panelGanhos.add(lblTituloGanhosMes);
 		
 		lblValorGanhoMes = new JLabel("R$ 0,00");
+		lblValorGanhoMes.setBounds(10, 73, 148, 17);
 		lblValorGanhoMes.setForeground(new Color(0, 128, 0));
-		lblValorGanhoMes.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblValorGanhoMes.setFont(new Font("ABeeZee", Font.BOLD, 14));
 		panelGanhos.add(lblValorGanhoMes);
 		
+		JLabel lblUpArrow = new JLabel("");
+		lblUpArrow.setBackground(new Color(0, 255, 0));
+		lblUpArrow.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\arrow-trend-up.png"));
+		lblUpArrow.setBounds(10, 13, 24, 24);
+		panelGanhos.add(lblUpArrow);
+		
 		JPanel panelDespesasMes = new JPanel();
-		panelDespesasMes.setBackground(new Color(215, 215, 215));
-		panelDespesasMes.setBounds(181, 191, 126, 114);
+		panelDespesasMes.setBackground(new Color(31, 33, 38));
+		panelDespesasMes.setBounds(248, 179, 168, 124);
 		panel_1.add(panelDespesasMes);
+		panelDespesasMes.setLayout(null);
 		
 		JLabel lblTituloDespesasMes = new JLabel("Despesas do mês:");
-		lblTituloDespesasMes.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblTituloDespesasMes.setBounds(10, 43, 148, 16);
+		lblTituloDespesasMes.setForeground(new Color(216, 216, 216));
+		lblTituloDespesasMes.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		panelDespesasMes.add(lblTituloDespesasMes);
 		
 		JLabel lblDespesasMes = new JLabel("R$ 0,00");
+		lblDespesasMes.setBounds(9, 68, 148, 17);
 		lblDespesasMes.setForeground(new Color(128, 0, 64));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelDespesasMes.add(lblDespesasMes);
+		
+		JLabel lbDownArrow = new JLabel("");
+		lbDownArrow.setBounds(10, 11, 24, 24);
+		panelDespesasMes.add(lbDownArrow);
+		lbDownArrow.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\arrow-trend-down.png"));
+		lbDownArrow.setBackground(Color.GREEN);
 
 		atualizarDashboard();
 		verificarAlertasDeVencimento();
