@@ -63,13 +63,23 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
 		
+		JLabel lblExtrato_1_1 = new JLabel("");
+		lblExtrato_1_1.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/settings.png")));
+		lblExtrato_1_1.setBounds(13, 203, 20, 24);
+		panel.add(lblExtrato_1_1);
+		
+		JLabel lblExtrato_1 = new JLabel("");
+		lblExtrato_1.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/add.png")));
+		lblExtrato_1.setBounds(12, 168, 20, 24);
+		panel.add(lblExtrato_1);
+		
 		JLabel lblExtrato = new JLabel("");
 		lblExtrato.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/time-past.png")));
 		lblExtrato.setBounds(12, 133, 20, 24);
 		panel.add(lblExtrato);
 		
 		JLabel lblDashboard = new JLabel("");
-		lblDashboard.setBounds(8, 98, 23, 24);
+		lblDashboard.setBounds(9, 100, 21, 21);
 		panel.add(lblDashboard);
 		lblDashboard.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/layout-fluid.png")));
 		

@@ -21,6 +21,11 @@
 			<location>C:/Users/Admin/Downloads/Imagens CashHub/CashHub_3.png</location>
 		</link>
 		<link>
+			<name>src/imagens/add.png</name>
+			<type>1</type>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/add.png</location>
+		</link>
+		<link>
 			<name>src/imagens/arrow-right_2.png</name>
 			<type>1</type>
 			<location>C:/Users/Admin/Downloads/Imagens CashHub/arrow-right_2.png</location>
@@ -46,9 +51,14 @@
 			<location>C:/Users/Admin/Downloads/Imagens CashHub/search_2.png</location>
 		</link>
 		<link>
+			<name>src/imagens/settings.png</name>
+			<type>1</type>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/settings.png</location>
+		</link>
+		<link>
 			<name>src/imagens/time-past.png</name>
 			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/time-past.png</location>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/time-past.png</location>
 		</link>
 	</linkedResources>
 </projectDescription>
