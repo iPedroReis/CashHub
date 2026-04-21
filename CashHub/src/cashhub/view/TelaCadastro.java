@@ -37,30 +37,21 @@ public class TelaCadastro extends JFrame {
 	private JLabel lblTituloValor;
 	private JLabel lblTituloData;
 	private JPanel panel;
-	private JLabel lblIMGConfiguracoes;
-	private JLabel lblIMGConfiguracoes_1;
-	private JLabel lblIMGSaldo;
-	private JLabel lblIMGExtrato;
-	private JLabel lblIMGDashboard;
 	private JButton btnDashboard;
 	private JButton btnExtrato;
 	private JButton btnAdicionarSaldo;
 	private JButton btnConfiguracoes;
 	private JButton btnAjuda;
-	private JLabel lblCashHub;
 	private JPanel panel_1;
-	private JButton btnNewButton_1;
 	private JLabel lblNomeSistema;
 	private JTextField textField;
 	private JLabel lblTituloTipoTransacoes;
 	private JButton btnAdicionar;
-	private JLabel lblNewLabel;
 	private JButton btnRetirar;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
+	private JLabel lblTituloAddRegistro;
 	private JButton btnCancelar;
 	private JTextField txtBoasPraticas;
-	private JLabel lblNewLabel_3;
+	private JLabel lblTituloBoasPraticas;
 	private boolean ehDespesa = false;
 
 	/**
@@ -96,33 +87,6 @@ public class TelaCadastro extends JFrame {
 		panel.setPreferredSize(new Dimension(130, 400));
 		panel.setBackground(new Color(31, 33, 38));
 		contentPane.add(panel);
-		
-		lblIMGConfiguracoes = new JLabel("");
-		lblIMGConfiguracoes.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/interrogation.png")));
-		lblIMGConfiguracoes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblIMGConfiguracoes.setBounds(11, 411, 20, 24);
-		panel.add(lblIMGConfiguracoes);
-		
-		lblIMGConfiguracoes_1 = new JLabel("");
-		lblIMGConfiguracoes_1.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/settings.png")));
-		lblIMGConfiguracoes_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblIMGConfiguracoes_1.setBounds(13, 203, 20, 24);
-		panel.add(lblIMGConfiguracoes_1);
-		
-		lblIMGSaldo = new JLabel("");
-		lblIMGSaldo.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/add.png")));
-		lblIMGSaldo.setBounds(12, 168, 20, 24);
-		panel.add(lblIMGSaldo);
-		
-		lblIMGExtrato = new JLabel("");
-		lblIMGExtrato.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/time-past.png")));
-		lblIMGExtrato.setBounds(12, 133, 20, 24);
-		panel.add(lblIMGExtrato);
-		
-		lblIMGDashboard = new JLabel("");
-		lblIMGDashboard.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/layout-fluid.png")));
-		lblIMGDashboard.setBounds(9, 100, 21, 21);
-		panel.add(lblIMGDashboard);
 		
 		btnDashboard = new JButton("      Dashboard");
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
@@ -169,34 +133,12 @@ public class TelaCadastro extends JFrame {
 		btnAjuda.setBounds(5, 408, 120, 30);
 		panel.add(btnAjuda);
 		
-		lblCashHub = new JLabel("");
-		lblCashHub.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/CashHub_3.png")));
-		lblCashHub.setBounds(-17, -7, 118, 91);
-		panel.add(lblCashHub);
-		
 		panel_1 = new JPanel();
 		panel_1.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(216, 216, 216));
 		panel_1.setBounds(130, -2, 544, 451);
 		contentPane.add(panel_1);
-		
-		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/arrow-trend-down_1.png")));
-		lblNewLabel_1.setBounds(171, 150, 21, 21);
-		panel_1.add(lblNewLabel_1);
-		
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/arrow-trend-up_1.png")));
-		lblNewLabel.setBounds(43, 149, 21, 21);
-		panel_1.add(lblNewLabel);
-		
-		btnNewButton_1 = new JButton("");
-		btnNewButton_1.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/search_2.png")));
-		btnNewButton_1.setBorder(null);
-		btnNewButton_1.setBackground(new Color(31, 33, 38));
-		btnNewButton_1.setBounds(331, 8, 36, 23);
-		panel_1.add(btnNewButton_1);
 		
 		lblNomeSistema = new JLabel("CA$H HUB");
 		lblNomeSistema.setForeground(new Color(31, 33, 38));
@@ -238,7 +180,7 @@ public class TelaCadastro extends JFrame {
 		txtValor = new JTextField();
 		txtValor.setForeground(new Color(31, 33, 38));
 		txtValor.setBorder(null);
-		txtValor.setBounds(36, 207, 283, 20);
+		txtValor.setBounds(36, 151, 283, 20);
 		panel_1.add(txtValor);
 		txtValor.setColumns(10);
 		
@@ -250,7 +192,7 @@ public class TelaCadastro extends JFrame {
 		
 		lblTituloValor = new JLabel("Valor:");
 		lblTituloValor.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		lblTituloValor.setBounds(36, 184, 87, 14);
+		lblTituloValor.setBounds(36, 128, 87, 14);
 		panel_1.add(lblTituloValor);
 		lblTituloValor.setHorizontalAlignment(SwingConstants.LEFT);
 		
@@ -268,8 +210,8 @@ public class TelaCadastro extends JFrame {
 		
 		lblTituloTipoTransacoes = new JLabel("Tipo de Transação");
 		lblTituloTipoTransacoes.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTituloTipoTransacoes.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-		lblTituloTipoTransacoes.setBounds(36, 111, 208, 14);
+		lblTituloTipoTransacoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
+		lblTituloTipoTransacoes.setBounds(36, 184, 208, 14);
 		panel_1.add(lblTituloTipoTransacoes);
 		
 		btnAdicionar = new JButton("Adicionar");
@@ -282,7 +224,7 @@ public class TelaCadastro extends JFrame {
 		btnAdicionar.setForeground(new Color(216, 216, 216));
 		btnAdicionar.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		btnAdicionar.setBackground(new Color(0, 128, 0));
-		btnAdicionar.setBounds(37, 148, 105, 23);
+		btnAdicionar.setBounds(37, 210, 105, 23);
 		panel_1.add(btnAdicionar);
 		
 		btnRetirar = new JButton("Retirar");
@@ -295,14 +237,14 @@ public class TelaCadastro extends JFrame {
 		btnRetirar.setForeground(new Color(216, 216, 216));
 		btnRetirar.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		btnRetirar.setBackground(new Color(166, 0, 4));
-		btnRetirar.setBounds(163, 148, 105, 23);
+		btnRetirar.setBounds(163, 210, 105, 23);
 		panel_1.add(btnRetirar);
 		
-		lblNewLabel_2 = new JLabel("ADICIONAR NOVO REGISTRO");
-		lblNewLabel_2.setForeground(new Color(31, 33, 38));
-		lblNewLabel_2.setFont(new Font("ABeeZee", Font.BOLD, 20));
-		lblNewLabel_2.setBounds(36, 66, 283, 23);
-		panel_1.add(lblNewLabel_2);
+		lblTituloAddRegistro = new JLabel("ADICIONAR NOVO REGISTRO");
+		lblTituloAddRegistro.setForeground(new Color(31, 33, 38));
+		lblTituloAddRegistro.setFont(new Font("ABeeZee", Font.BOLD, 20));
+		lblTituloAddRegistro.setBounds(36, 66, 283, 23);
+		panel_1.add(lblTituloAddRegistro);
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBorder(null);
@@ -311,11 +253,11 @@ public class TelaCadastro extends JFrame {
 		btnCancelar.setBounds(36, 415, 89, 23);
 		panel_1.add(btnCancelar);
 		
-		lblNewLabel_3 = new JLabel("Boas Praticas");
-		lblNewLabel_3.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-		lblNewLabel_3.setForeground(new Color(31, 33, 38));
-		lblNewLabel_3.setBounds(392, 124, 96, 14);
-		panel_1.add(lblNewLabel_3);
+		lblTituloBoasPraticas = new JLabel("Boas Praticas");
+		lblTituloBoasPraticas.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+		lblTituloBoasPraticas.setForeground(new Color(31, 33, 38));
+		lblTituloBoasPraticas.setBounds(392, 124, 96, 14);
+		panel_1.add(lblTituloBoasPraticas);
 		
 		txtBoasPraticas = new JTextField();
 		txtBoasPraticas.setBorder(null);

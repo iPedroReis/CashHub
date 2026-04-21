@@ -71,33 +71,6 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
 		
-		JLabel lblIMGConfiguracoes_1 = new JLabel("");
-		lblIMGConfiguracoes_1.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/interrogation.png")));
-		lblIMGConfiguracoes_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblIMGConfiguracoes_1.setBounds(11, 411, 20, 24);
-		panel.add(lblIMGConfiguracoes_1);
-		
-		JLabel lblIMGConfiguracoes = new JLabel("");
-		lblIMGConfiguracoes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblIMGConfiguracoes.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/settings.png")));
-		lblIMGConfiguracoes.setBounds(13, 203, 20, 24);
-		panel.add(lblIMGConfiguracoes);
-		
-		JLabel lblIMGSaldo = new JLabel("");
-		lblIMGSaldo.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/add.png")));
-		lblIMGSaldo.setBounds(12, 168, 20, 24);
-		panel.add(lblIMGSaldo);
-		
-		JLabel lblIMGExtrato = new JLabel("");
-		lblIMGExtrato.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/time-past.png")));
-		lblIMGExtrato.setBounds(12, 133, 20, 24);
-		panel.add(lblIMGExtrato);
-		
-		JLabel lblIMGDashboard = new JLabel("");
-		lblIMGDashboard.setBounds(9, 100, 21, 21);
-		panel.add(lblIMGDashboard);
-		lblIMGDashboard.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/layout-fluid.png")));
-		
 		JButton btnDashboard = new JButton("      Dashboard");
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -150,22 +123,10 @@ public class TelaPrincipal extends JFrame {
 		btnAjuda.setBounds(5, 408, 120, 30);
 		panel.add(btnAjuda);
 		
-		JLabel lblCashHub = new JLabel("");
-		lblCashHub.setBounds(-17, -7, 118, 91);
-		lblCashHub.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/CashHub_3.png")));
-		panel.add(lblCashHub);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(216, 216, 216));
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
-		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setBorder(null);
-		btnNewButton.setBackground(new Color(31, 33, 38));
-		btnNewButton.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/search_2.png")));
-		btnNewButton.setBounds(331, 8, 36, 23);
-		panel_1.add(btnNewButton);
 		
 		JLabel lblNomeSistema = new JLabel("CA$H HUB");
 		lblNomeSistema.setBounds(36, 12, 90, 15);
@@ -192,11 +153,6 @@ public class TelaPrincipal extends JFrame {
 		lblTituloTransacoes.setBounds(10, 11, 139, 14);
 		panelTranasacoes.add(lblTituloTransacoes);
 		
-		JLabel lblArrrow = new JLabel("");
-		lblArrrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-right_2.png")));
-		lblArrrow.setBounds(451, 13, 22, 14);
-		panelTranasacoes.add(lblArrrow);
-		
 		JButton btnVisualizarExtratoCompleto = new JButton("Visualizar extrato completo");
 		btnVisualizarExtratoCompleto.setForeground(new Color(216, 216, 216));
 		btnVisualizarExtratoCompleto.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -217,16 +173,12 @@ public class TelaPrincipal extends JFrame {
 		panel_2.add(lblTransacoes1);
 		
 		lblValorTransacao1 = new JLabel("R$: 0,00");
+		lblValorTransacao1.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblValorTransacao1.setForeground(new Color(0, 128, 0));
 		lblValorTransacao1.setBackground(new Color(255, 255, 255));
 		lblValorTransacao1.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		lblValorTransacao1.setBounds(392, 9, 61, 14);
+		lblValorTransacao1.setBounds(358, 9, 95, 14);
 		panel_2.add(lblValorTransacao1);
-		
-		JLabel lblImgTransacoes1 = new JLabel("");
-		lblImgTransacoes1.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/circle_1.png")));
-		lblImgTransacoes1.setBounds(10, 6, 16, 21);
-		panel_2.add(lblImgTransacoes1);
 		
 		JPanel panel_2_1 = new JPanel();
 		panel_2_1.setBackground(new Color(216, 216, 216));
@@ -240,16 +192,12 @@ public class TelaPrincipal extends JFrame {
 		panel_2_1.add(lblTransacoes2);
 		
 		lblValorTransacao2 = new JLabel("R$: 0,00");
+		lblValorTransacao2.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblValorTransacao2.setForeground(new Color(149, 0, 0));
 		lblValorTransacao2.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		lblValorTransacao2.setBackground(Color.WHITE);
-		lblValorTransacao2.setBounds(392, 8, 61, 14);
+		lblValorTransacao2.setBounds(358, 8, 95, 14);
 		panel_2_1.add(lblValorTransacao2);
-		
-		JLabel lblImgTransacoes2 = new JLabel("");
-		lblImgTransacoes2.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/circle_3.png")));
-		lblImgTransacoes2.setBounds(10, 6, 16, 21);
-		panel_2_1.add(lblImgTransacoes2);
 		
 		JPanel panelSaldo = new JPanel();
 		panelSaldo.setBackground(new Color(31, 33, 38));
@@ -299,12 +247,6 @@ public class TelaPrincipal extends JFrame {
 		lblValorGanhoMes.setFont(new Font("ABeeZee", Font.BOLD, 14));
 		panelGanhos.add(lblValorGanhoMes);
 		
-		JLabel lblUpArrow = new JLabel("");
-		lblUpArrow.setBackground(new Color(0, 255, 0));
-		lblUpArrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-trend-up.png")));
-		lblUpArrow.setBounds(10, 13, 24, 24);
-		panelGanhos.add(lblUpArrow);
-		
 		JPanel panelDespesasMes = new JPanel();
 		panelDespesasMes.setBackground(new Color(31, 33, 38));
 		panelDespesasMes.setBounds(248, 179, 168, 124);
@@ -324,12 +266,6 @@ public class TelaPrincipal extends JFrame {
 		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelDespesasMes.add(lblDespesasMes);
-		
-		JLabel lbDownArrow = new JLabel("");
-		lbDownArrow.setBounds(10, 11, 24, 24);
-		panelDespesasMes.add(lbDownArrow);
-		lbDownArrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-trend-down.png")));
-		lbDownArrow.setBackground(Color.GREEN);
 
 		LocalDate hoje = LocalDate.now();
 	    
