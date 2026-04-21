@@ -24,4 +24,16 @@ public class Repositorio {
 		}
 		return total;
 	}
+	
+	public static double calcularTotalDespesas() {
+	    double total = 0;
+	    for (Gasto g : listaGastos) {
+	        if (g.getValor() < 0) {
+	            total += g.getValor();
+	        }
+	    }
+	    return Math.abs(total);
+	}
+	
 }
+

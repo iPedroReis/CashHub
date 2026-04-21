@@ -28,7 +28,8 @@ public class TelaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtFieldPesquisar;
 	private JTextField txtR;
-	private JLabel lblValorGanhoMes; // Transformado em atributo para ser acessível
+	private JLabel lblValorGanhoMes;
+	private JLabel lblDespesasMes;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -255,7 +256,7 @@ public class TelaPrincipal extends JFrame {
 		lblTituloDespesasMes.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		panelDespesasMes.add(lblTituloDespesasMes);
 		
-		JLabel lblDespesasMes = new JLabel("R$ 0,00");
+		lblDespesasMes = new JLabel("R$ 0,00");
 		lblDespesasMes.setBounds(9, 68, 148, 17);
 		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -274,6 +275,12 @@ public class TelaPrincipal extends JFrame {
 	public void atualizarDashboard() {
 		double ganhos = Repositorio.calcularTotalGanhos();
 		lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos));
+		
+	    double despesas = Repositorio.calcularTotalDespesas();
+	    lblDespesasMes.setText(String.format("R$ %.2f", despesas));
+	    
+	    double saldoFinal = ganhos - despesas;
+	    txtR.setText(String.format("R$ %.2f", saldoFinal));	
 	}
 	
 	private void verificarAlertasDeVencimento() {
