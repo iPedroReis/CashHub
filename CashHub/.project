@@ -31,24 +31,24 @@
 			<location>C:/Users/Admin/Downloads/Imagens CashHub/arrow-right_2.png</location>
 		</link>
 		<link>
-			<name>src/imagens/arrow-trend-down (1).png</name>
-			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/arrow-trend-down (1).png</location>
-		</link>
-		<link>
 			<name>src/imagens/arrow-trend-down.png</name>
 			<type>1</type>
 			<location>C:/Users/Admin/Downloads/Imagens CashHub/arrow-trend-down.png</location>
 		</link>
 		<link>
-			<name>src/imagens/arrow-trend-up (1).png</name>
+			<name>src/imagens/arrow-trend-down_1.png</name>
 			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/arrow-trend-up (1).png</location>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/circulos/arrow-trend-down_1.png</location>
 		</link>
 		<link>
 			<name>src/imagens/arrow-trend-up.png</name>
 			<type>1</type>
 			<location>C:/Users/Admin/Downloads/Imagens CashHub/arrow-trend-up.png</location>
+		</link>
+		<link>
+			<name>src/imagens/arrow-trend-up_1.png</name>
+			<type>1</type>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/circulos/arrow-trend-up_1.png</location>
 		</link>
 		<link>
 			<name>src/imagens/circle.png</name>

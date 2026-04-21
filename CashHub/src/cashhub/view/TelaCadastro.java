@@ -61,6 +61,7 @@ public class TelaCadastro extends JFrame {
 	private JButton btnCancelar;
 	private JTextField txtBoasPraticas;
 	private JLabel lblNewLabel_3;
+	private boolean ehDespesa = false;
 
 	/**
 	 * Launch the application.
@@ -169,7 +170,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnAjuda);
 		
 		lblCashHub = new JLabel("");
-		lblCashHub.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/CashHub (3).png")));
+		lblCashHub.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/CashHub_3.png")));
 		lblCashHub.setBounds(-17, -7, 118, 91);
 		panel.add(lblCashHub);
 		
@@ -181,17 +182,17 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(panel_1);
 		
 		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/arrow-trend-down (1).png")));
+		lblNewLabel_1.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/arrow-trend-down_1.png")));
 		lblNewLabel_1.setBounds(171, 150, 21, 21);
 		panel_1.add(lblNewLabel_1);
 		
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/arrow-trend-up (1).png")));
+		lblNewLabel.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/arrow-trend-up_1.png")));
 		lblNewLabel.setBounds(43, 149, 21, 21);
 		panel_1.add(lblNewLabel);
 		
 		btnNewButton_1 = new JButton("");
-		btnNewButton_1.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/search (2).png")));
+		btnNewButton_1.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/search_2.png")));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setBackground(new Color(31, 33, 38));
 		btnNewButton_1.setBounds(331, 8, 36, 23);
@@ -272,6 +273,11 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(lblTituloTipoTransacoes);
 		
 		btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ehDespesa = false;
+			}
+		});
 		btnAdicionar.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnAdicionar.setForeground(new Color(216, 216, 216));
 		btnAdicionar.setFont(new Font("ABeeZee", Font.PLAIN, 14));
@@ -280,6 +286,11 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(btnAdicionar);
 		
 		btnRetirar = new JButton("Retirar");
+		btnRetirar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ehDespesa = true;
+			}
+		});
 		btnRetirar.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnRetirar.setForeground(new Color(216, 216, 216));
 		btnRetirar.setFont(new Font("ABeeZee", Font.PLAIN, 14));
@@ -321,32 +332,30 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(BoxCategoria);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String desc = txtDescricao.getText();
-		        double valor = Double.parseDouble(txtValor.getText()); // Converte texto em número
-		        
-		        // 2. Criar o objeto Gasto (usando a data de hoje para simplificar o teste)
-		        LocalDate hoje = LocalDate.now();
-		        Gasto novo = new Gasto(0, valor, desc, hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
-		        
-		        // 3. Salvar no Repositóri
-		        Repositorio.salvar(novo);
-		        
-		        
-		        if (TelaPrincipal.frameAberto != null) {
-		            TelaPrincipal.frameAberto.atualizarDashboard();
-		        }
+				try {
+		            String desc = txtDescricao.getText();
+		            double valor = Double.parseDouble(txtValor.getText());
 
-		        JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-		        dispose(); // Fecha a tela de cadastro
-		        
-		        
-		        // 4. Fechar a janela de cadastro
-		        dispose();
-		        
-		        // MENSAGEM DE SUCESSO
-		        JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!");
-				
-			}
+		            if (ehDespesa) {
+		                valor = valor * -1;
+		            }
+
+		            LocalDate hoje = LocalDate.now();
+		            Gasto novo = new Gasto(0, valor, desc, hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+
+		            Repositorio.salvar(novo);
+
+		            if (TelaPrincipal.frameAberto != null) {
+		                TelaPrincipal.frameAberto.atualizarDashboard();
+		            }
+
+		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!");
+		            dispose(); 
+
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(null, "Erro: Digite apenas números no campo Valor.");
+		        }
+		    }
 		});
 
 	}

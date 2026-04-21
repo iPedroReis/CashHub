@@ -267,6 +267,13 @@ public class TelaPrincipal extends JFrame {
 		panelSaldo.add(txtR);
 		
 		JButton btnAlterarSaldo = new JButton("Alterar Saldo");
+		btnAlterarSaldo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					TelaCadastro tela = new TelaCadastro();
+				    // Torna ela visível
+				    tela.setVisible(true);				
+			}
+		});
 		btnAlterarSaldo.setForeground(new Color(216, 216, 216));
 		btnAlterarSaldo.setFont(new Font("Dialog", Font.BOLD, 12));
 		btnAlterarSaldo.setBorder(null);
@@ -310,12 +317,9 @@ public class TelaPrincipal extends JFrame {
 		lblTituloDespesasMes.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		panelDespesasMes.add(lblTituloDespesasMes);
 		
-<<<<<<< HEAD
+
 		lblDespesasMes = new JLabel("R$ 0,00");
-=======
-		JLabel lblDespesasMes = new JLabel("R$ 0,00");
 		lblDespesasMes.setBackground(new Color(166, 0, 4));
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 		lblDespesasMes.setBounds(9, 68, 148, 17);
 		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -329,8 +333,8 @@ public class TelaPrincipal extends JFrame {
 
 		LocalDate hoje = LocalDate.now();
 	    
-	    Gasto g1 = new Gasto(1, 2000.0, "Salário", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
-	    Gasto g2 = new Gasto(2, -50.0, "Teste", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+	    Gasto g1 = new Gasto(1, 100.0, "Salário", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+	    Gasto g2 = new Gasto(2, -50.0, "Café", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
 	    
 	    Repositorio.salvar(g1);
 	    Repositorio.salvar(g2);
