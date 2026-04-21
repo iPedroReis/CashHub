@@ -31,9 +31,19 @@
 			<location>C:/Users/Gustavo/Downloads/arrow-right (2).png</location>
 		</link>
 		<link>
+			<name>src/imagens/arrow-trend-down (1).png</name>
+			<type>1</type>
+			<location>C:/Users/Gustavo/Downloads/arrow-trend-down (1).png</location>
+		</link>
+		<link>
 			<name>src/imagens/arrow-trend-down.png</name>
 			<type>1</type>
 			<location>C:/Users/Gustavo/Downloads/arrow-trend-down.png</location>
+		</link>
+		<link>
+			<name>src/imagens/arrow-trend-up (1).png</name>
+			<type>1</type>
+			<location>C:/Users/Gustavo/Downloads/arrow-trend-up (1).png</location>
 		</link>
 		<link>
 			<name>src/imagens/arrow-trend-up.png</name>

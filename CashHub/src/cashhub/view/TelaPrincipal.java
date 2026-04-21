@@ -170,6 +170,7 @@ public class TelaPrincipal extends JFrame {
 		lblNomeSistema.setForeground(new Color(31, 33, 38));
 		
 		txtFieldPesquisar = new JTextField();
+		txtFieldPesquisar.setForeground(new Color(216, 216, 216));
 		txtFieldPesquisar.setEditable(false);
 		txtFieldPesquisar.setBackground(new Color(31, 33, 38));
 		txtFieldPesquisar.setBounds(160, 5, 208, 28);
@@ -306,6 +307,7 @@ public class TelaPrincipal extends JFrame {
 		panelDespesasMes.add(lblTituloDespesasMes);
 		
 		JLabel lblDespesasMes = new JLabel("R$ 0,00");
+		lblDespesasMes.setBackground(new Color(166, 0, 4));
 		lblDespesasMes.setBounds(9, 68, 148, 17);
 		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
