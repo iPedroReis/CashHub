@@ -63,7 +63,27 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
 		
-		JButton btnExtrato = new JButton("Extrato");
+		JLabel lblExtrato = new JLabel("");
+		lblExtrato.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/time-past.png")));
+		lblExtrato.setBounds(12, 133, 20, 24);
+		panel.add(lblExtrato);
+		
+		JLabel lblDashboard = new JLabel("");
+		lblDashboard.setBounds(8, 98, 23, 24);
+		panel.add(lblDashboard);
+		lblDashboard.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/layout-fluid.png")));
+		
+		JButton btnDashboard = new JButton("      Dashboard");
+		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
+		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
+		btnDashboard.setForeground(new Color(216, 216, 216));
+		btnDashboard.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
+		btnDashboard.setBackground(new Color(31, 33, 38));
+		btnDashboard.setBounds(5, 95, 120, 30);
+		panel.add(btnDashboard);
+		
+		JButton btnExtrato = new JButton("       Extrato");
+		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		btnExtrato.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
 		btnExtrato.setBounds(5, 130, 120, 30);
@@ -71,7 +91,8 @@ public class TelaPrincipal extends JFrame {
 		btnExtrato.setBackground(new Color(31, 33, 38));
 		panel.add(btnExtrato);
 		
-		JButton btnAdicionarSaldo = new JButton("Adicionar Saldo");
+		JButton btnAdicionarSaldo = new JButton("       Saldo");
+		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCadastro tela = new TelaCadastro();
@@ -86,7 +107,8 @@ public class TelaPrincipal extends JFrame {
 		btnAdicionarSaldo.setBackground(new Color(31, 33, 38));
 		panel.add(btnAdicionarSaldo);
 		
-		JButton btnConfiguracoes = new JButton("Configurações");
+		JButton btnConfiguracoes = new JButton("       Configurações");
+		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConfiguracoes.setBorder(new LineBorder(new Color(216, 216, 216)));
 		btnConfiguracoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		btnConfiguracoes.setBounds(5, 200, 120, 30);
@@ -98,14 +120,6 @@ public class TelaPrincipal extends JFrame {
 		lblCashHub.setBounds(-17, -7, 118, 91);
 		lblCashHub.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/CashHub (3).png")));
 		panel.add(lblCashHub);
-		
-		JButton btnDashboard = new JButton("Dashboard");
-		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnDashboard.setForeground(new Color(216, 216, 216));
-		btnDashboard.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
-		btnDashboard.setBackground(new Color(31, 33, 38));
-		btnDashboard.setBounds(5, 95, 120, 30);
-		panel.add(btnDashboard);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(216, 216, 216));
@@ -233,7 +247,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblDespesasMes = new JLabel("R$ 0,00");
 		lblDespesasMes.setBounds(9, 68, 148, 17);
-		lblDespesasMes.setForeground(new Color(128, 0, 64));
+		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelDespesasMes.add(lblDespesasMes);
 		
