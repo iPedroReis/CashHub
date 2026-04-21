@@ -34,6 +34,10 @@ public class TelaPrincipal extends JFrame {
 	private JTextField txtR;
 	private JLabel lblValorGanhoMes;
 	private JLabel lblDespesasMes;
+	private JLabel lblTransacoes1;
+	private JLabel lblValorTransacao1;
+	private JLabel lblTransacoes2;
+	private JLabel lblValorTransacao2;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -49,8 +53,7 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	public TelaPrincipal() {
-		
-		
+				
 		setBackground(new Color(216, 216, 216));
 		setTitle("Ca$h Hub - Dashboard");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -207,12 +210,12 @@ public class TelaPrincipal extends JFrame {
 		panelTranasacoes.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblTransacoes1 = new JLabel("Salário - Itau");
+		lblTransacoes1 = new JLabel("Salário - Itau");
 		lblTransacoes1.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		lblTransacoes1.setBounds(37, 8, 146, 14);
 		panel_2.add(lblTransacoes1);
 		
-		JLabel lblValorTransacao1 = new JLabel("R$: 0,00");
+		lblValorTransacao1 = new JLabel("R$: 0,00");
 		lblValorTransacao1.setForeground(new Color(0, 128, 0));
 		lblValorTransacao1.setBackground(new Color(255, 255, 255));
 		lblValorTransacao1.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -220,7 +223,7 @@ public class TelaPrincipal extends JFrame {
 		panel_2.add(lblValorTransacao1);
 		
 		JLabel lblImgTransacoes1 = new JLabel("");
-		lblImgTransacoes1.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/circle (1).png")));
+		lblImgTransacoes1.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/circle_1.png")));
 		lblImgTransacoes1.setBounds(10, 6, 16, 21);
 		panel_2.add(lblImgTransacoes1);
 		
@@ -230,12 +233,12 @@ public class TelaPrincipal extends JFrame {
 		panelTranasacoes.add(panel_2_1);
 		panel_2_1.setLayout(null);
 		
-		JLabel lblTransacoes2 = new JLabel("Café - Starbucks");
+		lblTransacoes2 = new JLabel("Café - Starbucks");
 		lblTransacoes2.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		lblTransacoes2.setBounds(36, 8, 146, 14);
 		panel_2_1.add(lblTransacoes2);
 		
-		JLabel lblValorTransacao2 = new JLabel("R$: 0,00");
+		lblValorTransacao2 = new JLabel("R$: 0,00");
 		lblValorTransacao2.setForeground(new Color(149, 0, 0));
 		lblValorTransacao2.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		lblValorTransacao2.setBackground(Color.WHITE);
@@ -243,7 +246,7 @@ public class TelaPrincipal extends JFrame {
 		panel_2_1.add(lblValorTransacao2);
 		
 		JLabel lblImgTransacoes2 = new JLabel("");
-		lblImgTransacoes2.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/circle (3).png")));
+		lblImgTransacoes2.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/circle_3.png")));
 		lblImgTransacoes2.setBounds(10, 6, 16, 21);
 		panel_2_1.add(lblImgTransacoes2);
 		
@@ -318,9 +321,21 @@ public class TelaPrincipal extends JFrame {
 		lbDownArrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-trend-down.png")));
 		lbDownArrow.setBackground(Color.GREEN);
 
-		atualizarDashboard();
-		verificarAlertasDeVencimento();
+		LocalDate hoje = LocalDate.now();
+	    
+	    Gasto g1 = new Gasto(1, 2000.0, "Salário", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+	    Gasto g2 = new Gasto(2, -50.0, "Teste", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+	    
+	    Repositorio.salvar(g1);
+	    Repositorio.salvar(g2);
+
+	    setTitle("Ca$h Hub - Dashboard");
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	 
+	    atualizarDashboard();
+	    verificarAlertasDeVencimento();
 	}
+		
 	
 	public void atualizarDashboard() {
 		double ganhos = Repositorio.calcularTotalGanhos();
@@ -331,6 +346,24 @@ public class TelaPrincipal extends JFrame {
 	    
 	    double saldoFinal = ganhos - despesas;
 	    txtR.setText(String.format("R$ %.2f", saldoFinal));	
+	    
+	    Gasto ultimoGanho = Repositorio.getUltimoGanho();
+	    if (ultimoGanho != null) {
+	        lblTransacoes1.setText(ultimoGanho.getDescricao());
+	        lblValorTransacao1.setText(String.format("R$ %.2f", ultimoGanho.getValor()));
+	    } else {
+	        lblTransacoes1.setText("Nenhum ganho registrado");
+	        lblValorTransacao1.setText("R$ 0,00");
+	    }
+
+	    Gasto ultimaDespesa = Repositorio.getUltimaDespesa();
+	    if (ultimaDespesa != null) {
+	        lblTransacoes2.setText(ultimaDespesa.getDescricao());
+	        lblValorTransacao2.setText(String.format("R$ %.2f", Math.abs(ultimaDespesa.getValor())));
+	    } else {
+	        lblTransacoes2.setText("Nenhuma despesa registrada");
+	        lblValorTransacao2.setText("R$ 0,00");
+	    }
 	}
 	
 	private void verificarAlertasDeVencimento() {

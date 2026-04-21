@@ -41,29 +41,29 @@
 			<location>C:/Users/Admin/Downloads/Imagens CashHub/arrow-trend-up.png</location>
 		</link>
 		<link>
-			<name>src/imagens/circle (1).png</name>
-			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/circle (1).png</location>
-		</link>
-		<link>
-			<name>src/imagens/circle (2).png</name>
-			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/circle (2).png</location>
-		</link>
-		<link>
-			<name>src/imagens/circle (3).png</name>
-			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/circle (3).png</location>
-		</link>
-		<link>
 			<name>src/imagens/circle.png</name>
 			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/circle.png</location>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/circulos/circle.png</location>
+		</link>
+		<link>
+			<name>src/imagens/circle_1.png</name>
+			<type>1</type>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/circulos/circle_1.png</location>
+		</link>
+		<link>
+			<name>src/imagens/circle_2.png</name>
+			<type>1</type>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/circulos/circle_2.png</location>
+		</link>
+		<link>
+			<name>src/imagens/circle_3.png</name>
+			<type>1</type>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/circulos/circle_3.png</location>
 		</link>
 		<link>
 			<name>src/imagens/interrogation.png</name>
 			<type>1</type>
-			<location>C:/Users/Gustavo/Downloads/interrogation.png</location>
+			<location>C:/Users/Admin/Downloads/Imagens CashHub/circulos/interrogation.png</location>
 		</link>
 		<link>
 			<name>src/imagens/layout-fluid.png</name>

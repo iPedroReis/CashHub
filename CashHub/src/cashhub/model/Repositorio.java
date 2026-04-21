@@ -35,5 +35,25 @@ public class Repositorio {
 	    return Math.abs(total);
 	}
 	
+	public static Gasto getUltimoGanho() {
+		List<Gasto> lista = getLista();
+		for (int i = lista.size() - 1; i >= 0; i--) {
+			if (lista.get(i).getValor() > 0) {
+				return lista.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public static Gasto getUltimaDespesa() {
+		List<Gasto> lista = getLista();
+		for (int i = lista.size() - 1; i >= 0; i--) {
+			if (lista.get(i).getValor() < 0) {
+				return lista.get(i);
+			}
+		}
+		return null;
+	}
+	
 }
 
