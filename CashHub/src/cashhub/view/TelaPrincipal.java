@@ -24,13 +24,14 @@ import java.awt.Rectangle;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Cursor;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class TelaPrincipal extends JFrame {
 
 	public static TelaPrincipal frameAberto;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtFieldPesquisar;
 	private JTextField txtR;
 	private JLabel lblValorGanhoMes;
 	private JLabel lblDespesasMes;
@@ -65,11 +66,11 @@ public class TelaPrincipal extends JFrame {
 		frameAberto = this;
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(130, 400));
-		panel.setBackground(new Color(31, 33, 38));
-		contentPane.add(panel, BorderLayout.WEST);
-		panel.setLayout(null);
+		JPanel panelLateral = new JPanel();
+		panelLateral.setPreferredSize(new Dimension(130, 400));
+		panelLateral.setBackground(new Color(31, 33, 38));
+		contentPane.add(panelLateral, BorderLayout.WEST);
+		panelLateral.setLayout(null);
 		
 		JButton btnDashboard = new JButton("      Dashboard");
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
@@ -78,7 +79,7 @@ public class TelaPrincipal extends JFrame {
 		btnDashboard.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
 		btnDashboard.setBackground(new Color(31, 33, 38));
 		btnDashboard.setBounds(5, 95, 120, 30);
-		panel.add(btnDashboard);
+		panelLateral.add(btnDashboard);
 		
 		JButton btnExtrato = new JButton("       Extrato");
 		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
@@ -87,7 +88,7 @@ public class TelaPrincipal extends JFrame {
 		btnExtrato.setBounds(5, 130, 120, 30);
 		btnExtrato.setForeground(new Color(216, 216, 216));
 		btnExtrato.setBackground(new Color(31, 33, 38));
-		panel.add(btnExtrato);
+		panelLateral.add(btnExtrato);
 		
 		JButton btnAdicionarSaldo = new JButton("       Saldo");
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -103,7 +104,7 @@ public class TelaPrincipal extends JFrame {
 		btnAdicionarSaldo.setBounds(5, 165, 120, 30);
 		btnAdicionarSaldo.setForeground(new Color(216, 216, 216));
 		btnAdicionarSaldo.setBackground(new Color(31, 33, 38));
-		panel.add(btnAdicionarSaldo);
+		panelLateral.add(btnAdicionarSaldo);
 		
 		JButton btnConfiguracoes = new JButton("       Configurações");
 		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
@@ -112,7 +113,7 @@ public class TelaPrincipal extends JFrame {
 		btnConfiguracoes.setBounds(5, 200, 120, 30);
 		btnConfiguracoes.setForeground(new Color(216, 216, 216));
 		btnConfiguracoes.setBackground(new Color(31, 33, 38));
-		panel.add(btnConfiguracoes);
+		panelLateral.add(btnConfiguracoes);
 		
 		JButton btnAjuda = new JButton("       Ajuda");
 		btnAjuda.setHorizontalAlignment(SwingConstants.LEFT);
@@ -121,7 +122,7 @@ public class TelaPrincipal extends JFrame {
 		btnAjuda.setBorder(new LineBorder(new Color(216, 216, 216)));
 		btnAjuda.setBackground(new Color(31, 33, 38));
 		btnAjuda.setBounds(5, 408, 120, 30);
-		panel.add(btnAjuda);
+		panelLateral.add(btnAjuda);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(216, 216, 216));
@@ -129,17 +130,10 @@ public class TelaPrincipal extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel lblNomeSistema = new JLabel("CA$H HUB");
-		lblNomeSistema.setBounds(36, 12, 90, 15);
+		lblNomeSistema.setBounds(28, 13, 168, 28);
 		panel_1.add(lblNomeSistema);
-		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblNomeSistema.setForeground(new Color(31, 33, 38));
-		
-		txtFieldPesquisar = new JTextField();
-		txtFieldPesquisar.setForeground(new Color(216, 216, 216));
-		txtFieldPesquisar.setEditable(false);
-		txtFieldPesquisar.setBackground(new Color(31, 33, 38));
-		txtFieldPesquisar.setBounds(160, 5, 208, 28);
-		panel_1.add(txtFieldPesquisar);
 		
 		JPanel panelTranasacoes = new JPanel();
 		panelTranasacoes.setBackground(new Color(31, 33, 38));
@@ -266,6 +260,27 @@ public class TelaPrincipal extends JFrame {
 		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelDespesasMes.add(lblDespesasMes);
+		
+		JPanel panelnformacoes = new JPanel();
+		panelnformacoes.setBorder(null);
+		panelnformacoes.setBackground(new Color(216, 216, 216));
+		panelnformacoes.setBounds(339, 13, 193, 35);
+		panel_1.add(panelnformacoes);
+		panelnformacoes.setLayout(null);
+		
+		JLabel lblNome = new JLabel("Gustavo Dornellas");
+		lblNome.setBounds(0, 0, 149, 17);
+		panelnformacoes.add(lblNome);
+		lblNome.setForeground(new Color(31, 33, 38));
+		lblNome.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
+		
+		JLabel lblNewLabel = new JLabel("Plano premium");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("ABeeZee", Font.PLAIN, 12));
+		lblNewLabel.setForeground(new Color(128, 128, 128));
+		lblNewLabel.setBounds(38, 13, 111, 14);
+		panelnformacoes.add(lblNewLabel);
 
 		LocalDate hoje = LocalDate.now();
 	    
