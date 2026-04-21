@@ -96,7 +96,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblCashHub = new JLabel("");
 		lblCashHub.setBounds(-17, -7, 118, 91);
-		lblCashHub.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\CashHub (3).png"));
+		lblCashHub.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/CashHub (3).png")));
 		panel.add(lblCashHub);
 		
 		JButton btnDashboard = new JButton("Dashboard");
@@ -115,7 +115,7 @@ public class TelaPrincipal extends JFrame {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setBorder(null);
 		btnNewButton.setBackground(new Color(31, 33, 38));
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\search (2).png"));
+		btnNewButton.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/search (2).png")));
 		btnNewButton.setBounds(331, 8, 36, 23);
 		panel_1.add(btnNewButton);
 		
@@ -144,7 +144,7 @@ public class TelaPrincipal extends JFrame {
 		panelTranasacoes.add(lblTituloTransacoes);
 		
 		JLabel lblArrrow = new JLabel("");
-		lblArrrow.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\arrow-right (2).png"));
+		lblArrrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-right (2).png")));
 		lblArrrow.setBounds(451, 13, 22, 14);
 		panelTranasacoes.add(lblArrrow);
 		
@@ -158,7 +158,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(216, 216, 216));
-		panel_2.setBounds(10, 36, 453, 30);
+		panel_2.setBounds(10, 36, 463, 30);
 		panelTranasacoes.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -168,7 +168,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JPanel panel_2_1 = new JPanel();
 		panel_2_1.setBackground(new Color(216, 216, 216));
-		panel_2_1.setBounds(10, 77, 453, 30);
+		panel_2_1.setBounds(10, 77, 463, 30);
 		panelTranasacoes.add(panel_2_1);
 		panel_2_1.setLayout(null);
 		
@@ -215,7 +215,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblUpArrow = new JLabel("");
 		lblUpArrow.setBackground(new Color(0, 255, 0));
-		lblUpArrow.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\arrow-trend-up.png"));
+		lblUpArrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-trend-up.png")));
 		lblUpArrow.setBounds(10, 13, 24, 24);
 		panelGanhos.add(lblUpArrow);
 		
@@ -240,7 +240,7 @@ public class TelaPrincipal extends JFrame {
 		JLabel lbDownArrow = new JLabel("");
 		lbDownArrow.setBounds(10, 11, 24, 24);
 		panelDespesasMes.add(lbDownArrow);
-		lbDownArrow.setIcon(new ImageIcon("C:\\Users\\Gustavo\\Downloads\\arrow-trend-down.png"));
+		lbDownArrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-trend-down.png")));
 		lbDownArrow.setBackground(Color.GREEN);
 
 		atualizarDashboard();
