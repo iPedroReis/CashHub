@@ -96,7 +96,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblCashHub = new JLabel("");
 		lblCashHub.setBounds(-17, -7, 118, 91);
-		lblCashHub.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/CashHub (3).png")));
+		lblCashHub.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/CashHub_3.png")));
 		panel.add(lblCashHub);
 		
 		JButton btnDashboard = new JButton("Dashboard");
@@ -115,7 +115,7 @@ public class TelaPrincipal extends JFrame {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setBorder(null);
 		btnNewButton.setBackground(new Color(31, 33, 38));
-		btnNewButton.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/search (2).png")));
+		btnNewButton.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/search_2.png")));
 		btnNewButton.setBounds(331, 8, 36, 23);
 		panel_1.add(btnNewButton);
 		
@@ -144,7 +144,7 @@ public class TelaPrincipal extends JFrame {
 		panelTranasacoes.add(lblTituloTransacoes);
 		
 		JLabel lblArrrow = new JLabel("");
-		lblArrrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-right (2).png")));
+		lblArrrow.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/imagens/arrow-right_2.png")));
 		lblArrrow.setBounds(451, 13, 22, 14);
 		panelTranasacoes.add(lblArrrow);
 		
