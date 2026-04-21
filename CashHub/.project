@@ -21,6 +21,11 @@
 			<location>C:/Users/Gustavo/Downloads/CashHub (3).png</location>
 		</link>
 		<link>
+			<name>src/imagens/add.png</name>
+			<type>1</type>
+			<location>C:/Users/Gustavo/Downloads/add.png</location>
+		</link>
+		<link>
 			<name>src/imagens/arrow-right (2).png</name>
 			<type>1</type>
 			<location>C:/Users/Gustavo/Downloads/arrow-right (2).png</location>
@@ -44,6 +49,11 @@
 			<name>src/imagens/search (2).png</name>
 			<type>1</type>
 			<location>C:/Users/Gustavo/Downloads/search (2).png</location>
+		</link>
+		<link>
+			<name>src/imagens/settings.png</name>
+			<type>1</type>
+			<location>C:/Users/Gustavo/Downloads/settings.png</location>
 		</link>
 		<link>
 			<name>src/imagens/time-past.png</name>
