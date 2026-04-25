@@ -90,6 +90,8 @@ public class TelaPrincipal extends JFrame {
 		btnExtrato.setBackground(new Color(31, 33, 38));
 		panelLateral.add(btnExtrato);
 		
+		
+		//Alterado
 		JButton btnAdicionarSaldo = new JButton("       Saldo");
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.addActionListener(new ActionListener() {
@@ -208,6 +210,8 @@ public class TelaPrincipal extends JFrame {
 		txtR.setBounds(10, 11, 209, 20);
 		panelSaldo.add(txtR);
 		
+		
+		//Alterado
 		JButton btnAlterarSaldo = new JButton("Alterar Saldo");
 		btnAlterarSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -281,7 +285,9 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel.setForeground(new Color(128, 128, 128));
 		lblNewLabel.setBounds(38, 13, 111, 14);
 		panelnformacoes.add(lblNewLabel);
-
+		
+		
+		//Alterado
 		LocalDate hoje = LocalDate.now();
 	    
 	    Gasto g1 = new Gasto(1, 100.0, "Salário", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
@@ -295,9 +301,10 @@ public class TelaPrincipal extends JFrame {
 	 
 	    atualizarDashboard();
 	    verificarAlertasDeVencimento();
+	    //até aqui
 	}
 		
-	
+	//Alterado
 	public void atualizarDashboard() {
 		double ganhos = Repositorio.calcularTotalGanhos();
 		lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos));
@@ -340,6 +347,7 @@ public class TelaPrincipal extends JFrame {
 	                "ALERTA: O gasto '" + g.getDescricao() + "' está " + status + "!",
 	                "Sistema de Alertas Ca$h Hub",
 	                JOptionPane.WARNING_MESSAGE);
+	          //Até aqui
 			}
 		}
 	}

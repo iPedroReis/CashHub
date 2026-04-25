@@ -202,6 +202,8 @@ public class TelaCadastro extends JFrame {
 		lblTituloTipoTransacoes.setBounds(36, 184, 208, 14);
 		panel_1.add(lblTituloTipoTransacoes);
 		
+		
+		//Alterado
 		btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -215,11 +217,14 @@ public class TelaCadastro extends JFrame {
 		btnAdicionar.setBounds(37, 210, 105, 23);
 		panel_1.add(btnAdicionar);
 		
+		
+		//Alterado
 		btnRetirar = new JButton("Retirar");
 		btnRetirar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ehDespesa = true;
 			}
+			//até aqui
 		});
 		btnRetirar.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnRetirar.setForeground(new Color(216, 216, 216));
@@ -287,6 +292,8 @@ public class TelaCadastro extends JFrame {
 		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblNomeSistema.setBounds(36, 12, 168, 28);
 		panel_1.add(lblNomeSistema);
+		
+		//Alterado
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -313,6 +320,7 @@ public class TelaCadastro extends JFrame {
 		            JOptionPane.showMessageDialog(null, "Erro: Digite apenas números no campo Valor.");
 		        }
 		    }
+			//até aqui
 		});
 
 	}

@@ -6,8 +6,8 @@ public class Categoria extends EntidadeBase{
 	
 
 	public Categoria(int id, String nome) {
-		super(id);
-		this.nome = nome;
+		super(id); // Pega id da entidade base
+		this.nome = nome; 
 	}
 	
 	public String getNome() {
