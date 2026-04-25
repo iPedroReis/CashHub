@@ -43,8 +43,6 @@ public class TelaCadastro extends JFrame {
 	private JButton btnConfiguracoes;
 	private JButton btnAjuda;
 	private JPanel panel_1;
-	private JLabel lblNomeSistema;
-	private JTextField textField;
 	private JLabel lblTituloTipoTransacoes;
 	private JButton btnAdicionar;
 	private JButton btnRetirar;
@@ -53,6 +51,10 @@ public class TelaCadastro extends JFrame {
 	private JTextField txtBoasPraticas;
 	private JLabel lblTituloBoasPraticas;
 	private boolean ehDespesa = false;
+	private JPanel panelnformacoes;
+	private JLabel lblNome;
+	private JLabel lblNewLabel;
+	private JLabel lblNomeSistema;
 
 	/**
 	 * Launch the application.
@@ -139,20 +141,6 @@ public class TelaCadastro extends JFrame {
 		panel_1.setBackground(new Color(216, 216, 216));
 		panel_1.setBounds(130, -2, 544, 451);
 		contentPane.add(panel_1);
-		
-		lblNomeSistema = new JLabel("CA$H HUB");
-		lblNomeSistema.setForeground(new Color(31, 33, 38));
-		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblNomeSistema.setBounds(36, 12, 90, 15);
-		panel_1.add(lblNomeSistema);
-		
-		textField = new JTextField();
-		textField.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-		textField.setForeground(new Color(216, 216, 216));
-		textField.setBorder(null);
-		textField.setBackground(new Color(31, 33, 38));
-		textField.setBounds(160, 5, 208, 28);
-		panel_1.add(textField);
 		
 		txtDescricao = new JTextField();
 		txtDescricao.setForeground(new Color(31, 33, 38));
@@ -272,6 +260,33 @@ public class TelaCadastro extends JFrame {
 		BoxCategoria.setBorder(null);
 		BoxCategoria.setBounds(36, 260, 128, 20);
 		panel_1.add(BoxCategoria);
+		
+		panelnformacoes = new JPanel();
+		panelnformacoes.setLayout(null);
+		panelnformacoes.setBorder(null);
+		panelnformacoes.setBackground(new Color(216, 216, 216));
+		panelnformacoes.setBounds(328, 12, 193, 35);
+		panel_1.add(panelnformacoes);
+		
+		lblNome = new JLabel("Gustavo Dornellas");
+		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNome.setForeground(new Color(31, 33, 38));
+		lblNome.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+		lblNome.setBounds(0, 0, 149, 17);
+		panelnformacoes.add(lblNome);
+		
+		lblNewLabel = new JLabel("Plano premium");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setForeground(Color.GRAY);
+		lblNewLabel.setFont(new Font("ABeeZee", Font.PLAIN, 12));
+		lblNewLabel.setBounds(38, 13, 111, 14);
+		panelnformacoes.add(lblNewLabel);
+		
+		lblNomeSistema = new JLabel("CA$H HUB");
+		lblNomeSistema.setForeground(new Color(31, 33, 38));
+		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNomeSistema.setBounds(36, 12, 168, 28);
+		panel_1.add(lblNomeSistema);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
