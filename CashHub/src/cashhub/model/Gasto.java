@@ -13,7 +13,7 @@ public class Gasto extends EntidadeBase { // Declara a classe "Gasto" que herda 
 	
 	public Gasto(int id, double valor, String descricao, int ano, int mes, int dia, Categoria categoria, boolean pago) { 
 	// Declara o construtor da classe com todos os atributos como parâmetros
-		super(id); chama // pega o id da entidade base
+		super(id);  // pega o id da entidade base
 		this.valor = valor; // Atribui o valor ao atributo "valor"
 		this.descricao = descricao; // Atribui o valor ao atributo "descricao"
 		this.ano = ano; // Atribui o valor ao atributo "ano"
