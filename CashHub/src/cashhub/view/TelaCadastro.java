@@ -204,10 +204,10 @@ public class TelaCadastro extends JFrame {
 		
 		
 		//Alterado
-		btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ehDespesa = false;
+		btnAdicionar = new JButton("Adicionar"); 
+		btnAdicionar.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
+				ehDespesa = false; // Define que a operação não é uma despesa (é um ganho)
 			}
 		});
 		btnAdicionar.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -219,10 +219,10 @@ public class TelaCadastro extends JFrame {
 		
 		
 		//Alterado
-		btnRetirar = new JButton("Retirar");
-		btnRetirar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ehDespesa = true;
+		btnRetirar = new JButton("Retirar"); 
+		btnRetirar.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
+				ehDespesa = true; // Define que a operação é uma despesa
 			}
 			//até aqui
 		});
@@ -295,29 +295,30 @@ public class TelaCadastro extends JFrame {
 		
 		//Alterado
 		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-		            String desc = txtDescricao.getText();
-		            double valor = Double.parseDouble(txtValor.getText());
+			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
+				try { // Inicia um bloco de tratamento de exceções
+		            String desc = txtDescricao.getText(); // Obtém o texto digitado no campo de descrição
+		            double valor = Double.parseDouble(txtValor.getText()); // Converte o texto do campo de valor para número decimal
 
-		            if (ehDespesa) {
-		                valor = valor * -1;
+		            if (ehDespesa) { // Verifica se a operação é uma despesa
+		                valor = valor * -1; // Converte o valor para negativo
 		            }
 
-		            LocalDate hoje = LocalDate.now();
-		            Gasto novo = new Gasto(0, valor, desc, hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+		            LocalDate hoje = LocalDate.now(); // Obtém a data atual do sistema
+		            Gasto novo = new Gasto(0, valor, desc, hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false); 
+		         // Cria um novo objeto "Gasto" com os dados informados e a data atual
+		            Repositorio.salvar(novo); // Salva o objeto "Gasto" no repositório
 
-		            Repositorio.salvar(novo);
 
-		            if (TelaPrincipal.frameAberto != null) {
-		                TelaPrincipal.frameAberto.atualizarDashboard();
+		            if (TelaPrincipal.frameAberto != null) { // Verifica se existe uma instância aberta da tela principal
+		                TelaPrincipal.frameAberto.atualizarDashboard(); // Atualiza as informações exibidas na tela principal
 		            }
 
-		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!");
-		            dispose(); 
+		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!"); // Exibe uma mensagem de sucesso na tela
+		            dispose(); // Fecha a janela atual
 
-		        } catch (NumberFormatException ex) {
-		            JOptionPane.showMessageDialog(null, "Erro: Digite apenas números no campo Valor.");
+		        } catch (NumberFormatException ex) { // Captura erro de conversão de texto para número
+		            JOptionPane.showMessageDialog(null, "Erro: Digite apenas números no campo Valor."); // Exibe mensagem de erro ao usuário
 		        }
 		    }
 			//até aqui

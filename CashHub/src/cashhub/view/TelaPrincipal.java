@@ -95,10 +95,9 @@ public class TelaPrincipal extends JFrame {
 		JButton btnAdicionarSaldo = new JButton("       Saldo");
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaCadastro tela = new TelaCadastro();
-			    // Torna ela visível
-			    tela.setVisible(true);				
+			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
+				TelaCadastro tela = new TelaCadastro(); // Cria um objeto da classe "TelaCadastro
+			    tela.setVisible(true);		// Torna a nova tela visível		
 			}
 		});
 		btnAdicionarSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -214,10 +213,9 @@ public class TelaPrincipal extends JFrame {
 		//Alterado
 		JButton btnAlterarSaldo = new JButton("Alterar Saldo");
 		btnAlterarSaldo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					TelaCadastro tela = new TelaCadastro();
-				    // Torna ela visível
-				    tela.setVisible(true);				
+			public void actionPerformed(ActionEvent e) {  // Define o que acontece quando o botão é clicado
+					TelaCadastro tela = new TelaCadastro(); // Cria um objeto da classe "TelaCadastro"
+				    tela.setVisible(true);	// Torna a nova tela visível			
 			}
 		});
 		btnAlterarSaldo.setForeground(new Color(216, 216, 216));
@@ -288,65 +286,69 @@ public class TelaPrincipal extends JFrame {
 		
 		
 		//Alterado
-		LocalDate hoje = LocalDate.now();
+		LocalDate hoje = LocalDate.now(); // Obtém a data atual do sistema
 	    
-	    Gasto g1 = new Gasto(1, 100.0, "Salário", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+	    Gasto g1 = new Gasto(1, 100.0, "Salário", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false); 
+	 // Cria um objeto "Gasto" representando um ganho (valor positivo)
 	    Gasto g2 = new Gasto(2, -50.0, "Café", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+	 // Cria um objeto "Gasto" representando uma despesa (valor negativo)
 	    
-	    Repositorio.salvar(g1);
-	    Repositorio.salvar(g2);
+	    Repositorio.salvar(g1); // Salva o objeto "g1" no repositório
+	    Repositorio.salvar(g2); // Salva o objeto "g2" no repositório
 
-	    setTitle("Ca$h Hub - Dashboard");
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setTitle("Ca$h Hub - Dashboard"); // Define o título da janela
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define que o programa será encerrado ao fechar a janela
 	 
-	    atualizarDashboard();
-	    verificarAlertasDeVencimento();
+	    atualizarDashboard(); // Atualiza os dados exibidos na tela
+	    verificarAlertasDeVencimento(); // Verifica alertas de vencimento de gastos
 	    //até aqui
 	}
 		
 	//Alterado
-	public void atualizarDashboard() {
-		double ganhos = Repositorio.calcularTotalGanhos();
-		lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos));
+	public void atualizarDashboard() { // Método responsável por atualizar as informações exibidas na tela
+		double ganhos = Repositorio.calcularTotalGanhos(); // Obtém o total de ganhos do repositório
+		lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos)); // Atualiza o texto do label com o valor dos ganhos formatado
 		
-	    double despesas = Repositorio.calcularTotalDespesas();
-	    lblDespesasMes.setText(String.format("R$ %.2f", despesas));
+	    double despesas = Repositorio.calcularTotalDespesas(); // Obtém o total de despesas do repositório
+	    lblDespesasMes.setText(String.format("R$ %.2f", despesas)); // Atualiza o texto do label com o valor das despesas formatado
 	    
-	    double saldoFinal = ganhos - despesas;
-	    txtR.setText(String.format("R$ %.2f", saldoFinal));	
+	    double saldoFinal = ganhos - despesas; // Calcula o saldo final subtraindo despesas de ganhos
+	    txtR.setText(String.format("R$ %.2f", saldoFinal));	// Atualiza o campo de saldo com o valor formatado
 	    
-	    Gasto ultimoGanho = Repositorio.getUltimoGanho();
-	    if (ultimoGanho != null) {
-	        lblTransacoes1.setText(ultimoGanho.getDescricao());
-	        lblValorTransacao1.setText(String.format("R$ %.2f", ultimoGanho.getValor()));
-	    } else {
-	        lblTransacoes1.setText("Nenhum ganho registrado");
-	        lblValorTransacao1.setText("R$ 0,00");
+	    Gasto ultimoGanho = Repositorio.getUltimoGanho(); // Obtém o último ganho registrado
+	    if (ultimoGanho != null) { // Verifica se existe um ganho
+	        lblTransacoes1.setText(ultimoGanho.getDescricao()); // Exibe a descrição do último ganho
+	        lblValorTransacao1.setText(String.format("R$ %.2f", ultimoGanho.getValor())); // Exibe o valor do último ganho formatado
+	    } else { // Caso não exista ganho
+	        lblTransacoes1.setText("Nenhum ganho registrado"); // Exibe mensagem padrão
+	        lblValorTransacao1.setText("R$ 0,00"); // Define valor padrão
 	    }
 
-	    Gasto ultimaDespesa = Repositorio.getUltimaDespesa();
-	    if (ultimaDespesa != null) {
-	        lblTransacoes2.setText(ultimaDespesa.getDescricao());
-	        lblValorTransacao2.setText(String.format("R$ %.2f", Math.abs(ultimaDespesa.getValor())));
-	    } else {
-	        lblTransacoes2.setText("Nenhuma despesa registrada");
-	        lblValorTransacao2.setText("R$ 0,00");
+	    Gasto ultimaDespesa = Repositorio.getUltimaDespesa(); // Obtém a última despesa registrada
+	    if (ultimaDespesa != null) { // Verifica se existe uma despesa
+	        lblTransacoes2.setText(ultimaDespesa.getDescricao()); // Exibe a descrição da última despesa
+	        lblValorTransacao2.setText(String.format("R$ %.2f", Math.abs(ultimaDespesa.getValor()))); // Exibe o valor da despesa em formato positivo
+	    } else { // Caso não exista despesa
+	        lblTransacoes2.setText("Nenhuma despesa registrada"); // Exibe mensagem padrão
+	        lblValorTransacao2.setText("R$ 0,00"); // Define valor padrão
 	    }
 	}
 	
-	private void verificarAlertasDeVencimento() {
-		LocalDate hoje = LocalDate.now();
-		if (Repositorio.getLista() == null || Repositorio.getLista().isEmpty()) {
-			return;
+	private void verificarAlertasDeVencimento() { // Método que verifica gastos vencidos ou que vencem hoje
+		LocalDate hoje = LocalDate.now(); // Obtém a data atual
+		if (Repositorio.getLista() == null || Repositorio.getLista().isEmpty()) { // Verifica se a lista está nula ou vazia
+			return; // Encerra o método caso não haja dados
 		}
 
-		for (Gasto g : Repositorio.getLista()) {
-			String status = g.identificarStatus(hoje.getDayOfMonth(), hoje.getMonthValue(), hoje.getYear());
-	        if (status.equals("Vencido") || status.equals("Vence Hoje")) {
-	            JOptionPane.showMessageDialog(this, 
-	                "ALERTA: O gasto '" + g.getDescricao() + "' está " + status + "!",
-	                "Sistema de Alertas Ca$h Hub",
-	                JOptionPane.WARNING_MESSAGE);
+		for (Gasto g : Repositorio.getLista()) { // Percorre todos os gastos da lista
+			String status = g.identificarStatus(hoje.getDayOfMonth(), hoje.getMonthValue(), hoje.getYear()); 
+			// Obtém o status do gasto com base na data atual
+
+	        if (status.equals("Vencido") || status.equals("Vence Hoje")) { // Verifica se o gasto está vencido ou vence hoje
+	            JOptionPane.showMessageDialog(this, // Exibe uma caixa de mensagem na tela
+	                "ALERTA: O gasto '" + g.getDescricao() + "' está " + status + "!", // Define a mensagem exibida
+	                "Sistema de Alertas Ca$h Hub", // Define o título da mensagem
+	                JOptionPane.WARNING_MESSAGE); // Define o tipo de alerta como aviso
 	          //Até aqui
 			}
 		}
