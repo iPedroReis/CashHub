@@ -24,12 +24,12 @@ import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 
 public class TelaCadastro extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtDescricao;
 	private JTextField txtValor;
 	private JTextField txtData;
 	private JButton btnSalvar;
@@ -141,14 +141,6 @@ public class TelaCadastro extends JFrame {
 		panel_1.setBackground(new Color(216, 216, 216));
 		panel_1.setBounds(130, -2, 544, 451);
 		contentPane.add(panel_1);
-		
-		txtDescricao = new JTextField();
-		txtDescricao.setForeground(new Color(31, 33, 38));
-		txtDescricao.setFont(new Font("ABeeZee", Font.PLAIN, 12));
-		txtDescricao.setBorder(null);
-		txtDescricao.setBounds(36, 310, 283, 72);
-		panel_1.add(txtDescricao);
-		txtDescricao.setColumns(10);
 		
 		btnSalvar = new JButton("Salvar Transação");
 		btnSalvar.setBorder(null);
@@ -292,6 +284,12 @@ public class TelaCadastro extends JFrame {
 		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblNomeSistema.setBounds(36, 12, 168, 28);
 		panel_1.add(lblNomeSistema);
+		
+		JTextArea txtDescricao = new JTextArea();
+		txtDescricao.setForeground(new Color(31, 33, 38));
+		txtDescricao.setFont(new Font("ABeeZee", Font.PLAIN, 13));
+		txtDescricao.setBounds(36, 314, 283, 79);
+		panel_1.add(txtDescricao);
 		
 		//Alterado
 		btnSalvar.addActionListener(new ActionListener() {
