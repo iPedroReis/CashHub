@@ -308,13 +308,10 @@ public class TelaPrincipal extends JFrame {
 		//Alterado
 		LocalDate hoje = LocalDate.now(); // Obtém a data atual do sistema
 	    
-	    Gasto g1 = new Gasto(1, 100.0, "Salário", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false); 
-	 // Cria um objeto "Gasto" representando um ganho (valor positivo)
-	    Gasto g2 = new Gasto(2, -50.0, "Café", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+	    Gasto g1 = new Gasto(2, -50.0, "Conta de Luz", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
 	 // Cria um objeto "Gasto" representando uma despesa (valor negativo)
 	    
 	    Repositorio.salvar(g1); // Salva o objeto "g1" no repositório
-	    Repositorio.salvar(g2); // Salva o objeto "g2" no repositório
 
 	    setTitle("Ca$h Hub - Dashboard"); // Define o título da janela
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define que o programa será encerrado ao fechar a janela
@@ -366,7 +363,7 @@ public class TelaPrincipal extends JFrame {
 
 	        if (status.equals("Vencido") || status.equals("Vence Hoje")) { // Verifica se o gasto está vencido ou vence hoje
 	            JOptionPane.showMessageDialog(this, // Exibe uma caixa de mensagem na tela
-	                "ALERTA: O '" + g.getDescricao() + "' " + status + "!", // Define a mensagem exibida
+	                "ALERTA: '" + g.getDescricao() + "' " + status + "!", // Define a mensagem exibida
 	                "Sistema de Alertas Ca$h Hub", // Define o título da mensagem
 	                JOptionPane.WARNING_MESSAGE); // Define o tipo de alerta como aviso
 	          //Até aqui
