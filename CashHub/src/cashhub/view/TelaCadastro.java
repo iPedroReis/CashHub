@@ -91,6 +91,12 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(panel);
 		
 		btnDashboard = new JButton("      Dashboard");
+		btnDashboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaPrincipal tela = new TelaPrincipal();
+				tela.setVisible(true);
+			}
+		});
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDashboard.setForeground(new Color(216, 216, 216));
 		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -100,6 +106,12 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnDashboard);
 		
 		btnExtrato = new JButton("       Extrato");
+		btnExtrato.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaExtrato tela = new TelaExtrato();
+				tela.setVisible(true);
+			}
+		});
 		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExtrato.setForeground(new Color(216, 216, 216));
 		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -109,6 +121,10 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnExtrato);
 		
 		btnAdicionarSaldo = new JButton("       Saldo");
+		btnAdicionarSaldo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.setForeground(new Color(216, 216, 216));
 		btnAdicionarSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -118,6 +134,12 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnAdicionarSaldo);
 		
 		btnConfiguracoes = new JButton("       Configurações");
+		btnConfiguracoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConfiguracao tela = new TelaConfiguracao();
+				tela.setVisible(true);
+			}
+		});
 		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConfiguracoes.setForeground(new Color(216, 216, 216));
 		btnConfiguracoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
