@@ -308,7 +308,7 @@ public class TelaCadastro extends JFrame {
 		            Gasto novo = new Gasto(0, valor, desc, hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false); 
 		         // Cria um novo objeto "Gasto" com os dados informados e a data atual
 		            Repositorio.salvar(novo); // Salva o objeto "Gasto" no repositório
-
+		            if (TelaExtrato.frameAberto != null) TelaExtrato.frameAberto.carregarTabela();
 
 		            if (TelaPrincipal.frameAberto != null) { // Verifica se existe uma instância aberta da tela principal
 		                TelaPrincipal.frameAberto.atualizarDashboard(); // Atualiza as informações exibidas na tela principal
