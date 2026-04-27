@@ -101,7 +101,6 @@ public class TelaPrincipal extends JFrame {
 		panelLateral.add(btnExtrato);
 		
 		
-		//Alterado
 		JButton btnAdicionarSaldo = new JButton("       Saldo");
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.addActionListener(new ActionListener() {
@@ -236,7 +235,6 @@ public class TelaPrincipal extends JFrame {
 		panelSaldo.add(txtR);
 		
 		
-		//Alterado
 		JButton btnAlterarSaldo = new JButton("Alterar Saldo");
 		btnAlterarSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {  // Define o que acontece quando o botão é clicado
@@ -311,7 +309,6 @@ public class TelaPrincipal extends JFrame {
 		panelnformacoes.add(lblNewLabel);
 		
 		
-		//Alterado
 		LocalDate hoje = LocalDate.now(); // Obtém a data atual do sistema
 	    
 	    Gasto g1 = new Gasto(2, -50.0, "Conta de Luz", hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
@@ -327,7 +324,6 @@ public class TelaPrincipal extends JFrame {
 	    //até aqui
 	}
 		
-	//Alterado
 	public void atualizarDashboard() { // Método responsável por atualizar as informações exibidas na tela
 		double ganhos = Repositorio.calcularTotalGanhos(); // Obtém o total de ganhos do repositório
 		lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos)); // Atualiza o texto do label com o valor dos ganhos formatado
@@ -372,7 +368,6 @@ public class TelaPrincipal extends JFrame {
 	                "ALERTA: '" + g.getDescricao() + "' " + status + "!", // Define a mensagem exibida
 	                "Sistema de Alertas Ca$h Hub", // Define o título da mensagem
 	                JOptionPane.WARNING_MESSAGE); // Define o tipo de alerta como aviso
-	          //Até aqui
 			}
 		}
 	}

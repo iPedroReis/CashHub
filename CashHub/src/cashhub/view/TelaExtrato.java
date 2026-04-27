@@ -31,7 +31,9 @@ public class TelaExtrato extends JFrame {
 	public static TelaExtrato frameAberto;
 	private JLabel lblValorGanhoMes;
 	private JLabel lblDespesasMes;
-
+	
+	
+	// Alterado 26/04
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
 			try {
@@ -207,15 +209,6 @@ public class TelaExtrato extends JFrame {
 			}
 		};
 		
-//		modelo.addRow(new Object[] { "24/05/2026", "Alimentação", "Compra no mercado", "Saída", "-R$ 150,00" });
-//		modelo.addRow(new Object[] { "23/05/2026", "Salário", "Salário mensal", "Entrada", "R$ 7.500,00" });
-//		modelo.addRow(new Object[] { "22/05/2025", "Transporte", "Uber para o trabalho", "Saída", "-R$ 25,90" });
-//		modelo.addRow(new Object[] { "21/05/2025", "Moradia", "Conta de luz", "Saída", "-R$ 210,40" });
-//		modelo.addRow(new Object[] { "20/05/2025", "Investimentos", "Aplicação Tesouro Direto", "Entrada", "R$ 300,00" });
-//		modelo.addRow(new Object[] { "19/05/2025", "Alimentação", "Jantar fora", "Saída", "-R$ 89,90" });
-//		modelo.addRow(new Object[] { "18/05/2025", "Compras", "Roupa", "Saída", "-R$ 120,00" });
-//		modelo.addRow(new Object[] { "17/05/2025", "Outros", "Venda de item usado", "Entrada", "R$ 200,00" });
-
 
 		table = new JTable(modelo);
 		table.setRowHeight(38);
@@ -263,6 +256,9 @@ public class TelaExtrato extends JFrame {
 		return botao;
 	}
 
+	
+	// Alterado 26/04
+	
 	public void carregarTabela() {
 	    // 1. Pegamos o modelo
 	    DefaultTableModel modelo = (DefaultTableModel) table.getModel();
@@ -343,6 +339,8 @@ public class TelaExtrato extends JFrame {
 				}
 			}
 			return this;
+			
+			// Alterado 26/04 - até aqui
 		}
 	}
 }
