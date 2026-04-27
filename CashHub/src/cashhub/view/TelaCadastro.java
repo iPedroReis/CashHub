@@ -59,9 +59,8 @@ public class TelaCadastro extends JFrame {
 	private JLabel lblNewLabel;
 	private JButton btnNewButton;
 
-	/**
-	 * Launch the application.
-	 */
+	
+	// Alterado 26/04
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -75,9 +74,6 @@ public class TelaCadastro extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaCadastro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 486);
@@ -94,7 +90,16 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(panel);
 		
 		btnDashboard = new JButton("      Dashboard");
+<<<<<<< HEAD
 		btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+=======
+		btnDashboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaPrincipal tela = new TelaPrincipal();
+				tela.setVisible(true);
+			}
+		});
+>>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDashboard.setForeground(new Color(216, 216, 216));
 		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -104,7 +109,16 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnDashboard);
 		
 		btnExtrato = new JButton("       Extrato");
+<<<<<<< HEAD
 		btnExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+=======
+		btnExtrato.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaExtrato tela = new TelaExtrato();
+				tela.setVisible(true);
+			}
+		});
+>>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExtrato.setForeground(new Color(216, 216, 216));
 		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -114,7 +128,14 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnExtrato);
 		
 		btnAdicionarSaldo = new JButton("       Saldo");
+<<<<<<< HEAD
 		btnAdicionarSaldo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+=======
+		btnAdicionarSaldo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+>>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.setForeground(new Color(216, 216, 216));
 		btnAdicionarSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -123,6 +144,24 @@ public class TelaCadastro extends JFrame {
 		btnAdicionarSaldo.setBounds(5, 165, 120, 30);
 		panel.add(btnAdicionarSaldo);
 		
+<<<<<<< HEAD
+=======
+		btnConfiguracoes = new JButton("       Configurações");
+		btnConfiguracoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConfiguracao tela = new TelaConfiguracao();
+				tela.setVisible(true);
+			}
+		});
+		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConfiguracoes.setForeground(new Color(216, 216, 216));
+		btnConfiguracoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
+		btnConfiguracoes.setBorder(new LineBorder(new Color(216, 216, 216)));
+		btnConfiguracoes.setBackground(new Color(31, 33, 38));
+		btnConfiguracoes.setBounds(5, 200, 120, 30);
+		panel.add(btnConfiguracoes);
+		
+>>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 		btnAjuda = new JButton("       Ajuda");
 		btnAjuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAjuda.setHorizontalAlignment(SwingConstants.LEFT);
@@ -235,12 +274,19 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(lblTituloTipoTransacoes);
 		
 		
+<<<<<<< HEAD
 		//Alterado
 		btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ehDespesa = false;
+=======
+		btnAdicionar = new JButton("Adicionar"); 
+		btnAdicionar.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
+				ehDespesa = false; // Define que a operação não é uma despesa (é um ganho)
+>>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 			}
 		});
 		btnAdicionar.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -250,6 +296,7 @@ public class TelaCadastro extends JFrame {
 		btnAdicionar.setBounds(59, 150, 105, 23);
 		panel_1.add(btnAdicionar);
 		
+<<<<<<< HEAD
 		
 		//Alterado
 		btnRetirar = new JButton("Retirar");
@@ -257,8 +304,14 @@ public class TelaCadastro extends JFrame {
 		btnRetirar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ehDespesa = true;
+=======
+	
+		btnRetirar = new JButton("Retirar"); 
+		btnRetirar.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
+				ehDespesa = true; // Define que a operação é uma despesa
+>>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 			}
-			//até aqui
 		});
 		btnRetirar.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnRetirar.setForeground(new Color(216, 216, 216));
@@ -333,35 +386,54 @@ public class TelaCadastro extends JFrame {
 		btnNewButton.setBounds(159, 2, 30, 30);
 		panelnformacoes.add(btnNewButton);
 		
-		//Alterado
 		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            // 1. Coleta os dados básicos
 		            String desc = txtDescricao.getText();
 		            double valor = Double.parseDouble(txtValor.getText());
 
+		            // 2. Ajusta o sinal se for despesa
 		            if (ehDespesa) {
 		                valor = valor * -1;
 		            }
 
-		            LocalDate hoje = LocalDate.now();
-		            Gasto novo = new Gasto(0, valor, desc, hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false);
+		            // 3. Processa a Data do txtData
+		            String dataTexto = txtData.getText();
+		            String[] partes = dataTexto.split("/");
+		            
+		            // Verifica se a data tem as 3 partes (dia/mes/ano)
+		            if (partes.length != 3) {
+		                throw new Exception("Data incompleta");
+		            }
 
+		            int dia = Integer.parseInt(partes[0]);
+		            int mes = Integer.parseInt(partes[1]);
+		            int ano = Integer.parseInt(partes[2]);
+
+		            // 4. Cria e Salva o objeto
+		            Gasto novo = new Gasto(0, valor, desc, ano, mes, dia, null, false);
 		            Repositorio.salvar(novo);
+
+		            // 5. Atualiza as telas que estiverem abertas
+		            if (TelaExtrato.frameAberto != null) {
+		                TelaExtrato.frameAberto.carregarTabela();
+		            }
 
 		            if (TelaPrincipal.frameAberto != null) {
 		                TelaPrincipal.frameAberto.atualizarDashboard();
 		            }
 
+		            // 6. Finaliza a operação
 		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!");
-		            dispose(); 
+		            dispose();
 
 		        } catch (NumberFormatException ex) {
-		            JOptionPane.showMessageDialog(null, "Erro: Digite apenas números no campo Valor.");
+		            JOptionPane.showMessageDialog(null, "Erro: Verifique se o Valor e a Data contêm apenas números.");
+		        } catch (Exception ex) {
+		            JOptionPane.showMessageDialog(null, "Erro no formato da data! Use o padrão: DD/MM/AAAA");
 		        }
 		    }
-			//até aqui
 		});
-
 	}
 }
