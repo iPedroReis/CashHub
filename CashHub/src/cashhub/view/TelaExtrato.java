@@ -29,6 +29,8 @@ public class TelaExtrato extends JFrame {
 	private JTable table;
 	private JTextField txtR;
 	public static TelaExtrato frameAberto;
+	private JLabel lblValorGanhoMes;
+	private JLabel lblDespesasMes;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -151,7 +153,7 @@ public class TelaExtrato extends JFrame {
 		lblTituloGanhos.setBounds(11, 73, 50, 14);
 		panelBalanco.add(lblTituloGanhos);
 
-		JLabel lblValorGanhoMes = new JLabel("R$ 8.000,00");
+		lblValorGanhoMes = new JLabel("R$ 8.000,00");
 		lblValorGanhoMes.setForeground(new Color(34, 166, 62));
 		lblValorGanhoMes.setFont(new Font("ABeeZee", Font.BOLD, 13));
 		lblValorGanhoMes.setBounds(66, 72, 120, 17);
@@ -163,7 +165,7 @@ public class TelaExtrato extends JFrame {
 		lblTituloDespesas.setBounds(11, 93, 69, 14);
 		panelBalanco.add(lblTituloDespesas);
 
-		JLabel lblDespesasMes = new JLabel("R$ 0,00");
+		lblDespesasMes = new JLabel("R$ 0,00");
 		lblDespesasMes.setForeground(new Color(220, 45, 45));
 		lblDespesasMes.setFont(new Font("ABeeZee", Font.BOLD, 13));
 		lblDespesasMes.setBounds(81, 92, 91, 17);
@@ -204,7 +206,7 @@ public class TelaExtrato extends JFrame {
 				return false;
 			}
 		};
-
+		
 //		modelo.addRow(new Object[] { "24/05/2026", "Alimentação", "Compra no mercado", "Saída", "-R$ 150,00" });
 //		modelo.addRow(new Object[] { "23/05/2026", "Salário", "Salário mensal", "Entrada", "R$ 7.500,00" });
 //		modelo.addRow(new Object[] { "22/05/2025", "Transporte", "Uber para o trabalho", "Saída", "-R$ 25,90" });
@@ -213,6 +215,7 @@ public class TelaExtrato extends JFrame {
 //		modelo.addRow(new Object[] { "19/05/2025", "Alimentação", "Jantar fora", "Saída", "-R$ 89,90" });
 //		modelo.addRow(new Object[] { "18/05/2025", "Compras", "Roupa", "Saída", "-R$ 120,00" });
 //		modelo.addRow(new Object[] { "17/05/2025", "Outros", "Venda de item usado", "Entrada", "R$ 200,00" });
+
 
 		table = new JTable(modelo);
 		table.setRowHeight(38);
@@ -246,6 +249,8 @@ public class TelaExtrato extends JFrame {
 		scrollPane.getViewport().setBackground(new Color(250, 250, 250));
 		scrollPane.getVerticalScrollBar().setUnitIncrement(14);
 		panelPrincipal.add(scrollPane);
+		
+		carregarTabela();
 	}
 
 	private JButton criarBotaoMenu(String texto) {
@@ -259,31 +264,37 @@ public class TelaExtrato extends JFrame {
 	}
 
 	public void carregarTabela() {
-	    // 1. Pegamos o modelo da tabela que já foi criado
+	    // 1. Pegamos o modelo
 	    DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 	    
-	    // 2. Limpamos todas as linhas atuais (para não duplicar quando atualizar)
+	    // 2. Limpamos a tabela para não duplicar dados
 	    modelo.setRowCount(0);
 
-	    // 3. Percorremos a lista do Repositorio
+	    // 3. Percorremos os dados reais do Repositorio
 	    for (Gasto g : Repositorio.getLista()) {
-	        // Lógica para definir o texto do Tipo
 	        String tipo = (g.getValor() > 0) ? "Entrada" : "Saída";
 	        
-	        // Formatamos o valor (usando Math.abs para o sinal não aparecer duplicado no renderizador)
+	        // Formatação simples do valor
 	        String valorFormatado = String.format("R$ %.2f", Math.abs(g.getValor()));
 	        if (g.getValor() < 0) valorFormatado = "- " + valorFormatado;
 
-	        // 4. Adicionamos a linha com os dados reais do objeto Gasto
 	        modelo.addRow(new Object[] {
 	            String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()),
-	            "Geral", // Se você tiver g.getCategoria(), use aqui
+	            "Geral", 
 	            g.getDescricao(),
 	            tipo,
 	            valorFormatado
 	        });
 	    }
-	    carregarTabela();
+	    
+	    double ganhos = Repositorio.calcularTotalGanhos();
+	    double despesas = Repositorio.calcularTotalDespesas();
+	    double saldoTotal = ganhos - despesas;
+   
+	    lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos));
+	    lblDespesasMes.setText(String.format("R$ %.2f", despesas));
+	    txtR.setText(String.format("R$ %.2f", saldoTotal));
+	    
 	}
 	
 	

@@ -73,6 +73,10 @@ public class TelaPrincipal extends JFrame {
 		panelLateral.setLayout(null);
 		
 		JButton btnDashboard = new JButton("      Dashboard");
+		btnDashboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		btnDashboard.setForeground(new Color(216, 216, 216));
@@ -82,6 +86,12 @@ public class TelaPrincipal extends JFrame {
 		panelLateral.add(btnDashboard);
 		
 		JButton btnExtrato = new JButton("       Extrato");
+		btnExtrato.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaExtrato tela = new TelaExtrato();
+				tela.setVisible(true);
+			}
+		});
 		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		btnExtrato.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
@@ -108,6 +118,12 @@ public class TelaPrincipal extends JFrame {
 		panelLateral.add(btnAdicionarSaldo);
 		
 		JButton btnConfiguracoes = new JButton("       Configurações");
+		btnConfiguracoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConfiguracao tela = new TelaConfiguracao();
+				tela.setVisible(true);
+			}
+		});
 		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConfiguracoes.setBorder(new LineBorder(new Color(216, 216, 216)));
 		btnConfiguracoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -346,7 +362,7 @@ public class TelaPrincipal extends JFrame {
 
 	        if (status.equals("Vencido") || status.equals("Vence Hoje")) { // Verifica se o gasto está vencido ou vence hoje
 	            JOptionPane.showMessageDialog(this, // Exibe uma caixa de mensagem na tela
-	                "ALERTA: O gasto '" + g.getDescricao() + "' está " + status + "!", // Define a mensagem exibida
+	                "ALERTA: O '" + g.getDescricao() + "' " + status + "!", // Define a mensagem exibida
 	                "Sistema de Alertas Ca$h Hub", // Define o título da mensagem
 	                JOptionPane.WARNING_MESSAGE); // Define o tipo de alerta como aviso
 	          //Até aqui

@@ -203,7 +203,6 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(lblTituloTipoTransacoes);
 		
 		
-		//Alterado
 		btnAdicionar = new JButton("Adicionar"); 
 		btnAdicionar.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
@@ -217,14 +216,12 @@ public class TelaCadastro extends JFrame {
 		btnAdicionar.setBounds(37, 210, 105, 23);
 		panel_1.add(btnAdicionar);
 		
-		
-		//Alterado
+	
 		btnRetirar = new JButton("Retirar"); 
 		btnRetirar.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
 				ehDespesa = true; // Define que a operação é uma despesa
 			}
-			//até aqui
 		});
 		btnRetirar.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnRetirar.setForeground(new Color(216, 216, 216));
@@ -293,36 +290,54 @@ public class TelaCadastro extends JFrame {
 		lblNomeSistema.setBounds(36, 12, 168, 28);
 		panel_1.add(lblNomeSistema);
 		
-		//Alterado
 		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
-				try { // Inicia um bloco de tratamento de exceções
-		            String desc = txtDescricao.getText(); // Obtém o texto digitado no campo de descrição
-		            double valor = Double.parseDouble(txtValor.getText()); // Converte o texto do campo de valor para número decimal
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            // 1. Coleta os dados básicos
+		            String desc = txtDescricao.getText();
+		            double valor = Double.parseDouble(txtValor.getText());
 
-		            if (ehDespesa) { // Verifica se a operação é uma despesa
-		                valor = valor * -1; // Converte o valor para negativo
+		            // 2. Ajusta o sinal se for despesa
+		            if (ehDespesa) {
+		                valor = valor * -1;
 		            }
 
-		            LocalDate hoje = LocalDate.now(); // Obtém a data atual do sistema
-		            Gasto novo = new Gasto(0, valor, desc, hoje.getYear(), hoje.getMonthValue(), hoje.getDayOfMonth(), null, false); 
-		         // Cria um novo objeto "Gasto" com os dados informados e a data atual
-		            Repositorio.salvar(novo); // Salva o objeto "Gasto" no repositório
-		            if (TelaExtrato.frameAberto != null) TelaExtrato.frameAberto.carregarTabela();
-
-		            if (TelaPrincipal.frameAberto != null) { // Verifica se existe uma instância aberta da tela principal
-		                TelaPrincipal.frameAberto.atualizarDashboard(); // Atualiza as informações exibidas na tela principal
+		            // 3. Processa a Data do txtData
+		            String dataTexto = txtData.getText();
+		            String[] partes = dataTexto.split("/");
+		            
+		            // Verifica se a data tem as 3 partes (dia/mes/ano)
+		            if (partes.length != 3) {
+		                throw new Exception("Data incompleta");
 		            }
 
-		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!"); // Exibe uma mensagem de sucesso na tela
-		            dispose(); // Fecha a janela atual
+		            int dia = Integer.parseInt(partes[0]);
+		            int mes = Integer.parseInt(partes[1]);
+		            int ano = Integer.parseInt(partes[2]);
 
-		        } catch (NumberFormatException ex) { // Captura erro de conversão de texto para número
-		            JOptionPane.showMessageDialog(null, "Erro: Digite apenas números no campo Valor."); // Exibe mensagem de erro ao usuário
+		            // 4. Cria e Salva o objeto
+		            Gasto novo = new Gasto(0, valor, desc, ano, mes, dia, null, false);
+		            Repositorio.salvar(novo);
+
+		            // 5. Atualiza as telas que estiverem abertas
+		            if (TelaExtrato.frameAberto != null) {
+		                TelaExtrato.frameAberto.carregarTabela();
+		            }
+
+		            if (TelaPrincipal.frameAberto != null) {
+		                TelaPrincipal.frameAberto.atualizarDashboard();
+		            }
+
+		            // 6. Finaliza a operação
+		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!");
+		            dispose();
+
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(null, "Erro: Verifique se o Valor e a Data contêm apenas números.");
+		        } catch (Exception ex) {
+		            JOptionPane.showMessageDialog(null, "Erro no formato da data! Use o padrão: DD/MM/AAAA");
 		        }
 		    }
-			//até aqui
 		});
-
 	}
 }
