@@ -25,6 +25,9 @@ import javax.swing.border.LineBorder;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+import javax.swing.JList;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class TelaCadastro extends JFrame {
 
@@ -40,7 +43,6 @@ public class TelaCadastro extends JFrame {
 	private JButton btnDashboard;
 	private JButton btnExtrato;
 	private JButton btnAdicionarSaldo;
-	private JButton btnConfiguracoes;
 	private JButton btnAjuda;
 	private JPanel panel_1;
 	private JLabel lblTituloTipoTransacoes;
@@ -51,10 +53,11 @@ public class TelaCadastro extends JFrame {
 	private JTextField txtBoasPraticas;
 	private JLabel lblTituloBoasPraticas;
 	private boolean ehDespesa = false;
+	private JLabel lblNomeSistema;
 	private JPanel panelnformacoes;
 	private JLabel lblNome;
 	private JLabel lblNewLabel;
-	private JLabel lblNomeSistema;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -91,6 +94,7 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(panel);
 		
 		btnDashboard = new JButton("      Dashboard");
+		btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDashboard.setForeground(new Color(216, 216, 216));
 		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -100,6 +104,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnDashboard);
 		
 		btnExtrato = new JButton("       Extrato");
+		btnExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExtrato.setForeground(new Color(216, 216, 216));
 		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -109,6 +114,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnExtrato);
 		
 		btnAdicionarSaldo = new JButton("       Saldo");
+		btnAdicionarSaldo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.setForeground(new Color(216, 216, 216));
 		btnAdicionarSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -117,16 +123,8 @@ public class TelaCadastro extends JFrame {
 		btnAdicionarSaldo.setBounds(5, 165, 120, 30);
 		panel.add(btnAdicionarSaldo);
 		
-		btnConfiguracoes = new JButton("       Configurações");
-		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConfiguracoes.setForeground(new Color(216, 216, 216));
-		btnConfiguracoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnConfiguracoes.setBorder(new LineBorder(new Color(216, 216, 216)));
-		btnConfiguracoes.setBackground(new Color(31, 33, 38));
-		btnConfiguracoes.setBounds(5, 200, 120, 30);
-		panel.add(btnConfiguracoes);
-		
 		btnAjuda = new JButton("       Ajuda");
+		btnAjuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAjuda.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAjuda.setForeground(new Color(216, 216, 216));
 		btnAjuda.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -143,6 +141,7 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(panel_1);
 		
 		btnSalvar = new JButton("Salvar Transação");
+		btnSalvar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSalvar.setBorder(null);
 		btnSalvar.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		btnSalvar.setBackground(new Color(31, 33, 38));
@@ -151,16 +150,63 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(btnSalvar);
 		
 		txtData = new JTextField();
-		txtData.setForeground(new Color(31, 33, 38));
+		txtData.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				 // Quando o usuário clica no campo some o texto ja escrito
+		        if (txtData.getText().equals("EX: 22/04/2026")) {
+		            txtData.setText("");
+		            txtData.setForeground(new Color(31, 33, 38)); // Muda a cor para cinza escuro quando o usuário digitar para melhor visualização
+		        }
+		    }
+			
+		    @Override
+		    public void focusLost(FocusEvent e) {
+		        // Quando o usuário clica em outro lugar voltará o "EX: 22/04/2026"
+		        if (txtData.getText().isEmpty()) {
+		            txtData.setForeground(Color.LIGHT_GRAY);
+		            txtData.setText("EX: 22/04/2026");
+		        }
+			}
+		});
+		txtData.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+		txtData.setText("EX: 22/04/2026");
+		txtData.setForeground(new Color(216, 216, 216));
 		txtData.setBorder(null);
-		txtData.setBounds(191, 260, 128, 20);
+		txtData.setBounds(36, 262, 128, 20);
 		panel_1.add(txtData);
 		txtData.setColumns(10);
 		
+		
+		
 		txtValor = new JTextField();
-		txtValor.setForeground(new Color(31, 33, 38));
+		txtValor.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			
+			
+				 // Quando o usuário clica no campo some o texto ja escrito
+		        if (txtValor.getText().equals("EX: R$ 2000")) {
+		            txtValor.setText("");
+		            txtValor.setForeground(Color.BLACK); // Muda a cor para cinza escuro quando o usuário digitar para melhor visualização
+		        }
+		    }
+
+		    @Override
+		    public void focusLost(FocusEvent e) {
+		        // Quando o usuário clica em outro lugar voltará o "EX: R$ 2000"
+		        if (txtValor.getText().isEmpty()) {
+		            txtValor.setForeground(Color.LIGHT_GRAY);
+		            txtValor.setText("EX: R$ 2000");
+		        }
+			}
+		});
+		txtValor.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+		txtValor.setText("EX: R$ 2000");
+		txtValor.setForeground(new Color(216, 216, 216));
 		txtValor.setBorder(null);
-		txtValor.setBounds(36, 151, 283, 20);
+		txtValor.setBounds(36, 211, 283, 20);
 		panel_1.add(txtValor);
 		txtValor.setColumns(10);
 		
@@ -172,31 +218,26 @@ public class TelaCadastro extends JFrame {
 		
 		lblTituloValor = new JLabel("Valor:");
 		lblTituloValor.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		lblTituloValor.setBounds(36, 128, 87, 14);
+		lblTituloValor.setBounds(36, 188, 87, 14);
 		panel_1.add(lblTituloValor);
 		lblTituloValor.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		lblTituloData = new JLabel("Data:");
 		lblTituloData.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		lblTituloData.setBounds(191, 240, 52, 14);
+		lblTituloData.setBounds(36, 242, 52, 14);
 		panel_1.add(lblTituloData);
 		lblTituloData.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		JLabel lblTituloCategoria = new JLabel("Categoria:");
-		lblTituloCategoria.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTituloCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		lblTituloCategoria.setBounds(36, 241, 90, 14);
-		panel_1.add(lblTituloCategoria);
 		
 		lblTituloTipoTransacoes = new JLabel("Tipo de Transação");
 		lblTituloTipoTransacoes.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTituloTipoTransacoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		lblTituloTipoTransacoes.setBounds(36, 184, 208, 14);
+		lblTituloTipoTransacoes.setBounds(36, 124, 120, 14);
 		panel_1.add(lblTituloTipoTransacoes);
 		
 		
 		//Alterado
 		btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ehDespesa = false;
@@ -206,12 +247,13 @@ public class TelaCadastro extends JFrame {
 		btnAdicionar.setForeground(new Color(216, 216, 216));
 		btnAdicionar.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		btnAdicionar.setBackground(new Color(0, 128, 0));
-		btnAdicionar.setBounds(37, 210, 105, 23);
+		btnAdicionar.setBounds(59, 150, 105, 23);
 		panel_1.add(btnAdicionar);
 		
 		
 		//Alterado
 		btnRetirar = new JButton("Retirar");
+		btnRetirar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRetirar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ehDespesa = true;
@@ -222,7 +264,7 @@ public class TelaCadastro extends JFrame {
 		btnRetirar.setForeground(new Color(216, 216, 216));
 		btnRetirar.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 		btnRetirar.setBackground(new Color(166, 0, 4));
-		btnRetirar.setBounds(163, 210, 105, 23);
+		btnRetirar.setBounds(185, 149, 105, 23);
 		panel_1.add(btnRetirar);
 		
 		lblTituloAddRegistro = new JLabel("ADICIONAR NOVO REGISTRO");
@@ -232,6 +274,7 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(lblTituloAddRegistro);
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancelar.setBorder(null);
 		btnCancelar.setForeground(new Color(216, 216, 216));
 		btnCancelar.setBackground(new Color(73, 73, 73));
@@ -252,11 +295,17 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(txtBoasPraticas);
 		txtBoasPraticas.setColumns(10);
 		
-		JComboBox BoxCategoria = new JComboBox();
-		BoxCategoria.setForeground(new Color(31, 33, 38));
-		BoxCategoria.setBorder(null);
-		BoxCategoria.setBounds(36, 260, 128, 20);
-		panel_1.add(BoxCategoria);
+		lblNomeSistema = new JLabel("CA$H HUB");
+		lblNomeSistema.setForeground(new Color(31, 33, 38));
+		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNomeSistema.setBounds(36, 12, 168, 28);
+		panel_1.add(lblNomeSistema);
+		
+		JTextArea txtDescricao = new JTextArea();
+		txtDescricao.setForeground(new Color(31, 33, 38));
+		txtDescricao.setFont(new Font("ABeeZee", Font.PLAIN, 13));
+		txtDescricao.setBounds(36, 314, 283, 79);
+		panel_1.add(txtDescricao);
 		
 		panelnformacoes = new JPanel();
 		panelnformacoes.setLayout(null);
@@ -279,17 +328,10 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel.setBounds(38, 13, 111, 14);
 		panelnformacoes.add(lblNewLabel);
 		
-		lblNomeSistema = new JLabel("CA$H HUB");
-		lblNomeSistema.setForeground(new Color(31, 33, 38));
-		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblNomeSistema.setBounds(36, 12, 168, 28);
-		panel_1.add(lblNomeSistema);
-		
-		JTextArea txtDescricao = new JTextArea();
-		txtDescricao.setForeground(new Color(31, 33, 38));
-		txtDescricao.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		txtDescricao.setBounds(36, 314, 283, 79);
-		panel_1.add(txtDescricao);
+		btnNewButton = new JButton("");
+		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNewButton.setBounds(159, 2, 30, 30);
+		panelnformacoes.add(btnNewButton);
 		
 		//Alterado
 		btnSalvar.addActionListener(new ActionListener() {
