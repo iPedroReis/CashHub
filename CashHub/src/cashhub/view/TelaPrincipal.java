@@ -133,6 +133,10 @@ public class TelaPrincipal extends JFrame {
 		panelLateral.add(btnConfiguracoes);
 		
 		JButton btnAjuda = new JButton("       Ajuda");
+		btnAjuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAjuda.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAjuda.setForeground(new Color(216, 216, 216));
 		btnAjuda.setFont(new Font("ABeeZee", Font.PLAIN, 13));
