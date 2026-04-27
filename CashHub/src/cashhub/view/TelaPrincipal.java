@@ -169,6 +169,12 @@ public class TelaPrincipal extends JFrame {
 		panelTranasacoes.add(lblTituloTransacoes);
 		
 		JButton btnVisualizarExtratoCompleto = new JButton("Visualizar extrato completo");
+		btnVisualizarExtratoCompleto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaExtrato tela = new TelaExtrato();
+                tela.setVisible(true);
+			}
+		});
 		btnVisualizarExtratoCompleto.setForeground(new Color(216, 216, 216));
 		btnVisualizarExtratoCompleto.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btnVisualizarExtratoCompleto.setBorder(null);
