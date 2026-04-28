@@ -73,14 +73,12 @@ public class TelaPrincipal extends JFrame {
 		panelLateral.setLayout(null);
 		
 		JButton btnDashboard = new JButton("      Dashboard");
-<<<<<<< HEAD
 		btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-=======
 		btnDashboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		btnDashboard.setForeground(new Color(216, 216, 216));
@@ -90,16 +88,15 @@ public class TelaPrincipal extends JFrame {
 		panelLateral.add(btnDashboard);
 		
 		JButton btnExtrato = new JButton("       Extrato");
-<<<<<<< HEAD
+
 		btnExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-=======
 		btnExtrato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaExtrato tela = new TelaExtrato();
 				tela.setVisible(true);
 			}
 		});
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+		
 		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
 		btnExtrato.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
@@ -125,8 +122,6 @@ public class TelaPrincipal extends JFrame {
 		btnAdicionarSaldo.setBackground(new Color(31, 33, 38));
 		panelLateral.add(btnAdicionarSaldo);
 		
-<<<<<<< HEAD
-=======
 		JButton btnConfiguracoes = new JButton("       Configurações");
 		btnConfiguracoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,16 +137,14 @@ public class TelaPrincipal extends JFrame {
 		btnConfiguracoes.setBackground(new Color(31, 33, 38));
 		panelLateral.add(btnConfiguracoes);
 		
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+
 		JButton btnAjuda = new JButton("       Ajuda");
-<<<<<<< HEAD
 		btnAjuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-=======
 		btnAjuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+		
 		btnAjuda.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAjuda.setForeground(new Color(216, 216, 216));
 		btnAjuda.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -184,16 +177,14 @@ public class TelaPrincipal extends JFrame {
 		panelTranasacoes.add(lblTituloTransacoes);
 		
 		JButton btnVisualizarExtratoCompleto = new JButton("Visualizar extrato completo");
-<<<<<<< HEAD
 		btnVisualizarExtratoCompleto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-=======
 		btnVisualizarExtratoCompleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaExtrato tela = new TelaExtrato();
                 tela.setVisible(true);
 			}
 		});
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+		
 		btnVisualizarExtratoCompleto.setForeground(new Color(216, 216, 216));
 		btnVisualizarExtratoCompleto.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btnVisualizarExtratoCompleto.setBorder(null);

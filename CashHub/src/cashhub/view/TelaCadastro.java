@@ -90,16 +90,14 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(panel);
 		
 		btnDashboard = new JButton("      Dashboard");
-<<<<<<< HEAD
 		btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-=======
 		btnDashboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaPrincipal tela = new TelaPrincipal();
 				tela.setVisible(true);
 			}
 		});
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+
 		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDashboard.setForeground(new Color(216, 216, 216));
 		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -109,16 +107,14 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnDashboard);
 		
 		btnExtrato = new JButton("       Extrato");
-<<<<<<< HEAD
 		btnExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-=======
 		btnExtrato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaExtrato tela = new TelaExtrato();
 				tela.setVisible(true);
 			}
 		});
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+
 		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExtrato.setForeground(new Color(216, 216, 216));
 		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -128,14 +124,12 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnExtrato);
 		
 		btnAdicionarSaldo = new JButton("       Saldo");
-<<<<<<< HEAD
 		btnAdicionarSaldo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-=======
 		btnAdicionarSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
+
 		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAdicionarSaldo.setForeground(new Color(216, 216, 216));
 		btnAdicionarSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -144,9 +138,8 @@ public class TelaCadastro extends JFrame {
 		btnAdicionarSaldo.setBounds(5, 165, 120, 30);
 		panel.add(btnAdicionarSaldo);
 		
-<<<<<<< HEAD
-=======
-		btnConfiguracoes = new JButton("       Configurações");
+
+		/*btnConfiguracoes = new JButton("       Configurações");
 		btnConfiguracoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConfiguracao tela = new TelaConfiguracao();
@@ -160,8 +153,8 @@ public class TelaCadastro extends JFrame {
 		btnConfiguracoes.setBackground(new Color(31, 33, 38));
 		btnConfiguracoes.setBounds(5, 200, 120, 30);
 		panel.add(btnConfiguracoes);
+		*/
 		
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 		btnAjuda = new JButton("       Ajuda");
 		btnAjuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAjuda.setHorizontalAlignment(SwingConstants.LEFT);
@@ -274,19 +267,11 @@ public class TelaCadastro extends JFrame {
 		panel_1.add(lblTituloTipoTransacoes);
 		
 		
-<<<<<<< HEAD
-		//Alterado
-		btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ehDespesa = false;
-=======
+
 		btnAdicionar = new JButton("Adicionar"); 
 		btnAdicionar.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
 				ehDespesa = false; // Define que a operação não é uma despesa (é um ganho)
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 			}
 		});
 		btnAdicionar.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -295,22 +280,11 @@ public class TelaCadastro extends JFrame {
 		btnAdicionar.setBackground(new Color(0, 128, 0));
 		btnAdicionar.setBounds(59, 150, 105, 23);
 		panel_1.add(btnAdicionar);
-		
-<<<<<<< HEAD
-		
-		//Alterado
-		btnRetirar = new JButton("Retirar");
-		btnRetirar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRetirar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ehDespesa = true;
-=======
 	
 		btnRetirar = new JButton("Retirar"); 
 		btnRetirar.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
 				ehDespesa = true; // Define que a operação é uma despesa
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 			}
 		});
 		btnRetirar.setHorizontalAlignment(SwingConstants.TRAILING);

@@ -2,6 +2,7 @@ package cashhub.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -12,9 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-<<<<<<< HEAD
-import java.awt.Cursor;
-=======
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -24,7 +22,6 @@ import javax.swing.table.DefaultTableModel;
 
 import cashhub.model.Gasto;
 import cashhub.model.Repositorio;
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 
 public class TelaExtrato extends JFrame {
 
@@ -59,7 +56,6 @@ public class TelaExtrato extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
-<<<<<<< HEAD
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -67,6 +63,7 @@ public class TelaExtrato extends JFrame {
 		panel.setBackground(new Color(31, 33, 38));
 		panel.setBounds(0, 0, 130, 451);
 		contentPane.add(panel);
+		
 		
 		JButton btnDashboard = new JButton("      Dashboard");
 		btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -114,7 +111,6 @@ public class TelaExtrato extends JFrame {
 		panel_1.setBounds(130, 0, 761, 451);
 		contentPane.add(panel_1);
 		
-=======
 		setContentPane(contentPane);
 		frameAberto = this;
 
@@ -125,20 +121,19 @@ public class TelaExtrato extends JFrame {
 		panelMenu.setBounds(0, 0, 130, 451);
 		contentPane.add(panelMenu);
 
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 		JLabel lblNomeSistema = new JLabel("CA$H HUB");
 		lblNomeSistema.setForeground(new Color(216, 216, 216));
 		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 23));
 		lblNomeSistema.setBounds(14, 24, 125, 28);
 		panelMenu.add(lblNomeSistema);
 
-		JButton btnDashboard = criarBotaoMenu("      Dashboard");
-		btnDashboard.setBounds(5, 95, 120, 30);
-		panelMenu.add(btnDashboard);
+		//JButton btnDashboard = criarBotaoMenu("      Dashboard");
+		//btnDashboard.setBounds(5, 95, 120, 30);
+		//panelMenu.add(btnDashboard);
 
-		JButton btnExtrato = criarBotaoMenu("       Extrato");
-		btnExtrato.setBounds(5, 130, 120, 30);
-		panelMenu.add(btnExtrato);
+		//JButton btnExtrato = criarBotaoMenu("       Extrato");
+		//btnExtrato.setBounds(5, 130, 120, 30);
+		//panelMenu.add(btnExtrato);
 
 		JButton btnSaldo = criarBotaoMenu("       Saldo");
 		btnSaldo.setBounds(5, 165, 120, 30);
@@ -148,9 +143,9 @@ public class TelaExtrato extends JFrame {
 		btnConfiguracoes.setBounds(5, 200, 120, 30);
 		panelMenu.add(btnConfiguracoes);
 
-		JButton btnAjuda = criarBotaoMenu("       Ajuda");
-		btnAjuda.setBounds(5, 408, 120, 30);
-		panelMenu.add(btnAjuda);
+		//JButton btnAjuda = criarBotaoMenu("       Ajuda");
+		//btnAjuda.setBounds(5, 408, 120, 30);
+		//panelMenu.add(btnAjuda);
 
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setLayout(null);
@@ -226,15 +221,14 @@ public class TelaExtrato extends JFrame {
 		lblTituloDespesas.setForeground(new Color(216, 216, 216));
 		lblTituloDespesas.setFont(new Font("ABeeZee", Font.PLAIN, 12));
 		lblTituloDespesas.setBounds(11, 93, 69, 14);
-<<<<<<< HEAD
-		panel_3.add(lblTituloDespesas);
+		panelMenu.add(lblTituloDespesas);
 		
-		JLabel lblDespesasMes = new JLabel("R$ 0,00");
+		lblDespesasMes = new JLabel("R$ 0,00");
 		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblDespesasMes.setBackground(new Color(166, 0, 4));
 		lblDespesasMes.setBounds(71, 92, 101, 17);
-		panel_3.add(lblDespesasMes);
+		panelMenu.add(lblDespesasMes);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(31, 33, 38));
@@ -280,7 +274,7 @@ public class TelaExtrato extends JFrame {
 		panelnformacoes.setBounds(556, 12, 193, 35);
 		panel_1.add(panelnformacoes);
 		
-		JLabel lblNome = new JLabel("Gustavo Dornellas");
+		lblNome = new JLabel("Gustavo Dornellas");
 		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNome.setForeground(new Color(31, 33, 38));
 		lblNome.setFont(new Font("ABeeZee", Font.PLAIN, 14));
@@ -298,9 +292,7 @@ public class TelaExtrato extends JFrame {
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.setBounds(159, 2, 30, 30);
 		panelnformacoes.add(btnNewButton_1);
-=======
 		panelBalanco.add(lblTituloDespesas);
->>>>>>> branch 'master' of https://github.com/iPedroReis/CashHub.git
 
 		lblDespesasMes = new JLabel("R$ 0,00");
 		lblDespesasMes.setForeground(new Color(220, 45, 45));
@@ -371,7 +363,7 @@ public class TelaExtrato extends JFrame {
 		table.getColumnModel().getColumn(3).setCellRenderer(new TipoRenderer());
 		table.getColumnModel().getColumn(4).setCellRenderer(new ValorRenderer());
 
-		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 128, 527, 310);
 		scrollPane.setBorder(new LineBorder(new Color(31, 33, 38), 1, true));
 		scrollPane.getViewport().setBackground(new Color(250, 250, 250));
@@ -427,9 +419,6 @@ public class TelaExtrato extends JFrame {
 	    txtR.setText(String.format("R$ %.2f", saldoTotal));
 	    
 	}
-	
-	
-	
 	
 	
 	private static class TipoRenderer extends DefaultTableCellRenderer {
