@@ -122,21 +122,6 @@ public class TelaPrincipal extends JFrame {
 		btnAdicionarSaldo.setBackground(new Color(31, 33, 38));
 		panelLateral.add(btnAdicionarSaldo);
 		
-		JButton btnConfiguracoes = new JButton("       Configurações");
-		btnConfiguracoes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaConfiguracao tela = new TelaConfiguracao();
-				tela.setVisible(true);
-			}
-		});
-		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConfiguracoes.setBorder(new LineBorder(new Color(216, 216, 216)));
-		btnConfiguracoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnConfiguracoes.setBounds(5, 200, 120, 30);
-		btnConfiguracoes.setForeground(new Color(216, 216, 216));
-		btnConfiguracoes.setBackground(new Color(31, 33, 38));
-		panelLateral.add(btnConfiguracoes);
-		
 
 		JButton btnAjuda = new JButton("       Ajuda");
 		btnAjuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -326,6 +311,12 @@ public class TelaPrincipal extends JFrame {
 		panelnformacoes.add(lblNewLabel_3);
 		
 		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConfiguracao tela = new TelaConfiguracao();
+				tela.setVisible(true);
+			}
+		});
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.setBounds(159, 2, 30, 30);
 		panelnformacoes.add(btnNewButton_1);

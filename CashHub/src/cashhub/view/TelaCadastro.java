@@ -39,7 +39,7 @@ public class TelaCadastro extends JFrame {
 	private JLabel lblTituloDescricao;
 	private JLabel lblTituloValor;
 	private JLabel lblTituloData;
-	private JPanel panel;
+	private JPanel panelMenu;
 	private JButton btnDashboard;
 	private JButton btnExtrato;
 	private JButton btnAdicionarSaldo;
@@ -82,12 +82,12 @@ public class TelaCadastro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		panel = new JPanel();
-		panel.setBounds(0, -1, 130, 451);
-		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(130, 400));
-		panel.setBackground(new Color(31, 33, 38));
-		contentPane.add(panel);
+		panelMenu = new JPanel();
+		panelMenu.setBounds(0, -1, 130, 451);
+		panelMenu.setLayout(null);
+		panelMenu.setPreferredSize(new Dimension(130, 400));
+		panelMenu.setBackground(new Color(31, 33, 38));
+		contentPane.add(panelMenu);
 		
 		btnDashboard = new JButton("      Dashboard");
 		btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -104,7 +104,7 @@ public class TelaCadastro extends JFrame {
 		btnDashboard.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
 		btnDashboard.setBackground(new Color(31, 33, 38));
 		btnDashboard.setBounds(5, 95, 120, 30);
-		panel.add(btnDashboard);
+		panelMenu.add(btnDashboard);
 		
 		btnExtrato = new JButton("       Extrato");
 		btnExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -121,7 +121,7 @@ public class TelaCadastro extends JFrame {
 		btnExtrato.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
 		btnExtrato.setBackground(new Color(31, 33, 38));
 		btnExtrato.setBounds(5, 130, 120, 30);
-		panel.add(btnExtrato);
+		panelMenu.add(btnExtrato);
 		
 		btnAdicionarSaldo = new JButton("       Saldo");
 		btnAdicionarSaldo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -136,24 +136,8 @@ public class TelaCadastro extends JFrame {
 		btnAdicionarSaldo.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
 		btnAdicionarSaldo.setBackground(new Color(31, 33, 38));
 		btnAdicionarSaldo.setBounds(5, 165, 120, 30);
-		panel.add(btnAdicionarSaldo);
+		panelMenu.add(btnAdicionarSaldo);
 		
-
-		/*btnConfiguracoes = new JButton("       Configurações");
-		btnConfiguracoes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaConfiguracao tela = new TelaConfiguracao();
-				tela.setVisible(true);
-			}
-		});
-		btnConfiguracoes.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConfiguracoes.setForeground(new Color(216, 216, 216));
-		btnConfiguracoes.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnConfiguracoes.setBorder(new LineBorder(new Color(216, 216, 216)));
-		btnConfiguracoes.setBackground(new Color(31, 33, 38));
-		btnConfiguracoes.setBounds(5, 200, 120, 30);
-		panel.add(btnConfiguracoes);
-		*/
 		
 		btnAjuda = new JButton("       Ajuda");
 		btnAjuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -163,7 +147,7 @@ public class TelaCadastro extends JFrame {
 		btnAjuda.setBorder(new LineBorder(new Color(216, 216, 216)));
 		btnAjuda.setBackground(new Color(31, 33, 38));
 		btnAjuda.setBounds(5, 408, 120, 30);
-		panel.add(btnAjuda);
+		panelMenu.add(btnAjuda);
 		
 		panel_1 = new JPanel();
 		panel_1.setFont(new Font("ABeeZee", Font.PLAIN, 13));
@@ -356,6 +340,12 @@ public class TelaCadastro extends JFrame {
 		panelnformacoes.add(lblNewLabel);
 		
 		btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConfiguracao tela = new TelaConfiguracao();
+				tela.setVisible(true);
+			}
+		});
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.setBounds(159, 2, 30, 30);
 		panelnformacoes.add(btnNewButton);
