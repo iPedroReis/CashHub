@@ -2,7 +2,6 @@ package cashhub.view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -56,61 +55,6 @@ public class TelaExtrato extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(130, 400));
-		panel.setBackground(new Color(31, 33, 38));
-		panel.setBounds(0, 0, 130, 451);
-		contentPane.add(panel);
-		
-		
-		JButton btnDashboard = new JButton("      Dashboard");
-		btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDashboard.setForeground(new Color(216, 216, 216));
-		btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnDashboard.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
-		btnDashboard.setBackground(new Color(31, 33, 38));
-		btnDashboard.setBounds(5, 95, 120, 30);
-		panel.add(btnDashboard);
-		
-		JButton btnExtrato = new JButton("       Extrato");
-		btnExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
-		btnExtrato.setForeground(new Color(216, 216, 216));
-		btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnExtrato.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
-		btnExtrato.setBackground(new Color(31, 33, 38));
-		btnExtrato.setBounds(5, 130, 120, 30);
-		panel.add(btnExtrato);
-		
-		JButton btnAdicionarSaldo = new JButton("       Saldo");
-		btnAdicionarSaldo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAdicionarSaldo.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAdicionarSaldo.setForeground(new Color(216, 216, 216));
-		btnAdicionarSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnAdicionarSaldo.setBorder(new LineBorder(new Color(216, 216, 216), 1, true));
-		btnAdicionarSaldo.setBackground(new Color(31, 33, 38));
-		btnAdicionarSaldo.setBounds(5, 165, 120, 30);
-		panel.add(btnAdicionarSaldo);
-		
-		JButton btnAjuda = new JButton("       Ajuda");
-		btnAjuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAjuda.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAjuda.setForeground(new Color(216, 216, 216));
-		btnAjuda.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-		btnAjuda.setBorder(new LineBorder(new Color(216, 216, 216)));
-		btnAjuda.setBackground(new Color(31, 33, 38));
-		btnAjuda.setBounds(5, 408, 120, 30);
-		panel.add(btnAjuda);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(216, 216, 216));
-		panel_1.setBounds(130, 0, 761, 451);
-		contentPane.add(panel_1);
-		
 		setContentPane(contentPane);
 		frameAberto = this;
 
@@ -127,13 +71,13 @@ public class TelaExtrato extends JFrame {
 		lblNomeSistema.setBounds(14, 24, 125, 28);
 		panelMenu.add(lblNomeSistema);
 
-		//JButton btnDashboard = criarBotaoMenu("      Dashboard");
-		//btnDashboard.setBounds(5, 95, 120, 30);
-		//panelMenu.add(btnDashboard);
+		JButton btnDashboard = criarBotaoMenu("      Dashboard");
+		btnDashboard.setBounds(5, 95, 120, 30);
+		panelMenu.add(btnDashboard);
 
-		//JButton btnExtrato = criarBotaoMenu("       Extrato");
-		//btnExtrato.setBounds(5, 130, 120, 30);
-		//panelMenu.add(btnExtrato);
+		JButton btnExtrato = criarBotaoMenu("       Extrato");
+		btnExtrato.setBounds(5, 130, 120, 30);
+		panelMenu.add(btnExtrato);
 
 		JButton btnSaldo = criarBotaoMenu("       Saldo");
 		btnSaldo.setBounds(5, 165, 120, 30);
@@ -143,9 +87,9 @@ public class TelaExtrato extends JFrame {
 		btnConfiguracoes.setBounds(5, 200, 120, 30);
 		panelMenu.add(btnConfiguracoes);
 
-		//JButton btnAjuda = criarBotaoMenu("       Ajuda");
-		//btnAjuda.setBounds(5, 408, 120, 30);
-		//panelMenu.add(btnAjuda);
+		JButton btnAjuda = criarBotaoMenu("       Ajuda");
+		btnAjuda.setBounds(5, 408, 120, 30);
+		panelMenu.add(btnAjuda);
 
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setLayout(null);
@@ -221,77 +165,6 @@ public class TelaExtrato extends JFrame {
 		lblTituloDespesas.setForeground(new Color(216, 216, 216));
 		lblTituloDespesas.setFont(new Font("ABeeZee", Font.PLAIN, 12));
 		lblTituloDespesas.setBounds(11, 93, 69, 14);
-		panelMenu.add(lblTituloDespesas);
-		
-		lblDespesasMes = new JLabel("R$ 0,00");
-		lblDespesasMes.setForeground(new Color(149, 0, 0));
-		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblDespesasMes.setBackground(new Color(166, 0, 4));
-		lblDespesasMes.setBounds(71, 92, 101, 17);
-		panelMenu.add(lblDespesasMes);
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(31, 33, 38));
-		panel_4.setBounds(565, 261, 184, 177);
-		panel_1.add(panel_4);
-		panel_4.setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("Pagamentos Mensais");
-		lblNewLabel_1.setForeground(new Color(216, 216, 216));
-		lblNewLabel_1.setFont(new Font("ABeeZee", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(12, 6, 160, 21);
-		panel_4.add(lblNewLabel_1);
-		
-		JButton btnNewButton = new JButton("Gerenciar Pagamentos");
-		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton.setBorder(null);
-		btnNewButton.setBackground(new Color(216, 216, 216));
-		btnNewButton.setForeground(new Color(31, 33, 38));
-		btnNewButton.setBounds(12, 143, 160, 21);
-		panel_4.add(btnNewButton);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(539, 155, -524, 250);
-		panel_1.add(scrollPane);
-		
-		table = new JTable();
-		table.setBackground(new Color(216, 216, 216));
-		table.setForeground(new Color(31, 33, 38));
-		table.setFont(new Font("ABeeZee", Font.PLAIN, 12));
-		table.setBounds(12, 155, 527, 257);
-		panel_1.add(table);
-		
-		JLabel lblNewLabel_2 = new JLabel("Histórico de Transações");
-		lblNewLabel_2.setForeground(new Color(31, 33, 38));
-		lblNewLabel_2.setFont(new Font("ABeeZee", Font.BOLD, 30));
-		lblNewLabel_2.setBounds(12, 67, 422, 22);
-		panel_1.add(lblNewLabel_2);
-		
-		JPanel panelnformacoes = new JPanel();
-		panelnformacoes.setLayout(null);
-		panelnformacoes.setBorder(null);
-		panelnformacoes.setBackground(new Color(216, 216, 216));
-		panelnformacoes.setBounds(556, 12, 193, 35);
-		panel_1.add(panelnformacoes);
-		
-		lblNome = new JLabel("Gustavo Dornellas");
-		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNome.setForeground(new Color(31, 33, 38));
-		lblNome.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-		lblNome.setBounds(0, 0, 149, 17);
-		panelnformacoes.add(lblNome);
-		
-		JLabel lblNewLabel_3 = new JLabel("Plano premium");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_3.setForeground(Color.GRAY);
-		lblNewLabel_3.setFont(new Font("ABeeZee", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(38, 13, 111, 14);
-		panelnformacoes.add(lblNewLabel_3);
-		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton_1.setBounds(159, 2, 30, 30);
-		panelnformacoes.add(btnNewButton_1);
 		panelBalanco.add(lblTituloDespesas);
 
 		lblDespesasMes = new JLabel("R$ 0,00");
@@ -363,7 +236,7 @@ public class TelaExtrato extends JFrame {
 		table.getColumnModel().getColumn(3).setCellRenderer(new TipoRenderer());
 		table.getColumnModel().getColumn(4).setCellRenderer(new ValorRenderer());
 
-		scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 128, 527, 310);
 		scrollPane.setBorder(new LineBorder(new Color(31, 33, 38), 1, true));
 		scrollPane.getViewport().setBackground(new Color(250, 250, 250));
@@ -419,6 +292,9 @@ public class TelaExtrato extends JFrame {
 	    txtR.setText(String.format("R$ %.2f", saldoTotal));
 	    
 	}
+	
+	
+	
 	
 	
 	private static class TipoRenderer extends DefaultTableCellRenderer {
