@@ -361,51 +361,51 @@ public class TelaCadastro extends JFrame {
 		panelnformacoes.add(btnNewButton);
 		
 		btnSalvar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        try {
-		            // 1. Coleta os dados básicos
-		            String desc = txtDescricao.getText();
-		            double valor = Double.parseDouble(txtValor.getText());
+		    public void actionPerformed(ActionEvent e) { // Define o que acontece quando o evento é acionado
+		        try { // Inicia o tratamento de exceções
+		           
+		            String desc = txtDescricao.getText(); // Obtém o texto digitado no campo de descrição
+		            double valor = Double.parseDouble(txtValor.getText()); // Converte o texto do campo de valor para número decimal
 
-		            // 2. Ajusta o sinal se for despesa
-		            if (ehDespesa) {
-		                valor = valor * -1;
-		            }
-
-		            // 3. Processa a Data do txtData
-		            String dataTexto = txtData.getText();
-		            String[] partes = dataTexto.split("/");
 		            
-		            // Verifica se a data tem as 3 partes (dia/mes/ano)
-		            if (partes.length != 3) {
-		                throw new Exception("Data incompleta");
+		            if (ehDespesa) { // Verifica se a operação é uma despesa
+		                valor = valor * -1; // Converte o valor para negativo
 		            }
 
-		            int dia = Integer.parseInt(partes[0]);
-		            int mes = Integer.parseInt(partes[1]);
-		            int ano = Integer.parseInt(partes[2]);
-
-		            // 4. Cria e Salva o objeto
-		            Gasto novo = new Gasto(0, valor, desc, ano, mes, dia, null, false);
-		            Repositorio.salvar(novo);
-
-		            // 5. Atualiza as telas que estiverem abertas
-		            if (TelaExtrato.frameAberto != null) {
-		                TelaExtrato.frameAberto.carregarTabela();
+		            
+		            String dataTexto = txtData.getText(); // Obtém o texto digitado no campo de data
+		            String[] partes = dataTexto.split("/"); // Divide a data em partes usando "/" como separador
+		            
+		            
+		            if (partes.length != 3) { // Verifica se a data possui dia, mês e ano
+		                throw new Exception("Data incompleta"); // Lança exceção caso a data esteja incompleta
 		            }
 
-		            if (TelaPrincipal.frameAberto != null) {
-		                TelaPrincipal.frameAberto.atualizarDashboard();
+		            int dia = Integer.parseInt(partes[0]); // Converte a primeira parte da data para inteiro (dia)
+		            int mes = Integer.parseInt(partes[1]); // Converte a segunda parte da data para inteiro (mês)
+		            int ano = Integer.parseInt(partes[2]); // Converte a terceira parte da data para inteiro (ano)
+
+		           
+		            Gasto novo = new Gasto(0, valor, desc, ano, mes, dia, null, false); // Cria um novo objeto "Gasto" com os dados informados
+		            Repositorio.salvar(novo); // Salva o objeto no repositório
+
+		            
+		            if (TelaExtrato.frameAberto != null) { // Verifica se a tela de extrato está aberta
+		                TelaExtrato.frameAberto.carregarTabela(); // Atualiza a tabela da tela de extrato
 		            }
 
-		            // 6. Finaliza a operação
-		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!");
-		            dispose();
+		            if (TelaPrincipal.frameAberto != null) { // Verifica se a tela principal está aberta
+		                TelaPrincipal.frameAberto.atualizarDashboard(); // Atualiza o dashboard
+		            }
 
-		        } catch (NumberFormatException ex) {
-		            JOptionPane.showMessageDialog(null, "Erro: Verifique se o Valor e a Data contêm apenas números.");
-		        } catch (Exception ex) {
-		            JOptionPane.showMessageDialog(null, "Erro no formato da data! Use o padrão: DD/MM/AAAA");
+		         
+		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!"); // Exibe mensagem de sucesso
+		            dispose(); // Fecha a janela atual
+
+		        } catch (NumberFormatException ex) { // Captura erro de conversão de números
+		            JOptionPane.showMessageDialog(null, "Erro: Verifique se o Valor e a Data contêm apenas números."); // Exibe mensagem de erro
+		        } catch (Exception ex) { // Captura erro relacionado ao formato da data
+		            JOptionPane.showMessageDialog(null, "Erro no formato da data! Use o padrão: DD/MM/AAAA"); // Exibe mensagem de erro
 		        }
 		    }
 		});

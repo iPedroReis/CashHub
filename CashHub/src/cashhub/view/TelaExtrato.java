@@ -33,14 +33,14 @@ public class TelaExtrato extends JFrame {
 	private JLabel lblDespesasMes;
 	
 	
-	// Alterado 26/04
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				TelaExtrato frame = new TelaExtrato();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
+	
+	public static void main(String[] args) { 
+		EventQueue.invokeLater(() -> { 
+			try { // Inicia o tratamento de exceções
+				TelaExtrato frame = new TelaExtrato(); // Cria um objeto da classe "TelaExtrato"
+				frame.setVisible(true); // Torna a janela visível na tela
+			} catch (Exception e) { // Captura possíveis erros durante a execução
+				e.printStackTrace(); // Exibe os detalhes do erro no console
 			}
 		});
 	}
@@ -199,16 +199,17 @@ public class TelaExtrato extends JFrame {
 		btnGerenciarPagamentos.setBounds(12, 143, 177, 24);
 		panelPagamentos.add(btnGerenciarPagamentos);
 
-		String[] colunas = { "Data", "Categoria", "Descrição", "Tipo", "Valor" };
-		DefaultTableModel modelo = new DefaultTableModel(colunas, 0) {
-			private static final long serialVersionUID = 1L;
+		//
+		String[] colunas = { "Data", "Categoria", "Descrição", "Tipo", "Valor" }; // Cria um array de Strings com os nomes das colunas da tabela
+		DefaultTableModel modelo = new DefaultTableModel(colunas, 0) { // Cria um modelo de tabela com as colunas definidas e zero linhas iniciais
+			private static final long serialVersionUID = 1L; // Define um identificador de versão para a classe
 
 			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
+			public boolean isCellEditable(int row, int column) { // Sobrescreve o método que controla a edição das células
+				return false; // Impede que qualquer célula da tabela seja editada
 			}
 		};
-		
+		//
 
 		table = new JTable(modelo);
 		table.setRowHeight(38);
@@ -257,39 +258,35 @@ public class TelaExtrato extends JFrame {
 	}
 
 	
-	// Alterado 26/04
 	
-	public void carregarTabela() {
-	    // 1. Pegamos o modelo
-	    DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+	public void carregarTabela() { 
 	    
-	    // 2. Limpamos a tabela para não duplicar dados
-	    modelo.setRowCount(0);
-
-	    // 3. Percorremos os dados reais do Repositorio
-	    for (Gasto g : Repositorio.getLista()) {
-	        String tipo = (g.getValor() > 0) ? "Entrada" : "Saída";
+	    DefaultTableModel modelo = (DefaultTableModel) table.getModel();  // Obtém o modelo da tabela e faz o cast para DefaultTableModel
+	    modelo.setRowCount(0); // Remove todas as linhas da tabela para evitar duplicação
+           
+	    for (Gasto g : Repositorio.getLista()) { // Percorre todos os gastos armazenados no repositório
+	        String tipo = (g.getValor() > 0) ? "Entrada" : "Saída"; // Define o tipo como "Entrada" ou "Saída" com base no valor
 	        
-	        // Formatação simples do valor
-	        String valorFormatado = String.format("R$ %.2f", Math.abs(g.getValor()));
-	        if (g.getValor() < 0) valorFormatado = "- " + valorFormatado;
+	        
+	        String valorFormatado = String.format("R$ %.2f", Math.abs(g.getValor())); // Formata o valor absoluto para exibição com duas casas decimais
+	        if (g.getValor() < 0) valorFormatado = "- " + valorFormatado; // Adiciona sinal negativo ao valor formatado se for despesa
 
-	        modelo.addRow(new Object[] {
-	            String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()),
-	            "Geral", 
-	            g.getDescricao(),
-	            tipo,
-	            valorFormatado
+	        modelo.addRow(new Object[] { // Adiciona uma nova linha na tabela
+	            String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()), // Formata a data no padrão DD/MM/AAAA
+	            "Geral", // Define a categoria como "Geral"
+	            g.getDescricao(), // Adiciona a descrição do gasto
+	            tipo, // Adiciona o tipo (Entrada/Saída)
+	            valorFormatado // Adiciona o valor formatado
 	        });
 	    }
 	    
-	    double ganhos = Repositorio.calcularTotalGanhos();
-	    double despesas = Repositorio.calcularTotalDespesas();
-	    double saldoTotal = ganhos - despesas;
+	    double ganhos = Repositorio.calcularTotalGanhos(); // Obtém o total de ganhos
+	    double despesas = Repositorio.calcularTotalDespesas(); // Obtém o total de despesas
+	    double saldoTotal = ganhos - despesas; // Calcula o saldo total
    
-	    lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos));
-	    lblDespesasMes.setText(String.format("R$ %.2f", despesas));
-	    txtR.setText(String.format("R$ %.2f", saldoTotal));
+	    lblValorGanhoMes.setText(String.format("R$ %.2f", ganhos)); // Atualiza o label de ganhos
+	    lblDespesasMes.setText(String.format("R$ %.2f", despesas)); // Atualiza o label de despesas
+	    txtR.setText(String.format("R$ %.2f", saldoTotal)); // Atualiza o campo de saldo total
 	    
 	}
 	
@@ -297,50 +294,52 @@ public class TelaExtrato extends JFrame {
 	
 	
 	
-	private static class TipoRenderer extends DefaultTableCellRenderer {
-		private static final long serialVersionUID = 1L;
+	private static class TipoRenderer extends DefaultTableCellRenderer { // Declara uma classe interna estática que 
+		                                                                 // personaliza a renderização da coluna "Tipo"
+		private static final long serialVersionUID = 1L; // Define o identificador de versão da classe
 
-		@Override
+		@Override 
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			setHorizontalAlignment(CENTER);
+				int row, int column) { // Sobrescreve o método responsável por renderizar cada célula da tabela
+			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); // Chama o comportamento padrão da renderização
+			setHorizontalAlignment(CENTER); // Define o alinhamento do conteúdo da célula como centralizado
 
-			String tipo = value == null ? "" : value.toString();
-			if (!isSelected) {
-				setBackground(new Color(250, 250, 250));
-				if ("Entrada".equalsIgnoreCase(tipo)) {
-					setForeground(new Color(34, 139, 34));
-				} else {
-					setForeground(new Color(200, 30, 30));
+			String tipo = value == null ? "" : value.toString(); // Obtém o valor da célula e converte para String
+			if (!isSelected) { // Verifica se a célula não está selecionada
+				setBackground(new Color(250, 250, 250)); // Define a cor de fundo da célula
+				if ("Entrada".equalsIgnoreCase(tipo)) { // Verifica se o tipo é "Entrada"
+					setForeground(new Color(34, 139, 34)); // Define a cor do texto como verde
+				} else { // Caso contrário
+					setForeground(new Color(200, 30, 30)); // Define a cor do texto como vermelho
 				}
 			}
-			return this;
+			return this; // Retorna o componente renderizado
 		}
 	}
 
-	private static class ValorRenderer extends DefaultTableCellRenderer {
-		private static final long serialVersionUID = 1L;
+	private static class ValorRenderer extends DefaultTableCellRenderer { // Declara uma classe interna estática que personaliza 
+		                                                                  // a renderização da coluna "Valor"
+		private static final long serialVersionUID = 1L; // Define o identificador de versão da classe
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			setHorizontalAlignment(RIGHT);
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, 
+				int row, int column) { // Sobrescreve o método responsável por renderizar cada célula da tabela
+			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); // Chama o comportamento padrão da renderização
+			setHorizontalAlignment(RIGHT); // Define o alinhamento do conteúdo da célula à direita
 
-			Object tipoObj = table.getValueAt(row, 3);
-			String tipo = tipoObj == null ? "" : tipoObj.toString();
-			if (!isSelected) {
-				setBackground(new Color(250, 250, 250));
-				if ("Entrada".equalsIgnoreCase(tipo)) {
-					setForeground(new Color(34, 139, 34));
-				} else {
-					setForeground(new Color(200, 30, 30));
+			Object tipoObj = table.getValueAt(row, 3); // Obtém o valor da coluna "Tipo" da mesma linha
+			String tipo = tipoObj == null ? "" : tipoObj.toString(); // Converte o valor para String
+			if (!isSelected) { // Verifica se a célula não está selecionada
+				setBackground(new Color(250, 250, 250)); // Define a cor de fundo da célula
+				if ("Entrada".equalsIgnoreCase(tipo)) { // Verifica se o tipo é "Entrada"
+					setForeground(new Color(34, 139, 34)); // Define a cor do texto como verde
+				} else { // Caso contrário
+					setForeground(new Color(200, 30, 30)); // Define a cor do texto como vermelho
 				}
 			}
-			return this;
+			return this; // Retorna o componente renderizado
 			
-			// Alterado 26/04 - até aqui
+			
 		}
 	}
 }
