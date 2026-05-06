@@ -26,6 +26,14 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Cursor;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.CardLayout;
+import net.miginfocom.swing.MigLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.BorderFactory;
 
 public class TelaPrincipal extends JFrame {
 
@@ -143,12 +151,6 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 		
-		JLabel lblNomeSistema = new JLabel("CA$H HUB");
-		lblNomeSistema.setBounds(28, 13, 168, 28);
-		panel_1.add(lblNomeSistema);
-		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblNomeSistema.setForeground(new Color(31, 33, 38));
-		
 		JPanel panelTranasacoes = new JPanel();
 		panelTranasacoes.setBackground(new Color(31, 33, 38));
 		panelTranasacoes.setBounds(28, 326, 484, 114);
@@ -224,7 +226,12 @@ public class TelaPrincipal extends JFrame {
 		panelSaldo.setBackground(new Color(31, 33, 38));
 		panelSaldo.setBounds(28, 75, 484, 82);
 		panel_1.add(panelSaldo);
-		panelSaldo.setLayout(null);
+		GridBagLayout gbl_panelSaldo = new GridBagLayout();
+		gbl_panelSaldo.columnWidths = new int[]{237, 226, 0};
+		gbl_panelSaldo.rowHeights = new int[]{68, 0, 0, 0};
+		gbl_panelSaldo.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelSaldo.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panelSaldo.setLayout(gbl_panelSaldo);
 		
 		txtR = new JTextField();
 		txtR.setBorder(null);
@@ -232,8 +239,13 @@ public class TelaPrincipal extends JFrame {
 		txtR.setText("R$ 8.372,10");
 		txtR.setForeground(new Color(216, 216, 216));
 		txtR.setBackground(new Color(31, 33, 38));
-		txtR.setBounds(10, 11, 209, 20);
-		panelSaldo.add(txtR);
+		GridBagConstraints gbc_txtR = new GridBagConstraints();
+		gbc_txtR.fill = GridBagConstraints.BOTH;
+		gbc_txtR.insets = new Insets(0, 0, 5, 5);
+		gbc_txtR.gridx = 0;
+		gbc_txtR.gridy = 0;
+		panelSaldo.add(txtR, gbc_txtR);
+		txtR.setBorder(BorderFactory.createEmptyBorder(5, 7, 0, 0));
 		
 		
 		JButton btnAlterarSaldo = new JButton("Alterar Saldo");
@@ -248,78 +260,92 @@ public class TelaPrincipal extends JFrame {
 		btnAlterarSaldo.setFont(new Font("Dialog", Font.BOLD, 12));
 		btnAlterarSaldo.setBorder(null);
 		btnAlterarSaldo.setBackground(new Color(73, 73, 73));
-		btnAlterarSaldo.setBounds(373, 51, 101, 20);
-		panelSaldo.add(btnAlterarSaldo);
+		GridBagConstraints gbc_btnAlterarSaldo = new GridBagConstraints();
+		gbc_btnAlterarSaldo.anchor = GridBagConstraints.EAST;
+		gbc_btnAlterarSaldo.insets = new Insets(0, 0, 5, 0);
+		gbc_btnAlterarSaldo.fill = GridBagConstraints.VERTICAL;
+		gbc_btnAlterarSaldo.gridx = 1;
+		gbc_btnAlterarSaldo.gridy = 1;
+		panelSaldo.add(btnAlterarSaldo, gbc_btnAlterarSaldo);
 		
 		JPanel panelGanhos = new JPanel();
 		panelGanhos.setBackground(new Color(31, 33, 38));
-		panelGanhos.setBounds(28, 179, 168, 124);
+		panelGanhos.setBounds(30, 179, 193, 82);
 		panel_1.add(panelGanhos);
-		panelGanhos.setLayout(null);
+		GridBagLayout gbl_panelGanhos = new GridBagLayout();
+		gbl_panelGanhos.columnWidths = new int[]{114, 0};
+		gbl_panelGanhos.rowHeights = new int[]{16, 17, 0, 0};
+		gbl_panelGanhos.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panelGanhos.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		panelGanhos.setLayout(gbl_panelGanhos);
+
 		
 		JLabel lblTituloGanhosMes = new JLabel("Ganhos do mês:");
-		lblTituloGanhosMes.setBounds(10, 48, 136, 16);
 		lblTituloGanhosMes.setForeground(new Color(216, 216, 216));
 		lblTituloGanhosMes.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-		panelGanhos.add(lblTituloGanhosMes);
+		GridBagConstraints gbc_lblTituloGanhosMes = new GridBagConstraints();
+		gbc_lblTituloGanhosMes.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblTituloGanhosMes.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTituloGanhosMes.gridx = 0;
+		gbc_lblTituloGanhosMes.gridy = 0;
+		panelGanhos.add(lblTituloGanhosMes, gbc_lblTituloGanhosMes);
+		lblTituloGanhosMes.setBorder(BorderFactory.createEmptyBorder(5, 7, 0, 0));
+
 		
 		lblValorGanhoMes = new JLabel("R$ 0,00");
-		lblValorGanhoMes.setBounds(10, 73, 148, 17);
 		lblValorGanhoMes.setForeground(new Color(0, 128, 0));
 		lblValorGanhoMes.setFont(new Font("ABeeZee", Font.BOLD, 14));
-		panelGanhos.add(lblValorGanhoMes);
+		GridBagConstraints gbc_lblValorGanhoMes = new GridBagConstraints();
+		gbc_lblValorGanhoMes.anchor = GridBagConstraints.WEST;
+		gbc_lblValorGanhoMes.gridx = 0;
+		gbc_lblValorGanhoMes.gridy = 2;
+		panelGanhos.add(lblValorGanhoMes, gbc_lblValorGanhoMes);
+		lblValorGanhoMes.setBorder(BorderFactory.createEmptyBorder(0, 7, 0, 0));
 		
 		JPanel panelDespesasMes = new JPanel();
 		panelDespesasMes.setBackground(new Color(31, 33, 38));
-		panelDespesasMes.setBounds(248, 179, 168, 124);
+		panelDespesasMes.setBounds(248, 179, 193, 82);
 		panel_1.add(panelDespesasMes);
-		panelDespesasMes.setLayout(null);
+		GridBagLayout gbl_panelDespesasMes = new GridBagLayout();
+		gbl_panelDespesasMes.columnWidths = new int[]{127, 0};
+		gbl_panelDespesasMes.rowHeights = new int[]{16, 33, 17, 0};
+		gbl_panelDespesasMes.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panelDespesasMes.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		panelDespesasMes.setLayout(gbl_panelDespesasMes);
 		
 		JLabel lblTituloDespesasMes = new JLabel("Despesas do mês:");
-		lblTituloDespesasMes.setBounds(10, 43, 148, 16);
 		lblTituloDespesasMes.setForeground(new Color(216, 216, 216));
 		lblTituloDespesasMes.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-		panelDespesasMes.add(lblTituloDespesasMes);
+		GridBagConstraints gbc_lblTituloDespesasMes = new GridBagConstraints();
+		gbc_lblTituloDespesasMes.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblTituloDespesasMes.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTituloDespesasMes.gridx = 0;
+		gbc_lblTituloDespesasMes.gridy = 0;
+		panelDespesasMes.add(lblTituloDespesasMes, gbc_lblTituloDespesasMes);
+		lblTituloDespesasMes.setBorder(BorderFactory.createEmptyBorder(5, 7, 0, 0));
 		
 
 		lblDespesasMes = new JLabel("R$ 0,00");
 		lblDespesasMes.setBackground(new Color(166, 0, 4));
-		lblDespesasMes.setBounds(9, 68, 148, 17);
 		lblDespesasMes.setForeground(new Color(149, 0, 0));
 		lblDespesasMes.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelDespesasMes.add(lblDespesasMes);
+		GridBagConstraints gbc_lblDespesasMes = new GridBagConstraints();
+		gbc_lblDespesasMes.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblDespesasMes.anchor = GridBagConstraints.NORTH;
+		gbc_lblDespesasMes.gridx = 0;
+		gbc_lblDespesasMes.gridy = 2;
+		panelDespesasMes.add(lblDespesasMes, gbc_lblDespesasMes);
+		lblDespesasMes.setBorder(BorderFactory.createEmptyBorder(0, 7, 0, 0));
 		
-		JPanel panelnformacoes = new JPanel();
-		panelnformacoes.setLayout(null);
-		panelnformacoes.setBorder(null);
-		panelnformacoes.setBackground(new Color(216, 216, 216));
-		panelnformacoes.setBounds(341, 13, 193, 35);
-		panel_1.add(panelnformacoes);
+		JPanel panelCabecalho = new JPanel();
+		panelCabecalho.setBounds(10, 13, 524, 51);
+		panel_1.add(panelCabecalho);
+		panelCabecalho.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNome = new JLabel("Gustavo Dornellas");
-		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNome.setForeground(new Color(31, 33, 38));
-		lblNome.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-		lblNome.setBounds(0, 0, 149, 17);
-		panelnformacoes.add(lblNome);
-		
-		JLabel lblNewLabel_3 = new JLabel("Plano premium");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_3.setForeground(Color.GRAY);
-		lblNewLabel_3.setFont(new Font("ABeeZee", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(38, 13, 111, 14);
-		panelnformacoes.add(lblNewLabel_3);
-		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaConfiguracao tela = new TelaConfiguracao();
-				tela.setVisible(true);
-			}
-		});
-		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton_1.setBounds(159, 2, 30, 30);
-		panelnformacoes.add(btnNewButton_1);
+		JLabel lblNomeSistema = new JLabel("CA$H HUB");
+		panelCabecalho.add(lblNomeSistema, BorderLayout.CENTER);
+		lblNomeSistema.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNomeSistema.setForeground(new Color(31, 33, 38));
 		
 		
 		LocalDate hoje = LocalDate.now(); // Obtém a data atual do sistema
