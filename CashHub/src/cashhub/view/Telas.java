@@ -62,13 +62,13 @@ public class Telas extends JFrame {
 	private JLabel lblValorTransacao2;
 	private JTextField txtValor;
 	private JTextField txtData;
+	private JComboBox<String> listaCategoria;
 	private JButton btnSalvar;
 	private JLabel lblTituloDescricao;
 	private JLabel lblTituloValor;
 	private JLabel lblTituloData;
 	private JTextArea txtDescricao;
 	private JPanel panelBotoes;
-	private JPanel panelBoasPraticas;
 	private JPanel panelCorpo;
 	private JPanel panelRegistro;
 	private JLabel lblTituloAdicionarRegistro;
@@ -89,8 +89,8 @@ public class Telas extends JFrame {
 	private JButton btnAdicionar;
 	private JButton btnRetirar;
 	private JButton btnCancelar;
-	private JLabel lblTituloBoasPraticas;
 	private boolean ehDespesa = false;
+	private boolean ehPagamentoFuturo = false;
 	private JLabel lblNomeSistema;
 	private JLabel lblUsuario;
 	private JButton btnPerfil;
@@ -123,6 +123,7 @@ public class Telas extends JFrame {
 	private JLabel lblTituloDespesasExtrato;
 	private JLabel lblPagamentos;
 	private JLabel lblPagamentosDesc;
+	private JPanel panelTextoPagamentos;
 	
 	private JTextField txtPlanoPremium;
 	private JDialog dialogConfiguracao;
@@ -133,6 +134,10 @@ public class Telas extends JFrame {
 	private JButton btnAlterarPlano;
     private CardLayout cardLayout;
     private JPanel panelTelas;
+    private JButton btnPagamentoFuturo;
+    private JTextField txtBuscaCategoria;
+    private JTable tablePagamentos;
+    private DefaultTableModel modeloPagamentos;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -538,168 +543,298 @@ public class Telas extends JFrame {
         panelExtrato = new JPanel(new BorderLayout());
         panelExtrato.setBackground(new Color(216, 216, 216));
 
+        // --- 1. CABEÇALHO (Logo + Filtro + Perfil) ---
         panelCabecalho = new JPanel(new BorderLayout());
         panelCabecalho.setBackground(new Color(216, 216, 216));
         panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 10, 25));
+
+        // Painel para agrupar Logo e Filtro no canto esquerdo
+        JPanel panelLogoBusca = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 0));
+        panelLogoBusca.setBackground(new Color(216, 216, 216));
 
         lblLogo = new JLabel("CA$H HUB");
         lblLogo.setFont(new Font("Tahoma", Font.BOLD, 28));
         lblLogo.setForeground(new Color(31, 33, 38));
 
+        // Configuração do Filtro
+        txtBuscaCategoria = new JTextField(15);
+        txtBuscaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+        txtBuscaCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) { carregarTabela(); }
+        });
+
+        panelLogoBusca.add(lblLogo);
+        panelLogoBusca.add(new JLabel("Filtrar:"));
+        panelLogoBusca.add(txtBuscaCategoria);
+
+        // Painel de Perfil (Lado Direito)
         panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelPerfil.setBackground(new Color(216, 216, 216));
-
         lblUsuario = new JLabel("Gustavo Dornellas");
-        lblUsuario.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-        lblUsuario.setForeground(new Color(31, 33, 38));
-
         btnPerfil = new JButton("");
         btnPerfil.setBackground(new Color(31, 33, 38));
         btnPerfil.setPreferredSize(new Dimension(30, 30));
-        btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
         panelPerfil.add(lblUsuario);
         panelPerfil.add(btnPerfil);
 
-        panelCabecalho.add(lblLogo, BorderLayout.WEST);
+        panelCabecalho.add(panelLogoBusca, BorderLayout.WEST);
         panelCabecalho.add(panelPerfil, BorderLayout.EAST);
-
         panelExtrato.add(panelCabecalho, BorderLayout.NORTH);
 
+        // --- 2. ÁREA CENTRAL (Tabelas e Balanço) ---
         panelPrincipalExtrato = new JPanel(new BorderLayout(15, 0));
         panelPrincipalExtrato.setBackground(new Color(216, 216, 216));
         panelPrincipalExtrato.setBorder(BorderFactory.createEmptyBorder(5, 25, 25, 25));
 
+        // LADO ESQUERDO: Histórico
         JPanel panelCentroExtrato = new JPanel(new BorderLayout(0, 15));
         panelCentroExtrato.setBackground(new Color(216, 216, 216));
 
-        JPanel panelTituloExtrato = new JPanel(new BorderLayout());
-        panelTituloExtrato.setBackground(new Color(216, 216, 216));
-
+        JPanel panelTitulo = new JPanel(new BorderLayout());
+        panelTitulo.setBackground(new Color(216, 216, 216));
         lblTituloExtrato = new JLabel("Histórico de Transações");
-        lblTituloExtrato.setForeground(new Color(31, 33, 38));
         lblTituloExtrato.setFont(new Font("ABeeZee", Font.BOLD, 30));
-
         lblSubtituloExtrato = new JLabel("Acompanhe todas as entradas e saídas registradas.");
-        lblSubtituloExtrato.setForeground(new Color(90, 90, 90));
-        lblSubtituloExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+        panelTitulo.add(lblTituloExtrato, BorderLayout.NORTH);
+        panelTitulo.add(lblSubtituloExtrato, BorderLayout.SOUTH);
+        panelCentroExtrato.add(panelTitulo, BorderLayout.NORTH);
 
-        panelTituloExtrato.add(lblTituloExtrato, BorderLayout.NORTH);
-        panelTituloExtrato.add(lblSubtituloExtrato, BorderLayout.SOUTH);
-
-        panelCentroExtrato.add(panelTituloExtrato, BorderLayout.NORTH);
-
-        String[] colunas = { "Data", "Categoria", "Descrição", "Tipo", "Valor" }; // Cria um array de Strings com os nomes das colunas da tabela
-		DefaultTableModel modelo = new DefaultTableModel(colunas, 0) { // Cria um modelo de tabela com as colunas definidas e zero linhas iniciais
-			private static final long serialVersionUID = 1L; // Define um identificador de versão para a classe
-
-			@Override
-			public boolean isCellEditable(int row, int column) { // Sobrescreve o método que controla a edição das células
-				return false; // Impede que qualquer célula da tabela seja editada
-			}
-		};
-
-        table = new JTable(modelo);
+        // Tabela Principal
+        String[] colunas = { "Data", "Categoria", "Descrição", "Tipo", "Valor" };
+        table = new JTable(new DefaultTableModel(colunas, 0) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
+        });
+        // Estética igual ao seu print
         table.setRowHeight(38);
-        table.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-        table.setForeground(new Color(35, 35, 35));
-        table.setBackground(new Color(250, 250, 250));
-        table.setGridColor(new Color(225, 225, 225));
-        table.setShowVerticalLines(false);
-        table.setSelectionBackground(new Color(230, 236, 245));
-        table.setSelectionForeground(new Color(25, 25, 25));
-        table.setAutoCreateRowSorter(true);
-
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setBackground(new Color(31, 33, 38));
-        table.getTableHeader().setForeground(new Color(240, 240, 240));
-        table.getTableHeader().setFont(new Font("ABeeZee", Font.BOLD, 13));
-
-        table.getColumnModel().getColumn(0).setPreferredWidth(140);
-        table.getColumnModel().getColumn(1).setPreferredWidth(120);
-        table.getColumnModel().getColumn(2).setPreferredWidth(200);
-        table.getColumnModel().getColumn(3).setPreferredWidth(80);
-        table.getColumnModel().getColumn(4).setPreferredWidth(110);
-
+        table.getTableHeader().setForeground(Color.WHITE);
         table.getColumnModel().getColumn(3).setCellRenderer(new TipoRenderer());
         table.getColumnModel().getColumn(4).setCellRenderer(new ValorRenderer());
 
-        scrollPaneExtrato = new JScrollPane(table);
-        scrollPaneExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        scrollPaneExtrato.setBorder(new LineBorder(new Color(31, 33, 38), 1, true));
-        scrollPaneExtrato.getViewport().setBackground(new Color(250, 250, 250));
-        scrollPaneExtrato.getVerticalScrollBar().setUnitIncrement(14);
+        panelCentroExtrato.add(new JScrollPane(table), BorderLayout.CENTER);
 
-        panelCentroExtrato.add(scrollPaneExtrato, BorderLayout.CENTER);
+        // Botoes CRUD Embaixo da Tabela Principal
+        JPanel panelAcoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelAcoes.setBackground(new Color(216, 216, 216));
+        JButton btnEditar = new JButton("Editar");
+        btnEditar.addActionListener(e -> {
+            int linhaSelecionada = table.getSelectedRow();
 
+            if (linhaSelecionada != -1) {
+                // 1. Identifica o objeto original no Repositório
+                int modelIndex = table.convertRowIndexToModel(linhaSelecionada);
+                Gasto gastoExistente = Repositorio.getLista().get(modelIndex);
+
+                // 2. Abre diálogos para capturar os novos valores
+                String novaDescricao = JOptionPane.showInputDialog("Nova Descrição:", gastoExistente.getDescricao());
+                
+                // Se o usuário não cancelou a janela de descrição
+                if (novaDescricao != null && !novaDescricao.trim().isEmpty()) {
+                    
+                    String novoValorStr = JOptionPane.showInputDialog("Novo Valor (R$):", Math.abs(gastoExistente.getValor()));
+                    
+                    if (novoValorStr != null) {
+                        try {
+                            // 3. Converte e aplica as novas informações ao objeto
+                            double novoValor = Double.parseDouble(novoValorStr.replace(",", "."));
+                            
+                            // Mantém o sinal de negativo se o gasto original era uma despesa
+                            if (gastoExistente.getValor() < 0) {
+                                novoValor = Math.abs(novoValor) * -1;
+                            }
+
+                            gastoExistente.setDescricao(novaDescricao);
+                            gastoExistente.setValor(novoValor);
+
+                            // 4. Atualiza a visualização das telas
+                            carregarTabela();
+                            atualizarDashboard();
+                            
+                            JOptionPane.showMessageDialog(null, "Alterações salvas com sucesso!");
+
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(null, "Erro: Valor numérico inválido.");
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.");
+            }
+        });
+        JButton btnExcluir = new JButton("Excluir");
+        btnExcluir.addActionListener(e -> {
+            // 1. Verifica qual linha está selecionada na tabela
+            int linhaSelecionada = table.getSelectedRow();
+
+            if (linhaSelecionada != -1) {
+                // 2. Confirmação de segurança para evitar exclusões acidentais
+                int confirmacao = JOptionPane.showConfirmDialog(null, 
+                        "Tem certeza que deseja excluir esta transação?", 
+                        "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
+
+                if (confirmacao == JOptionPane.YES_OPTION) {
+                    /** * 3. Localização do objeto: 
+                     * Convertemos o índice da linha da tabela para o índice real do modelo,
+                     * isso garante que a exclusão funcione mesmo se a tabela estiver filtrada ou ordenada.
+                     */
+                    int modelIndex = table.convertRowIndexToModel(linhaSelecionada);
+                    
+                    // 4. Remove o item da lista global
+                    Repositorio.getLista().remove(modelIndex);
+
+                    // 5. Sincroniza a interface e o banco de dados (Repositorio)
+                    carregarTabela();      // Atualiza o extrato
+                    atualizarDashboard(); // Atualiza os totais no dashboard
+                    
+                    JOptionPane.showMessageDialog(null, "Registro removido com sucesso!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para excluir.");
+            }
+        });
+        btnExcluir.setBackground(new Color(149, 0, 0));
+        btnExcluir.setForeground(Color.WHITE);
+        panelAcoes.add(btnEditar);
+        panelAcoes.add(btnExcluir);
+        panelCentroExtrato.add(panelAcoes, BorderLayout.SOUTH);
+
+        // LADO DIREITO: Balanço e Agendados
         JPanel panelLadoDireito = new JPanel(new GridLayout(2, 1, 0, 15));
         panelLadoDireito.setBackground(new Color(216, 216, 216));
         panelLadoDireito.setPreferredSize(new Dimension(230, 0));
 
+        // Balanço
         panelBalanco = new JPanel(new GridLayout(5, 1, 0, 5));
         panelBalanco.setBackground(new Color(31, 33, 38));
         panelBalanco.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
-
-        lblBalancoTitulo = new JLabel("Balanço do mês");
-        lblBalancoTitulo.setForeground(new Color(216, 216, 216));
-        lblBalancoTitulo.setFont(new Font("ABeeZee", Font.PLAIN, 16));
-
         txtRExtrato = new JTextField("R$ 0,00");
         txtRExtrato.setEditable(false);
-        txtRExtrato.setBorder(null);
-        txtRExtrato.setForeground(new Color(216, 216, 216));
-        txtRExtrato.setFont(new Font("ABeeZee", Font.BOLD, 28));
         txtRExtrato.setBackground(new Color(31, 33, 38));
-
-        lblTituloGanhosExtrato = new JLabel("Ganhos:");
-        lblTituloGanhosExtrato.setForeground(new Color(216, 216, 216));
-        lblTituloGanhosExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 12));
-
+        txtRExtrato.setForeground(Color.WHITE);
+        txtRExtrato.setFont(new Font("ABeeZee", Font.BOLD, 28));
         lblValorGanhoMesExtrato = new JLabel("R$ 0,00");
         lblValorGanhoMesExtrato.setForeground(new Color(34, 166, 62));
-        lblValorGanhoMesExtrato.setFont(new Font("ABeeZee", Font.BOLD, 17));
-
-        lblTituloDespesasExtrato = new JLabel("Despesas:");
-        lblTituloDespesasExtrato.setForeground(new Color(216, 216, 216));
-        lblTituloDespesasExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 12));
-
         lblDespesasMesExtrato = new JLabel("R$ 0,00");
         lblDespesasMesExtrato.setForeground(new Color(220, 45, 45));
-        lblDespesasMesExtrato.setFont(new Font("ABeeZee", Font.BOLD, 17));
-
-        panelBalanco.add(lblBalancoTitulo);
+        panelBalanco.add(new JLabel("Balanço do mês") {{ setForeground(Color.LIGHT_GRAY); }});
         panelBalanco.add(txtRExtrato);
-        panelBalanco.add(lblTituloGanhosExtrato);
+        panelBalanco.add(new JLabel("Ganhos:") {{ setForeground(Color.LIGHT_GRAY); }});
         panelBalanco.add(lblValorGanhoMesExtrato);
         panelBalanco.add(lblDespesasMesExtrato);
 
+        // Pagamentos Mensais (O SEGREDO DO ERRO ESTÁ AQUI)
         panelPagamentos = new JPanel(new BorderLayout());
         panelPagamentos.setBackground(new Color(31, 33, 38));
         panelPagamentos.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-        JPanel panelTextoPagamentos = new JPanel(new GridLayout(2, 1));
+        modeloPagamentos = new DefaultTableModel(new String[]{"Data", "Descrição", "Valor", "Status"}, 0);
+        tablePagamentos = new JTable(modeloPagamentos); // 1. Criar a tabela primeiro
+        tablePagamentos.getColumnModel().getColumn(0).setPreferredWidth(75);  // Data
+        tablePagamentos.getColumnModel().getColumn(1).setPreferredWidth(100); // Descrição
+        tablePagamentos.getColumnModel().getColumn(2).setPreferredWidth(70);  // Valor
+        tablePagamentos.getColumnModel().getColumn(3).setPreferredWidth(70);  // Status
+
+        // Desativa o redimensionamento automático para as colunas respeitarem os tamanhos acima
+        tablePagamentos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
+
+        // Garante que a tabela ocupe todo o espaço do scroll
+        tablePagamentos.setFillsViewportHeight(true);        
+        tablePagamentos.setBackground(new Color(45, 47, 52));
+        tablePagamentos.setForeground(Color.WHITE);
+        
+        tablePagamentos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, 
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                
+                try {
+                    // 1. Pega a data da coluna 0 (ex: 10/05/2026)
+                    String dataStr = table.getValueAt(row, 0).toString();
+                    String[] p = dataStr.split("/");
+                    LocalDate vencimento = LocalDate.of(Integer.parseInt(p[2]), Integer.parseInt(p[1]), Integer.parseInt(p[0]));
+                    LocalDate hoje = LocalDate.now();
+
+                    // 2. Define a cor baseada na regra de negócio
+                    if (vencimento.isBefore(hoje)) {
+                        // VENCIDO: Vermelho
+                        c.setForeground(new Color(255, 100, 100));
+                        if (column == 3) value = "Vencido"; 
+                    } else if (vencimento.isBefore(hoje.plusDays(5))) {
+                        // PRÓXIMO (até 5 dias): Amarelo/Laranja
+                        c.setForeground(new Color(255, 200, 50));
+                        if (column == 3) value = "Urgente";
+                    } else {
+                        // EM DIA: Azul claro ou Verde
+                        c.setForeground(new Color(100, 200, 255));
+                        if (column == 3) value = "Em dia";
+                    }
+
+                    // Mantém o fundo escuro do painel
+                    c.setBackground(new Color(45, 47, 52));
+                    
+                    // Centraliza o texto nas colunas de Data e Status
+                    if (column == 0 || column == 3) {
+                        setHorizontalAlignment(CENTER);
+                    } else {
+                        setHorizontalAlignment(LEFT);
+                    }
+
+                } catch (Exception ex) {
+                    c.setForeground(Color.WHITE);
+                }
+                
+                return c;
+            }
+        });
+        
+        // AGORA configurar as colunas (Depois que ela já existe)
+        tablePagamentos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tablePagamentos.getColumnModel().getColumn(1).setPreferredWidth(120);
+
+        panelTextoPagamentos = new JPanel(new GridLayout(2, 1));
         panelTextoPagamentos.setBackground(new Color(31, 33, 38));
-
         lblPagamentos = new JLabel("Pagamentos Mensais");
-        lblPagamentos.setForeground(new Color(216, 216, 216));
-        lblPagamentos.setFont(new Font("ABeeZee", Font.PLAIN, 17));
-
+        lblPagamentos.setForeground(Color.WHITE);
         lblPagamentosDesc = new JLabel("Gerencie seus pagamentos");
-        lblPagamentosDesc.setForeground(new Color(216, 216, 216));
-        lblPagamentosDesc.setFont(new Font("ABeeZee", Font.PLAIN, 12));
-
+        lblPagamentosDesc.setForeground(Color.GRAY);
         panelTextoPagamentos.add(lblPagamentos);
         panelTextoPagamentos.add(lblPagamentosDesc);
 
         btnGerenciarPagamentos = new JButton("Gerenciar Pagamentos");
-        btnGerenciarPagamentos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnGerenciarPagamentos.setBorder(null);
-        btnGerenciarPagamentos.setBackground(new Color(216, 216, 216));
-        btnGerenciarPagamentos.setForeground(new Color(31, 33, 38));
-        btnGerenciarPagamentos.setFont(new Font("ABeeZee", Font.BOLD, 13));
+        
+        btnGerenciarPagamentos.addActionListener(e -> {
+            int linha = tablePagamentos.getSelectedRow();
+            
+            if (linha != -1) {
+                String desc = tablePagamentos.getValueAt(linha, 1).toString();
+                
+                int resposta = JOptionPane.showConfirmDialog(null, 
+                        "Deseja marcar '" + desc + "' como pago?", 
+                        "Confirmar Pagamento", JOptionPane.YES_NO_OPTION);
 
+                if (resposta == JOptionPane.YES_OPTION) {
+                    // Procura na lista e altera o estado
+                    for (Gasto g : Repositorio.getLista()) {
+                        if (g.getDescricao().equals(desc) && g.isAgendado()) {
+                            g.setAgendado(false); // Agora ele vira histórico
+                            g.setPago(true);      // Status de pago
+                            break;
+                        }
+                    }
+                    // Atualiza tudo
+                    carregarTabela(); 
+                    atualizarDashboard();
+                    JOptionPane.showMessageDialog(null, "Pagamento realizado com sucesso!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um pagamento na lista lateral.");
+            }
+        });
+        
         panelPagamentos.add(panelTextoPagamentos, BorderLayout.NORTH);
+        panelPagamentos.add(new JScrollPane(tablePagamentos), BorderLayout.CENTER);
         panelPagamentos.add(btnGerenciarPagamentos, BorderLayout.SOUTH);
 
         panelLadoDireito.add(panelBalanco);
@@ -707,289 +842,256 @@ public class Telas extends JFrame {
 
         panelPrincipalExtrato.add(panelCentroExtrato, BorderLayout.CENTER);
         panelPrincipalExtrato.add(panelLadoDireito, BorderLayout.EAST);
-
         panelExtrato.add(panelPrincipalExtrato, BorderLayout.CENTER);
 
         carregarTabela();
-
         return panelExtrato;
     }
     
     private JPanel telaSaldo() {
 
-    	panelSaldo = new JPanel(new BorderLayout());
-        panelSaldo.setBackground(new Color(216, 216, 216));
+    	    // --- 1. INICIALIZAÇÃO DOS COMPONENTES (Evita o NullPointerException) ---
+    	    panelSaldo = new JPanel(new BorderLayout());
+    	    panelSaldo.setBackground(new Color(216, 216, 216));
 
-        panelCabecalho = new JPanel(new BorderLayout());
-        panelCabecalho.setBackground(new Color(216, 216, 216));
-        panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 15, 25));
+    	    // Cabeçalho
+    	    panelCabecalho = new JPanel(new BorderLayout());
+    	    panelCabecalho.setBackground(new Color(216, 216, 216));
+    	    panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 15, 25));
 
-        lblLogo = new JLabel("CA$H HUB");
-        lblLogo.setFont(new Font("Tahoma", Font.BOLD, 28));
-        lblLogo.setForeground(new Color(31, 33, 38));
+    	    lblLogo = new JLabel("CA$H HUB");
+    	    lblLogo.setFont(new Font("Tahoma", Font.BOLD, 28));
+    	    lblLogo.setForeground(new Color(31, 33, 38));
 
-        lblUsuario = new JLabel("Gustavo Dornellas");
-        lblUsuario.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-        lblUsuario.setForeground(new Color(31, 33, 38));
+    	    lblUsuario = new JLabel("Gustavo Dornellas");
+    	    lblUsuario.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+    	    lblUsuario.setForeground(new Color(31, 33, 38));
 
-        btnPerfil = new JButton("");
-        btnPerfil.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
-        btnPerfil.setBackground(new Color(31, 33, 38));
-        btnPerfil.setPreferredSize(new Dimension(30, 30));
-        btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnPerfil.setFocusPainted(false);
-        btnPerfil.setBorder(null);
+    	    btnPerfil = new JButton("");
+    	    btnPerfil.setBackground(new Color(31, 33, 38));
+    	    btnPerfil.setPreferredSize(new Dimension(30, 30));
+    	    btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    	    btnPerfil.setFocusPainted(false);
+    	    btnPerfil.setBorder(null);
 
-        panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        panelPerfil.setBackground(new Color(216, 216, 216));
-        panelPerfil.add(lblUsuario);
-        panelPerfil.add(btnPerfil);
+    	    // Formulário e Inputs
+    	    lblTItuloTipoTrasacao = new JLabel("Tipo de Transação");
+    	    
+    	    btnAdicionar = new JButton("Adicionar");
+    	    btnAdicionar.setBackground(new Color(0, 128, 0));
+    	    btnAdicionar.setForeground(Color.WHITE);
 
-        panelCabecalho.add(lblLogo, BorderLayout.WEST);
-        panelCabecalho.add(panelPerfil, BorderLayout.EAST);
+    	    btnRetirar = new JButton("Retirar");
+    	    btnRetirar.setBackground(new Color(149, 0, 0));
+    	    btnRetirar.setForeground(Color.WHITE);
 
-        panelSaldo.add(panelCabecalho, BorderLayout.NORTH);
+    	    btnPagamentoFuturo = new JButton("Pagamento Futuro");
+    	    btnPagamentoFuturo.setForeground(Color.WHITE);
+    	    btnPagamentoFuturo.setBackground(new Color(0, 112, 127));
 
-        panelCorpo = new JPanel(new BorderLayout(30, 0));
-        panelCorpo.setBackground(new Color(216, 216, 216));
-        panelCorpo.setBorder(BorderFactory.createEmptyBorder(10, 35, 35, 35));
+    	    txtValor = new JTextField("EX: R$ 2000");
+    	    txtValor.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+    	    txtValor.setForeground(new Color(216, 216, 216));
+    	    txtValor.setBorder(null);
 
-        panelRegistro = new JPanel(new BorderLayout(0, 20));
-        panelRegistro.setBackground(new Color(216, 216, 216));
+    	    txtData = new JTextField("EX: 22/04/2026");
+    	    txtData.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+    	    txtData.setForeground(new Color(216, 216, 216));
+    	    txtData.setBorder(null);
 
-        lblTituloAdicionarRegistro = new JLabel("ADICIONAR NOVO REGISTRO");
-        lblTituloAdicionarRegistro.setFont(new Font("ABeeZee", Font.BOLD, 20));
-        lblTituloAdicionarRegistro.setForeground(new Color(31, 33, 38));
+    	    String[] categorias = {
+    	        "Renda", "Agendado", "Alimentação", "Educação", "Autocuidado", "Transporte", "Lazer", 
+    	        "Saúde", "Viagens", "Pets", "Manutenção", "Moradia", "Outros"
+    	    };
+    	    
+    	    btnAdicionar.addActionListener(e -> {
+    	        ehDespesa = false;
+    	        ehPagamentoFuturo = false; // Não é agendado
+    	        txtValor.setForeground(new Color(140, 170, 140));
+    	        listaCategoria.setSelectedItem("Renda"); // Muda automaticamente
+    	    });
 
-        panelRegistro.add(lblTituloAdicionarRegistro, BorderLayout.NORTH);
+    	    btnRetirar.addActionListener(e -> {
+    	        ehDespesa = true;
+    	        ehPagamentoFuturo = false; // Não é agendado
+    	        txtValor.setForeground(new Color(170, 140, 140));
+    	        listaCategoria.setSelectedItem("Outros"); // Reseta para o padrão de gasto
+    	    });
 
-        panelFormulario = new JPanel(new GridLayout(8, 1, 0, 8));
-        panelFormulario.setBackground(new Color(216, 216, 216));
+    	    btnPagamentoFuturo.addActionListener(e -> {
+    	        ehDespesa = true; // Geralmente um pagamento futuro é uma saída
+    	        ehPagamentoFuturo = true;
+    	        txtValor.setForeground(new Color(0, 112, 127)); // Cor do azul petróleo
+    	        listaCategoria.setSelectedItem("Agendado"); //
+    	    });
+    	    
+    	    listaCategoria = new JComboBox<>(new DefaultComboBoxModel<>(categorias));
+    	    listaCategoria.setBackground(Color.WHITE);
+    	    listaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+    	    listaCategoria.setBorder(null);
 
-        lblTItuloTipoTrasacao = new JLabel("Tipo de Transação");
+    	    txtDescricao = new JTextArea();
+    	    lblTituloAdicionarRegistro = new JLabel("ADICIONAR NOVO REGISTRO");
+    	    lblTituloAdicionarRegistro.setFont(new Font("ABeeZee", Font.BOLD, 20));
+    	    lblTituloAdicionarRegistro.setForeground(new Color(31, 33, 38));
 
-        panelTipo = new JPanel(new GridLayout(1, 2, 20, 0));
-        panelTipo.setBackground(new Color(216, 216, 216));
+    	    txtValor.addFocusListener(new FocusAdapter() {
+    	        @Override
+    	        public void focusGained(FocusEvent e) {
+    	            if (txtValor.getText().equals("EX: R$ 2000")) {
+    	                txtValor.setText("");
+    	                txtValor.setForeground(Color.BLACK);
+    	            }
+    	        }
+    	        @Override
+    	        public void focusLost(FocusEvent e) {
+    	            if (txtValor.getText().isEmpty()) {
+    	                txtValor.setForeground(Color.LIGHT_GRAY);
+    	                txtValor.setText("EX: R$ 2000");
+    	            }
+    	        }
+    	    });
 
-        btnAdicionar = new JButton("Adicionar");
-        btnAdicionar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		 ehDespesa = false; // Define que a operação não é uma despesa (é um ganho)
-        		 txtValor.setForeground(new Color(140, 170, 140)); // muda a cor para mostrar que é retirar saldo
-        	}
-        });
-        btnAdicionar.setBackground(new Color(0, 128, 0));
-        btnAdicionar.setForeground(Color.WHITE);
+    	    txtData.addFocusListener(new FocusAdapter() {
+    	        @Override
+    	        public void focusGained(FocusEvent e) {
+    	            if (txtData.getText().equals("EX: 22/04/2026")) {
+    	                txtData.setText("");
+    	                txtData.setForeground(new Color(31, 33, 38));
+    	            }
+    	        }
+    	        @Override
+    	        public void focusLost(FocusEvent e) {
+    	            if (txtData.getText().isEmpty()) {
+    	                txtData.setForeground(Color.LIGHT_GRAY);
+    	                txtData.setText("EX: 22/04/2026");
+    	            }
+    	        }
+    	    });
 
-        btnRetirar = new JButton("Retirar");
-        btnRetirar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {// Define o que acontece quando o botão é clicado
-    				ehDespesa = true; // Define que a operação é uma despesa
-    				txtValor.setForeground(new Color(170, 140, 140)); // muda a cor para mostrar que é retirar saldo
-        	}
-        });
-        btnRetirar.setBackground(new Color(149, 0, 0));
-        btnRetirar.setForeground(Color.WHITE);
+    	    panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+    	    panelPerfil.setBackground(new Color(216, 216, 216));
+    	    panelPerfil.add(lblUsuario);
+    	    panelPerfil.add(btnPerfil);
 
-        panelTipo.add(btnAdicionar);
-        panelTipo.add(btnRetirar);
+    	    panelCabecalho.add(lblLogo, BorderLayout.WEST);
+    	    panelCabecalho.add(panelPerfil, BorderLayout.EAST);
+    	    panelSaldo.add(panelCabecalho, BorderLayout.NORTH);
 
-        lblTituloValor = new JLabel("Valor:");
-        txtValor = new JTextField();
-        txtValor.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-			
-			
-				 // Quando o usuário clica no campo some o texto ja escrito
-		        if (txtValor.getText().equals("EX: R$ 2000")) {
-		            txtValor.setText("");
-		            txtValor.setForeground(Color.BLACK); // Muda a cor para cinza escuro quando o usuário digitar para melhor visualização
-		        }
-		    }
+    	    panelCorpo = new JPanel(new BorderLayout(30, 0));
+    	    panelCorpo.setBackground(new Color(216, 216, 216));
+    	    panelCorpo.setBorder(BorderFactory.createEmptyBorder(10, 35, 35, 35));
 
-		    @Override
-		    public void focusLost(FocusEvent e) {
-		        // Quando o usuário clica em outro lugar voltará o "EX: R$ 2000"
-		        if (txtValor.getText().isEmpty()) {
-		            txtValor.setForeground(Color.LIGHT_GRAY);
-		            txtValor.setText("EX: R$ 2000");
-		        }
-			}
-		});
-        txtValor.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-		txtValor.setText("EX: R$ 2000");
-		txtValor.setForeground(new Color(216, 216, 216));
-		txtValor.setBorder(null);
-		txtValor.setBounds(36, 211, 283, 20);
-		txtValor.setColumns(10);
-        
-        lblTituloData = new JLabel("Data:");
-		txtData = new JTextField();
-		txtData.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-				 // Quando o usuário clica no campo some o texto ja escrito
-		        if (txtData.getText().equals("EX: 22/04/2026")) {
-		            txtData.setText("");
-		            txtData.setForeground(new Color(31, 33, 38)); // Muda a cor para cinza escuro quando o usuário digitar para melhor visualização
-		        }
-		    }
-			
-		    @Override
-		    public void focusLost(FocusEvent e) {
-		        // Quando o usuário clica em outro lugar voltará o "EX: 22/04/2026"
-		        if (txtData.getText().isEmpty()) {
-		            txtData.setForeground(Color.LIGHT_GRAY);
-		            txtData.setText("EX: 22/04/2026");
-		        }
-			}
-		});
-		txtData.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-		txtData.setText("EX: 22/04/2026");
-		txtData.setForeground(new Color(216, 216, 216));
-		txtData.setBorder(null);
-		txtData.setBounds(36, 262, 128, 20);
-		txtData.setColumns(10);
+    	    panelRegistro = new JPanel(new BorderLayout(0, 20));
+    	    panelRegistro.setBackground(new Color(216, 216, 216));
+    	    panelRegistro.add(lblTituloAdicionarRegistro, BorderLayout.NORTH);
 
-        lblTituloDescricao = new JLabel("Descrição:");
-        txtDescricao = new JTextArea();
+    	    panelFormulario = new JPanel(new GridLayout(10, 1, 0, 8));
+    	    panelFormulario.setBackground(new Color(216, 216, 216));
+    	    
+    	    panelTipo = new JPanel(new GridLayout(1, 3, 20, 0));
+    	    panelTipo.setBackground(new Color(216, 216, 216));
+    	    panelTipo.add(btnAdicionar);
+    	    panelTipo.add(btnRetirar);
+    	    panelTipo.add(btnPagamentoFuturo);
 
-        JScrollPane scrollDescricao = new JScrollPane(txtDescricao);
-        scrollDescricao.setPreferredSize(new Dimension(400, 90));
-        
-        panelFormulario.add(lblTItuloTipoTrasacao);
-        panelFormulario.add(panelTipo);
-        panelFormulario.add(lblTituloValor);
-        panelFormulario.add(txtValor);
-        panelFormulario.add(lblTituloData);
-        panelFormulario.add(txtData);
-        panelFormulario.add(lblTituloDescricao);
-        panelFormulario.add(new JScrollPane(txtDescricao));
+    	    panelFormulario.add(new JLabel("Tipo de Transação"));
+    	    panelFormulario.add(panelTipo);
+    	    panelFormulario.add(new JLabel("Valor:"));
+    	    panelFormulario.add(txtValor);
+    	    panelFormulario.add(new JLabel("Data:"));
+    	    panelFormulario.add(txtData);
+    	    panelFormulario.add(new JLabel("Categoria:")); // Label da Categoria
+    	    panelFormulario.add(listaCategoria);          // Lista Suspensa
+    	    panelFormulario.add(new JLabel("Descrição:"));
+    	    panelFormulario.add(new JScrollPane(txtDescricao));
 
-        panelRegistro.add(panelFormulario, BorderLayout.CENTER);
+    	    panelRegistro.add(panelFormulario, BorderLayout.CENTER);
 
-        panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
-        panelBotoes.setBackground(new Color(216, 216, 216));
+    	    // Botões Inferiores (Salvar/Cancelar)
+    	    panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+    	    panelBotoes.setBackground(new Color(216, 216, 216));
 
-        btnCancelar = new JButton("Cancelar");
-        btnCancelar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		btnCancelar.addActionListener(new ActionListener() {
-        		    public void actionPerformed(ActionEvent e) {
-        		        txtValor.setText("EX: R$ 2000");
-        		        txtValor.setForeground(new Color(216, 216, 216));
+    	    btnCancelar = new JButton("Cancelar");
+    	    btnCancelar.setPreferredSize(new Dimension(100, 30));
+    	    btnCancelar.setBackground(new Color(73, 73, 73));
+    	    btnCancelar.setForeground(Color.WHITE);
+    	    btnCancelar.addActionListener(e -> {
+    	        txtValor.setText("EX: R$ 2000");
+    	        txtValor.setForeground(new Color(216, 216, 216));
+    	        txtData.setText("EX: 22/04/2026");
+    	        txtData.setForeground(new Color(216, 216, 216));
+    	        txtDescricao.setText("");
+    	        listaCategoria.setSelectedIndex(0);
+    	        ehDespesa = false;
+    	    });
 
-        		        txtData.setText("EX: 22/04/2026");
-        		        txtData.setForeground(new Color(216, 216, 216));
+    	    btnSalvar = new JButton("Salvar Transação");
+    	    btnSalvar.setPreferredSize(new Dimension(170, 30));
+    	    btnSalvar.setBackground(new Color(31, 33, 38));
+    	    btnSalvar.setForeground(Color.WHITE);
+    	    btnSalvar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    	     
+    	    btnSalvar.addActionListener(new ActionListener() {
+    	        public void actionPerformed(ActionEvent e) {
+    	            try {
+    	                String desc = txtDescricao.getText();
+    	                String categoriaSelecionada = (String) listaCategoria.getSelectedItem();
+    	                
+    	                // Limpa formatação de moeda se houver e converte
+    	                String valorTexto = txtValor.getText().replace("R$", "").replace(" ", "").replace(",", ".");
+    	                double valor = Double.parseDouble(valorTexto);
 
-        		        txtDescricao.setText("");
+    	                if (ehDespesa) {
+    	                    valor = Math.abs(valor) * -1;
+    	                }
 
-        		        ehDespesa = false;
-        		    }
-        		});
-        	}
-        });
-        btnCancelar.setPreferredSize(new Dimension(100, 30));
-        btnCancelar.setBackground(new Color(73, 73, 73));
-        btnCancelar.setForeground(Color.WHITE);
+    	                String dataTexto = txtData.getText();
+    	                String[] partes = dataTexto.split("/");
+    	                if (partes.length != 3) throw new Exception("Data incompleta");
 
-		btnSalvar = new JButton("Salvar Transação");
-		btnSalvar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSalvar.setFont(new Font("ABeeZee", Font.PLAIN, 13));
-        btnSalvar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		try { // Inicia o tratamento de exceções
- 		           
-		            String desc = txtDescricao.getText(); // Obtém o texto digitado no campo de descrição
-		            double valor = Double.parseDouble(txtValor.getText()); // Converte o texto do campo de valor para número decimal
+    	                int dia = Integer.parseInt(partes[0]);
+    	                int mes = Integer.parseInt(partes[1]);
+    	                int ano = Integer.parseInt(partes[2]);
 
-		            
-		            if (ehDespesa) { // Verifica se a operação é uma despesa
-		                valor = valor * -1; // Converte o valor para negativo
-		            }
+    	                // Criação do objeto com a categoria selecionada
+    	                cashhub.model.Categoria cat = new cashhub.model.Categoria(0, categoriaSelecionada);
+    	                Gasto novo = new Gasto(0, valor, desc, ano, mes, dia, cat, false);
+    	                
+    	                novo.setAgendado(ehPagamentoFuturo); // Aqui você "avisa" se é agendado ou não
+    	                	
+    	                Repositorio.salvar(novo);
+    	                
+    	                // Atualiza a interface
+    	                atualizarDashboard();
+    	                carregarTabela();
 
-		            
-		            String dataTexto = txtData.getText(); // Obtém o texto digitado no campo de data
-		            String[] partes = dataTexto.split("/"); // Divide a data em partes usando "/" como separador
-		            
-		            
-		            if (partes.length != 3) { // Verifica se a data possui dia, mês e ano
-		                throw new Exception("Data incompleta"); // Lança exceção caso a data esteja incompleta
-		            }
+    	                JOptionPane.showMessageDialog(null, "Registro de " + categoriaSelecionada + " salvo!");
+    	                
+    	                // Volta para o dashboard e limpa campos
+    	                cardLayout.show(panelTelas, "dashboard");
+    	                txtValor.setText("EX: R$ 2000");
+    	                txtValor.setForeground(new Color(216, 216, 216));
+    	                txtData.setText("EX: 22/04/2026");
+    	                txtData.setForeground(new Color(216, 216, 216));
+    	                txtDescricao.setText("");
+    	                listaCategoria.setSelectedIndex(0);
+    	                ehDespesa = false;
 
-		            int dia = Integer.parseInt(partes[0]); // Converte a primeira parte da data para inteiro (dia)
-		            int mes = Integer.parseInt(partes[1]); // Converte a segunda parte da data para inteiro (mês)
-		            int ano = Integer.parseInt(partes[2]); // Converte a terceira parte da data para inteiro (ano)
+    	            } catch (Exception ex) {
+    	                JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex.getMessage());
+    	            }
+    	        }
+    	    });
+    	    
+    	    panelBotoes.add(btnCancelar);
+    	    panelBotoes.add(btnSalvar);
+    	    panelRegistro.add(panelBotoes, BorderLayout.SOUTH);
+    	    panelCorpo.add(panelRegistro, BorderLayout.CENTER);
+    	    panelSaldo.add(panelCorpo, BorderLayout.CENTER);
 
-		           
-		            Gasto novo = new Gasto(0, valor, desc, ano, mes, dia, null, false); // Cria um novo objeto "Gasto" com os dados informados
-		            Repositorio.salvar(novo); // Salva o objeto no repositório
-
-		            
-		            if (TelaExtrato.frameAberto != null) { // Verifica se a tela de extrato está aberta
-		                TelaExtrato.frameAberto.carregarTabela(); // Atualiza a tabela da tela de extrato
-		            }
-
-		            if (TelaPrincipal.frameAberto != null) { // Verifica se a tela principal está aberta
-		                TelaPrincipal.frameAberto.atualizarDashboard(); // Atualiza o dashboard
-		            }
-
-		         
-		            JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!"); // Exibe mensagem de sucesso
-		            cardLayout.show(panelTelas, "dashboard");
-
-		        } catch (NumberFormatException ex) { // Captura erro de conversão de números
-		            JOptionPane.showMessageDialog(null, "Erro: Verifique se o Valor e a Data contêm apenas números."); // Exibe mensagem de erro
-		        } catch (Exception ex) { // Captura erro relacionado ao formato da data
-		            JOptionPane.showMessageDialog(null, "Erro no formato da data! Use o padrão: DD/MM/AAAA"); // Exibe mensagem de erro
-		        }
-        		atualizarDashboard(); // Atualiza os dados exibidos para o dashboard
-        		carregarTabela(); //atualiza os dados adicionados para a tabela
-        		cardLayout.show(panelTelas, "dashboard"); // volta pra tela de dashboard
-        		
-        		txtValor.setText("EX: R$ 2000"); //volta o exemplo depois de salvar transação
-        		txtValor.setForeground(new Color(216, 216, 216));
-
-        		txtData.setText("EX: 22/04/2026"); //volta o exemplo depois de salvar transação
-        		txtData.setForeground(new Color(216, 216, 216));
-
-        		txtDescricao.setText(""); //remove o texto na descrição
-
-        		ehDespesa = false; 
-        	}
-        });
-        btnSalvar.setPreferredSize(new Dimension(170, 30));
-        btnSalvar.setBackground(new Color(31, 33, 38));
-        btnSalvar.setForeground(Color.WHITE);
-
-        panelBotoes.add(btnCancelar);
-        panelBotoes.add(btnSalvar);
-
-        panelRegistro.add(panelBotoes, BorderLayout.SOUTH);
-
-        panelBoasPraticas = new JPanel(new BorderLayout());
-        panelBoasPraticas.setBackground(new Color(230, 230, 230));
-        panelBoasPraticas.setPreferredSize(new Dimension(220, 0));
-        panelBoasPraticas.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-
-        lblTituloBoasPraticas = new JLabel("Boas Práticas");
-        lblTituloBoasPraticas.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTituloBoasPraticas.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-
-        panelBoasPraticas.add(lblTituloBoasPraticas, BorderLayout.NORTH);
-
-        panelCorpo.add(panelRegistro, BorderLayout.CENTER);
-        panelCorpo.add(panelBoasPraticas, BorderLayout.EAST);
-
-        panelSaldo.add(panelCorpo, BorderLayout.CENTER);
-
-        return panelSaldo;
-    }
+    	    return panelSaldo;
+    	}
     
     private void configuracaoPopup() {
         dialogConfiguracao = new JDialog(this, "Configurações", true); // Cria um estilo popUp ligado na tela principal
@@ -1200,82 +1302,101 @@ public class Telas extends JFrame {
 	}	
 	
 	public void carregarTabela() {
-	    DefaultTableModel modelo = (DefaultTableModel) table.getModel(); // Obtém o modelo da tabela e faz o cast para DefaultTableModel
-	    modelo.setRowCount(0); // Remove todas as linhas da tabela para evitar duplicação
+	    DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+	    modelo.setRowCount(0);
 
-	    for (Gasto g : Repositorio.getLista()) { // Percorre todos os gastos armazenados no repositório
-	        String tipo = (g.getValor() > 0) ? "Entrada" : "Saída"; // Define o tipo como "Entrada" ou "Saída" com base no valor
+	    // Recupera o filtro de busca
+	    String busca = (txtBuscaCategoria != null) ? txtBuscaCategoria.getText().toLowerCase() : "";
 
-	        String valorFormatado = String.format("R$ %.2f", Math.abs(g.getValor())); // Formata o valor absoluto para exibição com duas casas decimais
-	        if (g.getValor() < 0) valorFormatado = "- " + valorFormatado; // Adiciona sinal negativo ao valor formatado se for despesa
+	    for (Gasto g : Repositorio.getLista()) {
+	        // FILTRO: Se NÃO for agendado, entra aqui
+	        if (!g.isAgendado()) { 
+	            String nomeCat = (g.getCategoria() != null) ? g.getCategoria().getNome() : "Outros";
 
-	        modelo.addRow(new Object[] {  // Adiciona uma nova linha na tabela
-	            String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()),  // Formata a data no padrão DD/MM/AAAA
-	            "Geral", // Define a categoria como "Geral"
-	            g.getDescricao(),  // Adiciona a descrição do gasto
-	            tipo, // Adiciona o tipo (Entrada/Saída)
-	            valorFormatado  // Adiciona o valor formatado
-	        });
+	            if (nomeCat.toLowerCase().contains(busca)) {
+	                String tipo = (g.getValor() > 0) ? "Entrada" : "Saída";
+	                String valorFormatado = String.format("R$ %.2f", Math.abs(g.getValor()));
+	                if (g.getValor() < 0) valorFormatado = "- " + valorFormatado;
+
+	                modelo.addRow(new Object[] {
+	                    String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()),
+	                    nomeCat,
+	                    g.getDescricao(),
+	                    tipo,
+	                    valorFormatado
+	                });
+	            }
+	        }
 	    }
 
-	    double ganhos = Repositorio.calcularTotalGanhos(); // Obtém o total de ganhos
-	    double despesas = Repositorio.calcularTotalDespesas();  // Obtém o total de despesas
-	    double saldoTotal = ganhos - despesas; // Calcula o saldo total
+	    // Processa os totais financeiros para os Labels do Extrato
+	    double ganhos = Repositorio.calcularTotalGanhos(); 
+	    double despesas = Repositorio.calcularTotalDespesas();  
+	    double saldoTotal = ganhos - despesas; 
 
-	    lblValorGanhoMesExtrato.setText(String.format("R$ %.2f", ganhos)); // Atualiza o label de ganhos
-	    lblDespesasMesExtrato.setText(String.format("R$ %.2f", despesas)); // Atualiza o label de despesas
-	    txtRExtrato.setText(String.format("R$ %.2f", saldoTotal)); // Atualiza o campo de saldo total
+	    lblValorGanhoMesExtrato.setText(String.format("R$ %.2f", ganhos)); 
+	    lblDespesasMesExtrato.setText(String.format("R$ %.2f", despesas)); 
+	    txtRExtrato.setText(String.format("R$ %.2f", saldoTotal)); 
+	    
+	    // Chama a atualização da tabela da direita
+	    carregarTabelaPagamentos();
+	}
 
+	/**
+	 * Atualiza a tabela de pagamentos mensais (Direita).
+	 * Filtra para exibir apenas transações que SÃO agendadas.
+	 */
+	public void carregarTabelaPagamentos() {
+	    if (modeloPagamentos == null) return;
+	    
+	    modeloPagamentos.setRowCount(0); 
+
+	    for (Gasto g : Repositorio.getLista()) {
+	        // Regra: Se o gasto FOR agendado, ele entra nesta tabela
+	        if (g.isAgendado()) {
+	            modeloPagamentos.addRow(new Object[] {
+	                String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()),
+	                g.getDescricao(),
+	                String.format("R$ %.2f", Math.abs(g.getValor())),
+	                "Pendente" 
+	            });
+	        }
+	    }
 	}
 	
-	private static class TipoRenderer extends DefaultTableCellRenderer { // Declara uma classe interna estática que 
-        // personaliza a renderização da coluna "Tipo"
-		private static final long serialVersionUID = 1L; // Define o identificador de versão da classe
+		class TipoRenderer extends DefaultTableCellRenderer {
+   		 @Override
+    		public Component getTableCellRendererComponent(JTable table, Object value, 
+          		  boolean isSelected, boolean hasFocus, int row, int column) {
+        		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        		setHorizontalAlignment(CENTER);
+        
+       		 String tipo = value == null ? "" : value.toString();
+       		 if ("Entrada".equalsIgnoreCase(tipo)) {
+            setForeground(new Color(34, 139, 34)); // Verde
+       		 } else {
+            setForeground(new Color(200, 30, 30)); // Vermelho
+       		 }
+      		  return this;
+    		}
+	}		
 	
-		@Override 
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) { // Sobrescreve o método responsável por renderizar cada célula da tabela
-			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); // Chama o comportamento padrão da renderização
-			setHorizontalAlignment(CENTER); // Define o alinhamento do conteúdo da célula como centralizado
-		
-			String tipo = value == null ? "" : value.toString(); // Obtém o valor da célula e converte para String
-			if (!isSelected) { // Verifica se a célula não está selecionada
-				setBackground(new Color(250, 250, 250)); // Define a cor de fundo da célula
-				if ("Entrada".equalsIgnoreCase(tipo)) { // Verifica se o tipo é "Entrada"
-					setForeground(new Color(34, 139, 34)); // Define a cor do texto como verde
-				} else { // Caso contrário
-					setForeground(new Color(200, 30, 30)); // Define a cor do texto como vermelho
-				}
-			}
-			return this; // Retorna o componente renderizado
+		class ValorRenderer extends DefaultTableCellRenderer {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, 
+		            boolean isSelected, boolean hasFocus, int row, int column) {
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        setHorizontalAlignment(RIGHT);
+		        
+		        Object tipoObj = table.getValueAt(row, 3);
+		        String tipo = tipoObj == null ? "" : tipoObj.toString();
+		        
+		        if ("Entrada".equalsIgnoreCase(tipo)) {
+		            setForeground(new Color(34, 139, 34));
+		        } else {
+		            setForeground(new Color(200, 30, 30));
+		        }
+		        return this;
+		    }
 		}
-	}
-	
-	private static class ValorRenderer extends DefaultTableCellRenderer { // Declara uma classe interna estática que personaliza 
-	         // a renderização da coluna "Valor"
-		private static final long serialVersionUID = 1L; // Define o identificador de versão da classe
-	
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, 
-				int row, int column) { // Sobrescreve o método responsável por renderizar cada célula da tabela
-			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); // Chama o comportamento padrão da renderização
-			setHorizontalAlignment(RIGHT); // Define o alinhamento do conteúdo da célula à direita
-	
-			Object tipoObj = table.getValueAt(row, 3); // Obtém o valor da coluna "Tipo" da mesma linha
-			String tipo = tipoObj == null ? "" : tipoObj.toString(); // Converte o valor para String
-			if (!isSelected) { // Verifica se a célula não está selecionada
-				setBackground(new Color(250, 250, 250)); // Define a cor de fundo da célula
-				if ("Entrada".equalsIgnoreCase(tipo)) { // Verifica se o tipo é "Entrada"
-					setForeground(new Color(34, 139, 34)); // Define a cor do texto como verde
-				} else { // Caso contrário
-					setForeground(new Color(200, 30, 30)); // Define a cor do texto como vermelho
-				}
-			}
-			return this; // Retorna o componente renderizado
-	
-	
-	}
-}
-	
-	
-}
+}		

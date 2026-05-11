@@ -11,6 +11,9 @@ public class Gasto extends EntidadeBase { // Declara a classe "Gasto" que herda 
 	private boolean pago; // Declara uma variável do tipo boolean (true, false)
 	
 	
+	// 10/05/26 - adicionado posteriormente à documentação (diagrama de classe)
+	private boolean agendado;
+	
 	public Gasto(int id, double valor, String descricao, int ano, int mes, int dia, Categoria categoria, boolean pago) { 
 	// Declara o construtor da classe com todos os atributos como parâmetros
 		super(id);  // pega o id da entidade base
@@ -136,4 +139,13 @@ public class Gasto extends EntidadeBase { // Declara a classe "Gasto" que herda 
 		// 3. Pendente: (Se for no futuro)
 		return "Pendente"; // Retorna "Pendente" se a data ainda não chegou
 	}
+	
+	public boolean isAgendado() {
+	    return agendado;
+	}
+
+	public void setAgendado(boolean agendado) {
+	    this.agendado = agendado;
+	}
+	
 }
