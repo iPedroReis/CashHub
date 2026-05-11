@@ -115,13 +115,13 @@ public class Telas extends JFrame {
 	private JPanel panelBalanco;
 	private JPanel panelPagamentos;
 	private JScrollPane scrollPaneExtrato;
-	private JButton btnPagamentosFuturos;
+	private JButton btnPagarAgora;
 	private JLabel lblTituloExtrato;
 	private JLabel lblSubtituloExtrato;
 	private JLabel lblBalancoTitulo;
 	private JLabel lblTituloGanhosExtrato;
 	private JLabel lblTituloDespesasExtrato;
-	private JLabel lblPagamentos;
+	private JLabel lblTituloPagamentosFuturos;
 	private JLabel lblPagamentosDesc;
 	private JPanel panelTextoPagamentos;
 	
@@ -874,18 +874,18 @@ public class Telas extends JFrame {
 
         panelTextoPagamentos = new JPanel(new GridLayout(2, 1));
         panelTextoPagamentos.setBackground(new Color(31, 33, 38));
-        lblPagamentos = new JLabel("Pagamentos Mensais");
-        lblPagamentos.setForeground(Color.WHITE);
+        lblTituloPagamentosFuturos = new JLabel("Pagamentos Futuros");
+        lblTituloPagamentosFuturos.setForeground(Color.WHITE);
         lblPagamentosDesc = new JLabel("Gerencie seus pagamentos");
         lblPagamentosDesc.setForeground(Color.GRAY);
-        panelTextoPagamentos.add(lblPagamentos);
+        panelTextoPagamentos.add(lblTituloPagamentosFuturos);
         panelTextoPagamentos.add(lblPagamentosDesc);
 
-        btnPagamentosFuturos = new JButton("Pagamentos Futuros");
-        btnPagamentosFuturos.setFont(new Font("ABeeZee", Font.PLAIN, 11));
-        btnPagamentosFuturos.setBackground(new Color(255, 255, 255));
+        btnPagarAgora = new JButton("Pagar agora");
+        btnPagarAgora.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnPagarAgora.setBackground(new Color(255, 255, 255));
         
-        btnPagamentosFuturos.addActionListener(e -> {
+        btnPagarAgora.addActionListener(e -> {
             int linha = tablePagamentos.getSelectedRow();
             
             if (linha != -1) {
@@ -902,9 +902,12 @@ public class Telas extends JFrame {
                             g.setAgendado(false); // Agora ele vira histórico
                             g.setPago(true);      // Status de pago
                             break;
+                            
+                            
                         }
+                        
                     }
-                    // Atualiza tudo
+                 // Atualiza tudo
                     carregarTabela(); 
                     atualizarDashboard();
                     JOptionPane.showMessageDialog(null, "Pagamento realizado com sucesso!");
@@ -916,7 +919,7 @@ public class Telas extends JFrame {
         
         panelPagamentos.add(panelTextoPagamentos, BorderLayout.NORTH);
         panelPagamentos.add(new JScrollPane(tablePagamentos), BorderLayout.CENTER);
-        panelPagamentos.add(btnPagamentosFuturos, BorderLayout.SOUTH);
+        panelPagamentos.add(btnPagarAgora, BorderLayout.SOUTH);
 
         panelLadoDireito.add(panelBalanco);
         panelLadoDireito.add(panelPagamentos);
@@ -1119,6 +1122,7 @@ public class Telas extends JFrame {
     	        txtDescricao.setText("");
     	        listaCategoria.setSelectedIndex(0);
     	        ehDespesa = false;
+    	        ehPagamentoFuturo = false;
     	    });
 
     	    btnSalvar = new JButton("Salvar Transação");
@@ -1174,6 +1178,7 @@ public class Telas extends JFrame {
     	                txtDescricao.setText("");
     	                listaCategoria.setSelectedIndex(0);
     	                ehDespesa = false;
+    	                ehPagamentoFuturo = false;
 
     	            } catch (Exception ex) {
     	                JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex.getMessage());
