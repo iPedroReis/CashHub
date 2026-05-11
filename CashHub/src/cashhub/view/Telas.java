@@ -115,7 +115,7 @@ public class Telas extends JFrame {
 	private JPanel panelBalanco;
 	private JPanel panelPagamentos;
 	private JScrollPane scrollPaneExtrato;
-	private JButton btnGerenciarPagamentos;
+	private JButton btnPagamentosFuturos;
 	private JLabel lblTituloExtrato;
 	private JLabel lblSubtituloExtrato;
 	private JLabel lblBalancoTitulo;
@@ -129,8 +129,8 @@ public class Telas extends JFrame {
 	private JDialog dialogConfiguracao;
 	private JPanel contentPaneConfiguracao;
 	private JComboBox boxMoedaBase;
-	private JCheckBox chckbxNewCheckBox;
-	private JCheckBox chckbxNewCheckBox_1;
+	private JCheckBox checkbxLimite;
+	private JCheckBox checkbxLembrete;
 	private JButton btnAlterarPlano;
     private CardLayout cardLayout;
     private JPanel panelTelas;
@@ -138,6 +138,9 @@ public class Telas extends JFrame {
     private JTextField txtBuscaCategoria;
     private JTable tablePagamentos;
     private DefaultTableModel modeloPagamentos;
+    
+    private JButton btnVoltar;
+    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -179,7 +182,7 @@ public class Telas extends JFrame {
         	    getClass().getResource("/cashhub/view/imagens/CashHub (3).png")
         	);
 
-        	Image imgLogo = iconLogo.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
+        	Image imgLogo = iconLogo.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 
         	JLabel lblLogoMenu = new JLabel(new ImageIcon(imgLogo));
         	lblLogoMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -188,7 +191,6 @@ public class Telas extends JFrame {
         
         btnDashboard = new JButton("Dashboard"); // Botão do Dashboard
         btnDashboard.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
-        btnDashboard.setBorder(new LineBorder(new Color(216, 216, 216)));
         btnDashboard.setBackground(new Color(31, 33, 38));
         btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         btnDashboard.setForeground(new Color(216, 216, 216));
@@ -196,6 +198,21 @@ public class Telas extends JFrame {
         btnDashboard.setMaximumSize(new Dimension(130, 32));
         btnDashboard.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnDashboard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        ImageIcon iconDashboard = new ImageIcon(
+        	    getClass().getResource("/cashhub/view/imagens/dashboard.png")
+        	);
+        	Image imgDashboard = iconDashboard.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        btnDashboard.setIcon(new ImageIcon(imgDashboard));
+        btnDashboard.setBorder(
+        		BorderFactory.createCompoundBorder(
+        				new LineBorder(new Color(216, 216, 216)),
+        				BorderFactory.createEmptyBorder(0, 10, 0, 0)
+        )
+        );
+        btnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
+        btnDashboard.setIconTextGap(10);
+        
         btnDashboard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelTelas, "dashboard");
@@ -287,7 +304,7 @@ public class Telas extends JFrame {
 
         // BOTÃO EXTRATO
         btnExtrato = new JButton("Extrato");
-        btnExtrato.setBorder(new LineBorder(new Color(216, 216, 216)));
+        btnExtrato.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
         btnExtrato.setBackground(new Color(31, 33, 38));
         btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         btnExtrato.setForeground(new Color(216, 216, 216));
@@ -295,6 +312,19 @@ public class Telas extends JFrame {
         btnExtrato.setMaximumSize(new Dimension(130, 32));
         btnExtrato.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnExtrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        ImageIcon iconExtrato = new ImageIcon(
+        	    getClass().getResource("/cashhub/view/imagens/extrato.png")
+        	);
+        	Image imgExtrato = iconExtrato.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        btnExtrato.setIcon(new ImageIcon(imgExtrato));
+        btnExtrato.setBorder(
+        		BorderFactory.createCompoundBorder(
+        				new LineBorder(new Color(216, 216, 216)),
+        				BorderFactory.createEmptyBorder(0, 10, 0, 0)
+        )
+        );
+        btnExtrato.setHorizontalAlignment(SwingConstants.LEFT);
+        btnExtrato.setIconTextGap(10);
         btnExtrato.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelTelas, "extrato");
@@ -303,7 +333,20 @@ public class Telas extends JFrame {
 
         // BOTÃO SALDO
         btnSaldo = new JButton("Saldo");
-        btnSaldo.setBorder(new LineBorder(new Color(216, 216, 216)));
+        btnSaldo.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        ImageIcon iconSaldo = new ImageIcon(
+        	    getClass().getResource("/cashhub/view/imagens/saldo.png")
+        	);
+        	Image imgSaldo = iconSaldo.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        	btnSaldo.setIcon(new ImageIcon(imgSaldo));
+        btnSaldo.setBorder(
+        		BorderFactory.createCompoundBorder(
+        				new LineBorder(new Color(216, 216, 216)),
+        				BorderFactory.createEmptyBorder(0, 10, 0, 0)
+        )
+        );
+        btnSaldo.setHorizontalAlignment(SwingConstants.LEFT);
+        btnSaldo.setIconTextGap(10);        
         btnSaldo.setBackground(new Color(31, 33, 38));
         btnSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         btnSaldo.setForeground(new Color(216, 216, 216));
@@ -370,7 +413,16 @@ public class Telas extends JFrame {
         lblUsuario.setForeground(new Color(31, 33, 38));
         panelPerfil.add(lblUsuario);
 
-        btnPerfil = new JButton("");
+        btnPerfil = new JButton();
+        ImageIcon iconConfiguracao = new ImageIcon(
+            getClass().getResource("/cashhub/view/imagens/configuracoes.png")
+        );
+        Image imgConfiguracao = iconConfiguracao.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        btnPerfil.setIcon(new ImageIcon(imgConfiguracao));
+        btnPerfil.setFocusPainted(false);
+        btnPerfil.setBorderPainted(false);
+        btnPerfil.setContentAreaFilled(false);
+        btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnPerfil.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 configuracaoPopup();
@@ -405,6 +457,7 @@ public class Telas extends JFrame {
         
 
         btnAlterarSaldo = new JButton("Alterar Saldo");
+        btnAlterarSaldo.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
         btnAlterarSaldo.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
                     cardLayout.show(panelTelas, "cadastro"); // Torna o panel visivel
@@ -477,6 +530,7 @@ public class Telas extends JFrame {
         panelTopoTransacoes.add(lblTituloTransacoes, BorderLayout.WEST);
 
         btnVisualizarExtratoCompleto = new JButton("Visualizar extrato completo");
+        btnVisualizarExtratoCompleto.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
         btnVisualizarExtratoCompleto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnVisualizarExtratoCompleto.setForeground(new Color(216, 216, 216));
         btnVisualizarExtratoCompleto.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -571,9 +625,21 @@ public class Telas extends JFrame {
         panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelPerfil.setBackground(new Color(216, 216, 216));
         lblUsuario = new JLabel("Gustavo Dornellas");
-        btnPerfil = new JButton("");
-        btnPerfil.setBackground(new Color(31, 33, 38));
-        btnPerfil.setPreferredSize(new Dimension(30, 30));
+        btnPerfil = new JButton();
+        ImageIcon iconConfiguracao = new ImageIcon(
+            getClass().getResource("/cashhub/view/imagens/configuracoes.png")
+        );
+        Image imgConfiguracao = iconConfiguracao.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        btnPerfil.setIcon(new ImageIcon(imgConfiguracao));
+        btnPerfil.setFocusPainted(false);
+        btnPerfil.setBorderPainted(false);
+        btnPerfil.setContentAreaFilled(false);
+        btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnPerfil.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                configuracaoPopup();
+            }
+        });
         panelPerfil.add(lblUsuario);
         panelPerfil.add(btnPerfil);
 
@@ -610,13 +676,25 @@ public class Telas extends JFrame {
         table.getTableHeader().setForeground(Color.WHITE);
         table.getColumnModel().getColumn(3).setCellRenderer(new TipoRenderer());
         table.getColumnModel().getColumn(4).setCellRenderer(new ValorRenderer());
+     // Cria um renderizador padrão e define o alinhamento para o centro
+        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
+        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
 
-        panelCentroExtrato.add(new JScrollPane(table), BorderLayout.CENTER);
+        // Aplica nas colunas: Data (0), Categoria (1) e Descrição (2)
+        table.getColumnModel().getColumn(0).setCellRenderer(centralizado);
+        table.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        table.getColumnModel().getColumn(2).setCellRenderer(centralizado);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        panelCentroExtrato.add(scrollPane, BorderLayout.CENTER);
 
         // Botoes CRUD Embaixo da Tabela Principal
         JPanel panelAcoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelAcoes.setBackground(new Color(216, 216, 216));
         JButton btnEditar = new JButton("Editar");
+        btnEditar.setBackground(new Color(255, 255, 255));
+        btnEditar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnEditar.addActionListener(e -> {
             int linhaSelecionada = table.getSelectedRow();
 
@@ -662,6 +740,7 @@ public class Telas extends JFrame {
             }
         });
         JButton btnExcluir = new JButton("Excluir");
+        btnExcluir.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnExcluir.addActionListener(e -> {
             // 1. Verifica qual linha está selecionada na tabela
             int linhaSelecionada = table.getSelectedRow();
@@ -802,9 +881,11 @@ public class Telas extends JFrame {
         panelTextoPagamentos.add(lblPagamentos);
         panelTextoPagamentos.add(lblPagamentosDesc);
 
-        btnGerenciarPagamentos = new JButton("Gerenciar Pagamentos");
+        btnPagamentosFuturos = new JButton("Pagamentos Futuros");
+        btnPagamentosFuturos.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnPagamentosFuturos.setBackground(new Color(255, 255, 255));
         
-        btnGerenciarPagamentos.addActionListener(e -> {
+        btnPagamentosFuturos.addActionListener(e -> {
             int linha = tablePagamentos.getSelectedRow();
             
             if (linha != -1) {
@@ -835,7 +916,7 @@ public class Telas extends JFrame {
         
         panelPagamentos.add(panelTextoPagamentos, BorderLayout.NORTH);
         panelPagamentos.add(new JScrollPane(tablePagamentos), BorderLayout.CENTER);
-        panelPagamentos.add(btnGerenciarPagamentos, BorderLayout.SOUTH);
+        panelPagamentos.add(btnPagamentosFuturos, BorderLayout.SOUTH);
 
         panelLadoDireito.add(panelBalanco);
         panelLadoDireito.add(panelPagamentos);
@@ -867,25 +948,37 @@ public class Telas extends JFrame {
     	    lblUsuario.setFont(new Font("ABeeZee", Font.PLAIN, 14));
     	    lblUsuario.setForeground(new Color(31, 33, 38));
 
-    	    btnPerfil = new JButton("");
-    	    btnPerfil.setBackground(new Color(31, 33, 38));
-    	    btnPerfil.setPreferredSize(new Dimension(30, 30));
-    	    btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    	    btnPerfil.setFocusPainted(false);
-    	    btnPerfil.setBorder(null);
+    	    btnPerfil = new JButton();
+            ImageIcon iconConfiguracao = new ImageIcon(
+                getClass().getResource("/cashhub/view/imagens/configuracoes.png")
+            );
+            Image imgConfiguracao = iconConfiguracao.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+            btnPerfil.setIcon(new ImageIcon(imgConfiguracao));
+            btnPerfil.setFocusPainted(false);
+            btnPerfil.setBorderPainted(false);
+            btnPerfil.setContentAreaFilled(false);
+            btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btnPerfil.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    configuracaoPopup();
+                }
+            });
 
     	    // Formulário e Inputs
     	    lblTItuloTipoTrasacao = new JLabel("Tipo de Transação");
     	    
     	    btnAdicionar = new JButton("Adicionar");
+    	    btnAdicionar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
     	    btnAdicionar.setBackground(new Color(0, 128, 0));
     	    btnAdicionar.setForeground(Color.WHITE);
 
     	    btnRetirar = new JButton("Retirar");
+    	    btnRetirar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
     	    btnRetirar.setBackground(new Color(149, 0, 0));
     	    btnRetirar.setForeground(Color.WHITE);
 
     	    btnPagamentoFuturo = new JButton("Pagamento Futuro");
+    	    btnPagamentoFuturo.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
     	    btnPagamentoFuturo.setForeground(Color.WHITE);
     	    btnPagamentoFuturo.setBackground(new Color(0, 112, 127));
 
@@ -1013,6 +1106,8 @@ public class Telas extends JFrame {
     	    panelBotoes.setBackground(new Color(216, 216, 216));
 
     	    btnCancelar = new JButton("Cancelar");
+    	    btnCancelar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+    	    btnCancelar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
     	    btnCancelar.setPreferredSize(new Dimension(100, 30));
     	    btnCancelar.setBackground(new Color(73, 73, 73));
     	    btnCancelar.setForeground(Color.WHITE);
@@ -1027,6 +1122,8 @@ public class Telas extends JFrame {
     	    });
 
     	    btnSalvar = new JButton("Salvar Transação");
+    	    btnSalvar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+    	    btnSalvar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
     	    btnSalvar.setPreferredSize(new Dimension(170, 30));
     	    btnSalvar.setBackground(new Color(31, 33, 38));
     	    btnSalvar.setForeground(Color.WHITE);
@@ -1123,8 +1220,17 @@ public class Telas extends JFrame {
         lblTituloMembro.setBounds(121, 57, 183, 14);
         panelPerfil.add(lblTituloMembro);
 
-        JButton btnVoltar = new JButton("");
+        btnVoltar = new JButton();
         btnVoltar.setBounds(10, 11, 25, 25);
+        ImageIcon iconVoltar = new ImageIcon(
+                getClass().getResource("/cashhub/view/imagens/seta-esquerda.png")
+            );
+            Image imgVoltar = iconVoltar.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+            btnVoltar.setIcon(new ImageIcon(imgVoltar));
+            btnVoltar.setFocusPainted(false);
+            btnVoltar.setBorderPainted(false);
+            btnVoltar.setContentAreaFilled(false);
+            btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialogConfiguracao.dispose();
@@ -1195,11 +1301,12 @@ public class Telas extends JFrame {
         lblTituloPagamentosMensais.setBounds(10, 51, 202, 14);
         panel_2.add(lblTituloPagamentosMensais);
 
-        chckbxNewCheckBox = new JCheckBox("");
-        chckbxNewCheckBox.setBackground(new Color(216, 216, 216));
-        chckbxNewCheckBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        chckbxNewCheckBox.setBounds(307, 37, 23, 23);
-        panel_2.add(chckbxNewCheckBox);
+        checkbxLembrete = new JCheckBox("");
+        checkbxLembrete.setBackground(new Color(216, 216, 216));
+        checkbxLembrete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        checkbxLembrete.setBounds(307, 37, 23, 23);
+        checkbxLembrete.setSelected(true);
+        panel_2.add(checkbxLembrete);
 
         JLabel lblTituloAlertaLimite = new JLabel("Alerta de limite de orçamento");
         lblTituloAlertaLimite.setForeground(new Color(31, 33, 38));
@@ -1213,11 +1320,11 @@ public class Telas extends JFrame {
         lblTituloGastos80.setBounds(10, 85, 223, 14);
         panel_2.add(lblTituloGastos80);
 
-        chckbxNewCheckBox_1 = new JCheckBox("");
-        chckbxNewCheckBox_1.setBackground(new Color(216, 216, 216));
-        chckbxNewCheckBox_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        chckbxNewCheckBox_1.setBounds(307, 67, 23, 23);
-        panel_2.add(chckbxNewCheckBox_1);
+        checkbxLimite = new JCheckBox("");
+        checkbxLimite.setBackground(new Color(216, 216, 216));
+        checkbxLimite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        checkbxLimite.setBounds(307, 67, 23, 23);
+        panel_2.add(checkbxLimite);
 
         JPanel panel_4 = new JPanel();
         panel_4.setBackground(new Color(216, 216, 216));
