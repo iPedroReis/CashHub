@@ -92,7 +92,10 @@ public class Telas extends JFrame {
 	private boolean ehDespesa = false;
 	private boolean ehPagamentoFuturo = false;
 	private JLabel lblNomeSistema;
-	private JLabel lblUsuario;
+	private JLabel lblUsuarioDash;
+	private JLabel lblUsuarioExtrato;
+	private JLabel lblUsuarioSaldo;
+	private JLabel lblUsuarioPopUp;
 	private JButton btnPerfil;
 	private JLabel lblTituloDespesasMes;
 	private JLabel lblTituloGanhosMes;
@@ -408,10 +411,10 @@ public class Telas extends JFrame {
         panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelPerfil.setBackground(new Color(216, 216, 216));
 
-        lblUsuario = new JLabel("Gustavo Dornellas");
-        lblUsuario.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-        lblUsuario.setForeground(new Color(31, 33, 38));
-        panelPerfil.add(lblUsuario);
+        lblUsuarioDash = new JLabel("Gustavo Dornellas");
+        lblUsuarioDash.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+        lblUsuarioDash.setForeground(new Color(31, 33, 38));
+        panelPerfil.add(lblUsuarioDash);
 
         btnPerfil = new JButton();
         ImageIcon iconConfiguracao = new ImageIcon(
@@ -473,7 +476,6 @@ public class Telas extends JFrame {
 
         panelCorpo.add(panelSaldo, BorderLayout.NORTH);
 
-        
         
         panelMovimentacao = new JPanel(new GridLayout(1, 2, 25, 0));
         panelMovimentacao.setBackground(new Color(216, 216, 216));
@@ -624,7 +626,10 @@ public class Telas extends JFrame {
         // Painel de Perfil (Lado Direito)
         panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelPerfil.setBackground(new Color(216, 216, 216));
-        lblUsuario = new JLabel("Gustavo Dornellas");
+        lblUsuarioExtrato = new JLabel("Gustavo Dornellas"); 
+        lblUsuarioExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+        lblUsuarioExtrato.setForeground(new Color(31, 33, 38));
+        panelPerfil.add(lblUsuarioExtrato);
         btnPerfil = new JButton();
         ImageIcon iconConfiguracao = new ImageIcon(
             getClass().getResource("/cashhub/view/imagens/configuracoes.png")
@@ -640,8 +645,10 @@ public class Telas extends JFrame {
                 configuracaoPopup();
             }
         });
-        panelPerfil.add(lblUsuario);
+        
         panelPerfil.add(btnPerfil);
+        
+        lblUsuarioExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 
         panelCabecalho.add(panelLogoBusca, BorderLayout.WEST);
         panelCabecalho.add(panelPerfil, BorderLayout.EAST);
@@ -695,80 +702,147 @@ public class Telas extends JFrame {
         JButton btnEditar = new JButton("Editar");
         btnEditar.setBackground(new Color(255, 255, 255));
         btnEditar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+     // --- Lógica do Botão Editar (Substitua no método telaExtrato) ---
         btnEditar.addActionListener(e -> {
             int linhaSelecionada = table.getSelectedRow();
 
             if (linhaSelecionada != -1) {
-                // 1. Identifica o objeto original no Repositório
+                // 1. Localiza o objeto original no Repositório
                 int modelIndex = table.convertRowIndexToModel(linhaSelecionada);
                 Gasto gastoExistente = Repositorio.getLista().get(modelIndex);
 
-                // 2. Abre diálogos para capturar os novos valores
-                String novaDescricao = JOptionPane.showInputDialog("Nova Descrição:", gastoExistente.getDescricao());
+                // 2. Criação dos componentes para o formulário de edição
+                JTextField editDesc = new JTextField(gastoExistente.getDescricao());
+                JTextField editValor = new JTextField(String.valueOf(Math.abs(gastoExistente.getValor())));
                 
-                // Se o usuário não cancelou a janela de descrição
-                if (novaDescricao != null && !novaDescricao.trim().isEmpty()) {
-                    
-                    String novoValorStr = JOptionPane.showInputDialog("Novo Valor (R$):", Math.abs(gastoExistente.getValor()));
-                    
-                    if (novoValorStr != null) {
-                        try {
-                            // 3. Converte e aplica as novas informações ao objeto
-                            double novoValor = Double.parseDouble(novoValorStr.replace(",", "."));
-                            
-                            // Mantém o sinal de negativo se o gasto original era uma despesa
-                            if (gastoExistente.getValor() < 0) {
-                                novoValor = Math.abs(novoValor) * -1;
-                            }
+                // Formata a data atual do objeto para o campo de texto
+                String dataFormatada = String.format("%02d/%02d/%d", gastoExistente.getDia(), gastoExistente.getMes(), gastoExistente.getAno());
+                JTextField editData = new JTextField(dataFormatada);
 
-                            gastoExistente.setDescricao(novaDescricao);
-                            gastoExistente.setValor(novoValor);
+                // Cria a lista suspensa de categorias (reutilizando seu array)
+                String[] categoriasParaEditar = {
+                			    "💰 Renda", 
+                			    "🗓️ Agendado", 
+                			    "🍴 Alimentação", 
+                			    "📚 Educação", 
+                			    "❤️ Autocuidado", 
+                			    "🚗 Transporte", 
+                			    "🎭 Lazer", 
+                			    "🏥 Saúde", 
+                			    "✈️ Viagens", 
+                			    "🐾 Pets", 
+                			    "🔧 Manutenção", 
+                			    "🏠 Moradia", 
+                			    "⚙️ Outros"
+                			};
+         
+                JComboBox<String> editCat = new JComboBox<>(new DefaultComboBoxModel<>(categoriasParaEditar));
+                
+                // Define a categoria atual como selecionada na lista
+                if (gastoExistente.getCategoria() != null) {
+                    editCat.setSelectedItem(gastoExistente.getCategoria().getNome());
+                } else {
+                    editCat.setSelectedItem("Outros");
+                }
 
-                            // 4. Atualiza a visualização das telas
-                            carregarTabela();
-                            atualizarDashboard();
-                            
-                            JOptionPane.showMessageDialog(null, "Alterações salvas com sucesso!");
+                // 3. Organização do Layout do formulário de edição
+                JPanel panelEdicao = new JPanel(new GridLayout(0, 1, 5, 5));
+                panelEdicao.add(new JLabel("Descrição:"));
+                panelEdicao.add(editDesc);
+                panelEdicao.add(new JLabel("Valor (R$):"));
+                panelEdicao.add(editValor);
+                panelEdicao.add(new JLabel("Data (DD/MM/AAAA):"));
+                panelEdicao.add(editData);
+                panelEdicao.add(new JLabel("Categoria:"));
+                panelEdicao.add(editCat);
 
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Erro: Valor numérico inválido.");
+                // 4. Exibição do Diálogo de Confirmação com o painel customizado
+                int result = JOptionPane.showConfirmDialog(null, panelEdicao, 
+                        "Editar Transação", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                if (result == JOptionPane.OK_OPTION) {
+                    try {
+                        // Validação e Processamento dos novos dados
+                        String novaDesc = editDesc.getText();
+                        double novoValor = Double.parseDouble(editValor.getText().replace(",", "."));
+                        String[] partesData = editData.getText().split("/");
+
+                        if (partesData.length != 3) throw new Exception("Formato de data inválido!");
+
+                        int novoDia = Integer.parseInt(partesData[0]);
+                        int novoMes = Integer.parseInt(partesData[1]);
+                        int novoAno = Integer.parseInt(partesData[2]);
+                        String novaCatNome = (String) editCat.getSelectedItem();
+
+                        // 5. Atualização dos atributos do objeto Gasto
+                        gastoExistente.setDescricao(novaDesc);
+                        
+                        // Mantém o sinal de negativo se for uma despesa
+                        if (gastoExistente.getValor() < 0) {
+                            gastoExistente.setValor(Math.abs(novoValor) * -1);
+                        } else {
+                            gastoExistente.setValor(Math.abs(novoValor));
                         }
+
+                        // Atualiza Data e Categoria
+                        gastoExistente.setDia(novoDia);
+                        gastoExistente.setMes(novoMes);
+                        gastoExistente.setAno(novoAno);
+                        gastoExistente.setCategoria(new cashhub.model.Categoria(0, novaCatNome));
+
+                        // 6. Sincronização da Interface
+                        carregarTabela();
+                        atualizarDashboard();
+                        
+                        JOptionPane.showMessageDialog(null, "Transação atualizada com sucesso!");
+
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro: Valor numérico inválido.");
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex.getMessage());
                     }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.");
             }
         });
+        	
         JButton btnExcluir = new JButton("Excluir");
         btnExcluir.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnExcluir.addActionListener(e -> {
             // 1. Verifica qual linha está selecionada na tabela
-            int linhaSelecionada = table.getSelectedRow();
+        	int linhaSelecionada = table.getSelectedRow();
 
             if (linhaSelecionada != -1) {
-                // 2. Confirmação de segurança para evitar exclusões acidentais
+                // 1. Captura os dados da linha para identificar o item corretamente
+                String dataTabela = table.getValueAt(linhaSelecionada, 0).toString();
+                String descTabela = table.getValueAt(linhaSelecionada, 2).toString();
+
                 int confirmacao = JOptionPane.showConfirmDialog(null, 
-                        "Tem certeza que deseja excluir esta transação?", 
+                        "Deseja excluir: " + descTabela + "?", 
                         "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 
                 if (confirmacao == JOptionPane.YES_OPTION) {
-                    /** * 3. Localização do objeto: 
-                     * Convertemos o índice da linha da tabela para o índice real do modelo,
-                     * isso garante que a exclusão funcione mesmo se a tabela estiver filtrada ou ordenada.
+                    
+                    /**
+                     * 2. O SEGREDO: Usamos removeIf para percorrer a lista real e 
+                     * apagar apenas o item que bate com a descrição e data, 
+                     * garantindo que ele NÃO SEJA um agendado (!g.isAgendado()).
                      */
-                    int modelIndex = table.convertRowIndexToModel(linhaSelecionada);
-                    
-                    // 4. Remove o item da lista global
-                    Repositorio.getLista().remove(modelIndex);
+                    Repositorio.getLista().removeIf(g -> 
+                        !g.isAgendado() && 
+                        g.getDescricao().equals(descTabela) &&
+                        String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()).equals(dataTabela)
+                    );
 
-                    // 5. Sincroniza a interface e o banco de dados (Repositorio)
-                    carregarTabela();      // Atualiza o extrato
-                    atualizarDashboard(); // Atualiza os totais no dashboard
+                    // 3. Atualiza as telas
+                    carregarTabela();      
+                    atualizarDashboard(); 
                     
-                    JOptionPane.showMessageDialog(null, "Registro removido com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Registro removido!");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para excluir.");
+                JOptionPane.showMessageDialog(null, "Selecione uma transação no histórico.");
             }
         });
         btnExcluir.setBackground(new Color(149, 0, 0));
@@ -807,7 +881,17 @@ public class Telas extends JFrame {
         panelPagamentos.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
         modeloPagamentos = new DefaultTableModel(new String[]{"Data", "Descrição", "Valor", "Status"}, 0);
-        tablePagamentos = new JTable(modeloPagamentos); // 1. Criar a tabela primeiro
+        modeloPagamentos = new DefaultTableModel(new String[]{"Data", "Descrição", "Valor", "Status"}, 0) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Bloqueia a edição em todas as células
+            }
+        };
+        
+        tablePagamentos = new JTable(modeloPagamentos);
+        
         tablePagamentos.getColumnModel().getColumn(0).setPreferredWidth(75);  // Data
         tablePagamentos.getColumnModel().getColumn(1).setPreferredWidth(100); // Descrição
         tablePagamentos.getColumnModel().getColumn(2).setPreferredWidth(70);  // Valor
@@ -933,267 +1017,248 @@ public class Telas extends JFrame {
     }
     
     private JPanel telaSaldo() {
+        // --- 1. INICIALIZAÇÃO DOS COMPONENTES ---
+        panelSaldo = new JPanel(new BorderLayout());
+        panelSaldo.setBackground(new Color(216, 216, 216));
 
-    	    // --- 1. INICIALIZAÇÃO DOS COMPONENTES (Evita o NullPointerException) ---
-    	    panelSaldo = new JPanel(new BorderLayout());
-    	    panelSaldo.setBackground(new Color(216, 216, 216));
+        // Cabeçalho
+        panelCabecalho = new JPanel(new BorderLayout());
+        panelCabecalho.setBackground(new Color(216, 216, 216));
+        panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 15, 25));
 
-    	    // Cabeçalho
-    	    panelCabecalho = new JPanel(new BorderLayout());
-    	    panelCabecalho.setBackground(new Color(216, 216, 216));
-    	    panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 15, 25));
+        lblLogo = new JLabel("CA$H HUB");
+        lblLogo.setFont(new Font("Tahoma", Font.BOLD, 28));
+        lblLogo.setForeground(new Color(31, 33, 38));
 
-    	    lblLogo = new JLabel("CA$H HUB");
-    	    lblLogo.setFont(new Font("Tahoma", Font.BOLD, 28));
-    	    lblLogo.setForeground(new Color(31, 33, 38));
+        // Criamos o label do usuário (Apenas uma vez aqui)
+        lblUsuarioSaldo = new JLabel("Gustavo Dornellas");
+        lblUsuarioSaldo.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+        lblUsuarioSaldo.setForeground(new Color(31, 33, 38));
 
-    	    lblUsuario = new JLabel("Gustavo Dornellas");
-    	    lblUsuario.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-    	    lblUsuario.setForeground(new Color(31, 33, 38));
+        btnPerfil = new JButton();
+        ImageIcon iconConfiguracao = new ImageIcon(getClass().getResource("/cashhub/view/imagens/configuracoes.png"));
+        Image imgConfiguracao = iconConfiguracao.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        btnPerfil.setIcon(new ImageIcon(imgConfiguracao));
+        btnPerfil.setFocusPainted(false);
+        btnPerfil.setBorderPainted(false);
+        btnPerfil.setContentAreaFilled(false);
+        btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnPerfil.addActionListener(e -> configuracaoPopup());
 
-    	    btnPerfil = new JButton();
-            ImageIcon iconConfiguracao = new ImageIcon(
-                getClass().getResource("/cashhub/view/imagens/configuracoes.png")
-            );
-            Image imgConfiguracao = iconConfiguracao.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
-            btnPerfil.setIcon(new ImageIcon(imgConfiguracao));
-            btnPerfil.setFocusPainted(false);
-            btnPerfil.setBorderPainted(false);
-            btnPerfil.setContentAreaFilled(false);
-            btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            btnPerfil.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    configuracaoPopup();
+        // Painel Perfil (Onde estava o erro: Criamos antes de adicionar os itens)
+        panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        panelPerfil.setBackground(new Color(216, 216, 216));
+        panelPerfil.add(lblUsuarioSaldo);
+        panelPerfil.add(btnPerfil);
+
+        panelCabecalho.add(lblLogo, BorderLayout.WEST);
+        panelCabecalho.add(panelPerfil, BorderLayout.EAST);
+        panelSaldo.add(panelCabecalho, BorderLayout.NORTH);
+
+        // --- 2. CORPO E FORMULÁRIO (Exatamente seu visual original) ---
+        panelCorpo = new JPanel(new BorderLayout(30, 0));
+        panelCorpo.setBackground(new Color(216, 216, 216));
+        panelCorpo.setBorder(BorderFactory.createEmptyBorder(10, 35, 35, 35));
+
+        panelRegistro = new JPanel(new BorderLayout(0, 20));
+        panelRegistro.setBackground(new Color(216, 216, 216));
+        lblTituloAdicionarRegistro = new JLabel("ADICIONAR NOVO REGISTRO");
+        lblTituloAdicionarRegistro.setFont(new Font("ABeeZee", Font.BOLD, 20));
+        lblTituloAdicionarRegistro.setForeground(new Color(31, 33, 38));
+        panelRegistro.add(lblTituloAdicionarRegistro, BorderLayout.NORTH);
+
+        panelFormulario = new JPanel(new GridLayout(10, 1, 0, 8));
+        panelFormulario.setBackground(new Color(216, 216, 216));
+        
+        panelTipo = new JPanel(new GridLayout(1, 3, 20, 0));
+        panelTipo.setBackground(new Color(216, 216, 216));
+
+        btnAdicionar = new JButton("Adicionar");
+        btnAdicionar.setFocusPainted(false);
+        btnAdicionar.setBackground(new Color(0, 128, 0));
+        btnAdicionar.setForeground(Color.WHITE);
+
+        btnRetirar = new JButton("Retirar");
+        btnRetirar.setFocusPainted(false);
+        btnRetirar.setBackground(new Color(149, 0, 0));
+        btnRetirar.setForeground(Color.WHITE);
+
+        btnPagamentoFuturo = new JButton("Pagamento Futuro");
+        btnPagamentoFuturo.setFocusPainted(false);
+        btnPagamentoFuturo.setForeground(Color.WHITE);
+        btnPagamentoFuturo.setBackground(new Color(0, 112, 127));
+
+        panelTipo.add(btnAdicionar);
+        panelTipo.add(btnRetirar);
+        panelTipo.add(btnPagamentoFuturo);
+
+        txtValor = new JTextField("EX: R$ 2000");
+        txtValor.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+        txtValor.setForeground(new Color(216, 216, 216));
+        txtValor.setBorder(null);
+
+        txtData = new JTextField("EX: 22/04/2026");
+        txtData.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+        txtData.setForeground(new Color(216, 216, 216));
+        txtData.setBorder(null);
+
+        String[] categorias = {"💰 Renda", "🗓️ Agendado", "🍴 Alimentação", "📚 Educação", "❤️ Autocuidado", "🚗 Transporte", "🎭 Lazer", "🏥 Saúde", "✈️ Viagens", "🐾 Pets", "🔧 Manutenção", "🏠 Moradia", "⚙️ Outros"};
+        listaCategoria = new JComboBox<>(new DefaultComboBoxModel<>(categorias));
+        listaCategoria.setBackground(Color.WHITE);
+        listaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+        listaCategoria.setBorder(null);
+
+        txtDescricao = new JTextArea();
+
+        // Placeholder Logic (Mantida)
+        txtValor.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtValor.getText().equals("EX: R$ 2000")) {
+                    txtValor.setText("");
+                    txtValor.setForeground(Color.BLACK);
                 }
-            });
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (txtValor.getText().isEmpty()) {
+                    txtValor.setForeground(Color.LIGHT_GRAY);
+                    txtValor.setText("EX: R$ 2000");
+                }
+            }
+        });
 
-    	    // Formulário e Inputs
-    	    lblTItuloTipoTrasacao = new JLabel("Tipo de Transação");
-    	    
-    	    btnAdicionar = new JButton("Adicionar");
-    	    btnAdicionar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
-    	    btnAdicionar.setBackground(new Color(0, 128, 0));
-    	    btnAdicionar.setForeground(Color.WHITE);
+        txtData.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtData.getText().equals("EX: 22/04/2026")) {
+                    txtData.setText("");
+                    txtData.setForeground(new Color(31, 33, 38));
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (txtData.getText().isEmpty()) {
+                    txtData.setForeground(Color.LIGHT_GRAY);
+                    txtData.setText("EX: 22/04/2026");
+                }
+            }
+        });
 
-    	    btnRetirar = new JButton("Retirar");
-    	    btnRetirar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
-    	    btnRetirar.setBackground(new Color(149, 0, 0));
-    	    btnRetirar.setForeground(Color.WHITE);
+        // Button Listeners (Mantidos)
+        btnAdicionar.addActionListener(e -> {
+            ehDespesa = false; ehPagamentoFuturo = false;
+            txtValor.setForeground(new Color(140, 170, 140));
+            listaCategoria.setSelectedItem("💰 Renda");
+        });
+        btnRetirar.addActionListener(e -> {
+            ehDespesa = true; ehPagamentoFuturo = false;
+            txtValor.setForeground(new Color(170, 140, 140));
+            listaCategoria.setSelectedItem("⚙️ Outros");
+        });
+        btnPagamentoFuturo.addActionListener(e -> {
+            ehDespesa = true; ehPagamentoFuturo = true;
+            txtValor.setForeground(new Color(0, 112, 127));
+            listaCategoria.setSelectedItem("🗓️ Agendado");
+        });
 
-    	    btnPagamentoFuturo = new JButton("Pagamento Futuro");
-    	    btnPagamentoFuturo.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
-    	    btnPagamentoFuturo.setForeground(Color.WHITE);
-    	    btnPagamentoFuturo.setBackground(new Color(0, 112, 127));
+        panelFormulario.add(new JLabel("Tipo de Transação"));
+        panelFormulario.add(panelTipo);
+        panelFormulario.add(new JLabel("Valor:"));
+        panelFormulario.add(txtValor);
+        panelFormulario.add(new JLabel("Data:"));
+        panelFormulario.add(txtData);
+        panelFormulario.add(new JLabel("Categoria:"));
+        panelFormulario.add(listaCategoria);
+        panelFormulario.add(new JLabel("Descrição:"));
+        panelFormulario.add(new JScrollPane(txtDescricao));
 
-    	    txtValor = new JTextField("EX: R$ 2000");
-    	    txtValor.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-    	    txtValor.setForeground(new Color(216, 216, 216));
-    	    txtValor.setBorder(null);
+        panelRegistro.add(panelFormulario, BorderLayout.CENTER);
 
-    	    txtData = new JTextField("EX: 22/04/2026");
-    	    txtData.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-    	    txtData.setForeground(new Color(216, 216, 216));
-    	    txtData.setBorder(null);
+        // --- 3. BOTÕES INFERIORES ---
+        panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+        panelBotoes.setBackground(new Color(216, 216, 216));
 
-    	    String[] categorias = {
-    	        "Renda", "Agendado", "Alimentação", "Educação", "Autocuidado", "Transporte", "Lazer", 
-    	        "Saúde", "Viagens", "Pets", "Manutenção", "Moradia", "Outros"
-    	    };
-    	    
-    	    btnAdicionar.addActionListener(e -> {
-    	        ehDespesa = false;
-    	        ehPagamentoFuturo = false; // Não é agendado
-    	        txtValor.setForeground(new Color(140, 170, 140));
-    	        listaCategoria.setSelectedItem("Renda"); // Muda automaticamente
-    	    });
+        btnCancelar = new JButton("Cancelar");
+        btnCancelar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnCancelar.setPreferredSize(new Dimension(100, 30));
+        btnCancelar.setBackground(new Color(73, 73, 73));
+        btnCancelar.setForeground(Color.WHITE);
 
-    	    btnRetirar.addActionListener(e -> {
-    	        ehDespesa = true;
-    	        ehPagamentoFuturo = false; // Não é agendado
-    	        txtValor.setForeground(new Color(170, 140, 140));
-    	        listaCategoria.setSelectedItem("Outros"); // Reseta para o padrão de gasto
-    	    });
+        btnSalvar = new JButton("Salvar Transação");
+        btnSalvar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnSalvar.setPreferredSize(new Dimension(170, 30));
+        btnSalvar.setBackground(new Color(31, 33, 38));
+        btnSalvar.setForeground(Color.WHITE);
 
-    	    btnPagamentoFuturo.addActionListener(e -> {
-    	        ehDespesa = true; // Geralmente um pagamento futuro é uma saída
-    	        ehPagamentoFuturo = true;
-    	        txtValor.setForeground(new Color(0, 112, 127)); // Cor do azul petróleo
-    	        listaCategoria.setSelectedItem("Agendado"); //
-    	    });
-    	    
-    	    listaCategoria = new JComboBox<>(new DefaultComboBoxModel<>(categorias));
-    	    listaCategoria.setBackground(Color.WHITE);
-    	    listaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-    	    listaCategoria.setBorder(null);
+        btnSalvar.addActionListener(e -> {
+            try {
+                String desc = txtDescricao.getText();
+                String catSel = (String) listaCategoria.getSelectedItem();
+                
+                // Conversão de valores
+                String valorTexto = txtValor.getText().replace("R$", "").replace(" ", "").replace(",", ".");
+                double valor = Double.parseDouble(valorTexto);
+                if (ehDespesa) valor = Math.abs(valor) * -1;
 
-    	    txtDescricao = new JTextArea();
-    	    lblTituloAdicionarRegistro = new JLabel("ADICIONAR NOVO REGISTRO");
-    	    lblTituloAdicionarRegistro.setFont(new Font("ABeeZee", Font.BOLD, 20));
-    	    lblTituloAdicionarRegistro.setForeground(new Color(31, 33, 38));
+                String[] p = txtData.getText().split("/");
+                if (p.length != 3) throw new Exception("Formato de data inválido!");
 
-    	    txtValor.addFocusListener(new FocusAdapter() {
-    	        @Override
-    	        public void focusGained(FocusEvent e) {
-    	            if (txtValor.getText().equals("EX: R$ 2000")) {
-    	                txtValor.setText("");
-    	                txtValor.setForeground(Color.BLACK);
-    	            }
-    	        }
-    	        @Override
-    	        public void focusLost(FocusEvent e) {
-    	            if (txtValor.getText().isEmpty()) {
-    	                txtValor.setForeground(Color.LIGHT_GRAY);
-    	                txtValor.setText("EX: R$ 2000");
-    	            }
-    	        }
-    	    });
+                Gasto novo = new Gasto(0, valor, desc, Integer.parseInt(p[2]), Integer.parseInt(p[1]), Integer.parseInt(p[0]), new cashhub.model.Categoria(0, catSel), false);
+                novo.setAgendado(ehPagamentoFuturo);
+                
+                // Salva e atualiza
+                Repositorio.salvar(novo);
+                atualizarDashboard(); 
+                carregarTabela();
 
-    	    txtData.addFocusListener(new FocusAdapter() {
-    	        @Override
-    	        public void focusGained(FocusEvent e) {
-    	            if (txtData.getText().equals("EX: 22/04/2026")) {
-    	                txtData.setText("");
-    	                txtData.setForeground(new Color(31, 33, 38));
-    	            }
-    	        }
-    	        @Override
-    	        public void focusLost(FocusEvent e) {
-    	            if (txtData.getText().isEmpty()) {
-    	                txtData.setForeground(Color.LIGHT_GRAY);
-    	                txtData.setText("EX: 22/04/2026");
-    	            }
-    	        }
-    	    });
+                // --- AQUI ESTÁ A MENSAGEM QUE FALTAVA ---
+                JOptionPane.showMessageDialog(null, "Registro de '" + catSel + "' salvo com sucesso!", "Ca$h Hub", JOptionPane.INFORMATION_MESSAGE);
 
-    	    panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-    	    panelPerfil.setBackground(new Color(216, 216, 216));
-    	    panelPerfil.add(lblUsuario);
-    	    panelPerfil.add(btnPerfil);
+                // Volta para o dashboard
+                cardLayout.show(panelTelas, "dashboard");
+                
+                // Limpa os campos para a próxima vez
+                txtValor.setText("EX: R$ 2000");
+                txtValor.setForeground(new Color(216, 216, 216));
+                txtData.setText("EX: 22/04/2026");
+                txtData.setForeground(new Color(216, 216, 216));
+                txtDescricao.setText("");
 
-    	    panelCabecalho.add(lblLogo, BorderLayout.WEST);
-    	    panelCabecalho.add(panelPerfil, BorderLayout.EAST);
-    	    panelSaldo.add(panelCabecalho, BorderLayout.NORTH);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex.getMessage());
+            }
+        });
 
-    	    panelCorpo = new JPanel(new BorderLayout(30, 0));
-    	    panelCorpo.setBackground(new Color(216, 216, 216));
-    	    panelCorpo.setBorder(BorderFactory.createEmptyBorder(10, 35, 35, 35));
+        panelBotoes.add(btnCancelar);
+        panelBotoes.add(btnSalvar);
+        panelRegistro.add(panelBotoes, BorderLayout.SOUTH);
+        panelCorpo.add(panelRegistro, BorderLayout.CENTER);
+        panelSaldo.add(panelCorpo, BorderLayout.CENTER);
+        
+     // --- Lógica do Botão Cancelar ---
+        btnCancelar.addActionListener(e -> {
+            // Reseta os campos para o estado original (Placeholders)
+            txtValor.setText("EX: R$ 2000");
+            txtValor.setForeground(new Color(216, 216, 216));
+            
+            txtData.setText("EX: 22/04/2026");
+            txtData.setForeground(new Color(216, 216, 216));
+            
+            txtDescricao.setText("");
+            
+            // Reseta a lista de categorias para a primeira opção
+            if (listaCategoria != null) {
+                listaCategoria.setSelectedIndex(0);
+            }
 
-    	    panelRegistro = new JPanel(new BorderLayout(0, 20));
-    	    panelRegistro.setBackground(new Color(216, 216, 216));
-    	    panelRegistro.add(lblTituloAdicionarRegistro, BorderLayout.NORTH);
+            // Reseta as flags de controle interno
+            ehDespesa = false;
+            ehPagamentoFuturo = false;
+        });
 
-    	    panelFormulario = new JPanel(new GridLayout(10, 1, 0, 8));
-    	    panelFormulario.setBackground(new Color(216, 216, 216));
-    	    
-    	    panelTipo = new JPanel(new GridLayout(1, 3, 20, 0));
-    	    panelTipo.setBackground(new Color(216, 216, 216));
-    	    panelTipo.add(btnAdicionar);
-    	    panelTipo.add(btnRetirar);
-    	    panelTipo.add(btnPagamentoFuturo);
-
-    	    panelFormulario.add(new JLabel("Tipo de Transação"));
-    	    panelFormulario.add(panelTipo);
-    	    panelFormulario.add(new JLabel("Valor:"));
-    	    panelFormulario.add(txtValor);
-    	    panelFormulario.add(new JLabel("Data:"));
-    	    panelFormulario.add(txtData);
-    	    panelFormulario.add(new JLabel("Categoria:")); // Label da Categoria
-    	    panelFormulario.add(listaCategoria);          // Lista Suspensa
-    	    panelFormulario.add(new JLabel("Descrição:"));
-    	    panelFormulario.add(new JScrollPane(txtDescricao));
-
-    	    panelRegistro.add(panelFormulario, BorderLayout.CENTER);
-
-    	    // Botões Inferiores (Salvar/Cancelar)
-    	    panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
-    	    panelBotoes.setBackground(new Color(216, 216, 216));
-
-    	    btnCancelar = new JButton("Cancelar");
-    	    btnCancelar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
-    	    btnCancelar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
-    	    btnCancelar.setPreferredSize(new Dimension(100, 30));
-    	    btnCancelar.setBackground(new Color(73, 73, 73));
-    	    btnCancelar.setForeground(Color.WHITE);
-    	    btnCancelar.addActionListener(e -> {
-    	        txtValor.setText("EX: R$ 2000");
-    	        txtValor.setForeground(new Color(216, 216, 216));
-    	        txtData.setText("EX: 22/04/2026");
-    	        txtData.setForeground(new Color(216, 216, 216));
-    	        txtDescricao.setText("");
-    	        listaCategoria.setSelectedIndex(0);
-    	        ehDespesa = false;
-    	        ehPagamentoFuturo = false;
-    	    });
-
-    	    btnSalvar = new JButton("Salvar Transação");
-    	    btnSalvar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
-    	    btnSalvar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
-    	    btnSalvar.setPreferredSize(new Dimension(170, 30));
-    	    btnSalvar.setBackground(new Color(31, 33, 38));
-    	    btnSalvar.setForeground(Color.WHITE);
-    	    btnSalvar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    	     
-    	    btnSalvar.addActionListener(new ActionListener() {
-    	        public void actionPerformed(ActionEvent e) {
-    	            try {
-    	                String desc = txtDescricao.getText();
-    	                String categoriaSelecionada = (String) listaCategoria.getSelectedItem();
-    	                
-    	                // Limpa formatação de moeda se houver e converte
-    	                String valorTexto = txtValor.getText().replace("R$", "").replace(" ", "").replace(",", ".");
-    	                double valor = Double.parseDouble(valorTexto);
-
-    	                if (ehDespesa) {
-    	                    valor = Math.abs(valor) * -1;
-    	                }
-
-    	                String dataTexto = txtData.getText();
-    	                String[] partes = dataTexto.split("/");
-    	                if (partes.length != 3) throw new Exception("Data incompleta");
-
-    	                int dia = Integer.parseInt(partes[0]);
-    	                int mes = Integer.parseInt(partes[1]);
-    	                int ano = Integer.parseInt(partes[2]);
-
-    	                // Criação do objeto com a categoria selecionada
-    	                cashhub.model.Categoria cat = new cashhub.model.Categoria(0, categoriaSelecionada);
-    	                Gasto novo = new Gasto(0, valor, desc, ano, mes, dia, cat, false);
-    	                
-    	                novo.setAgendado(ehPagamentoFuturo); // Aqui você "avisa" se é agendado ou não
-    	                	
-    	                Repositorio.salvar(novo);
-    	                
-    	                // Atualiza a interface
-    	                atualizarDashboard();
-    	                carregarTabela();
-
-    	                JOptionPane.showMessageDialog(null, "Registro de " + categoriaSelecionada + " salvo!");
-    	                
-    	                // Volta para o dashboard e limpa campos
-    	                cardLayout.show(panelTelas, "dashboard");
-    	                txtValor.setText("EX: R$ 2000");
-    	                txtValor.setForeground(new Color(216, 216, 216));
-    	                txtData.setText("EX: 22/04/2026");
-    	                txtData.setForeground(new Color(216, 216, 216));
-    	                txtDescricao.setText("");
-    	                listaCategoria.setSelectedIndex(0);
-    	                ehDespesa = false;
-    	                ehPagamentoFuturo = false;
-
-    	            } catch (Exception ex) {
-    	                JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex.getMessage());
-    	            }
-    	        }
-    	    });
-    	    
-    	    panelBotoes.add(btnCancelar);
-    	    panelBotoes.add(btnSalvar);
-    	    panelRegistro.add(panelBotoes, BorderLayout.SOUTH);
-    	    panelCorpo.add(panelRegistro, BorderLayout.CENTER);
-    	    panelSaldo.add(panelCorpo, BorderLayout.CENTER);
-
-    	    return panelSaldo;
-    	}
+        return panelSaldo;
+    }
     
     private void configuracaoPopup() {
         dialogConfiguracao = new JDialog(this, "Configurações", true); // Cria um estilo popUp ligado na tela principal
@@ -1206,6 +1271,34 @@ public class Telas extends JFrame {
         contentPaneConfiguracao.setBackground(new Color(216, 216, 216));
         contentPaneConfiguracao.setLayout(null);
         dialogConfiguracao.setContentPane(contentPaneConfiguracao);
+        
+        JPanel panelHeader = new JPanel();
+        panelHeader.setBounds(0, 0, 375, 116);
+        panelHeader.setLayout(null);
+        contentPaneConfiguracao.add(panelHeader);
+        
+
+     // CAMPO PARA EDITAR O NOME
+        JTextField txtEditarNome = new JTextField(lblUsuarioDash.getText());
+        txtEditarNome.setFont(new Font("ABeeZee", Font.PLAIN, 21));
+        txtEditarNome.setBounds(121, 35, 200, 30);
+        panelHeader.add(txtEditarNome);
+        
+     // Botão Salvar Nome
+        JButton btnSalvarNome = new JButton("Salvar Nome");
+        btnSalvarNome.setBounds(121, 75, 110, 25);
+        btnSalvarNome.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnSalvarNome.addActionListener(e -> {
+            String novoNome = txtEditarNome.getText();
+            if (!novoNome.trim().isEmpty()) {
+                if (lblUsuarioDash != null) lblUsuarioDash.setText(novoNome);
+                if (lblUsuarioExtrato != null) lblUsuarioExtrato.setText(novoNome);
+                if (lblUsuarioSaldo != null) lblUsuarioSaldo.setText(novoNome);
+                
+                JOptionPane.showMessageDialog(dialogConfiguracao, "Nome atualizado!");
+            }
+        });
+        panelHeader.add(btnSalvarNome);       
 
         JPanel panelPerfil = new JPanel();
         panelPerfil.setBorder(new LineBorder(new Color(31, 33, 38)));
@@ -1236,7 +1329,7 @@ public class Telas extends JFrame {
             btnVoltar.setBorderPainted(false);
             btnVoltar.setContentAreaFilled(false);
             btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnVoltar.addActionListener(new ActionListener() {
+            btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialogConfiguracao.dispose();
             }
@@ -1460,17 +1553,21 @@ public class Telas extends JFrame {
 	 */
 	public void carregarTabelaPagamentos() {
 	    if (modeloPagamentos == null) return;
+	    modeloPagamentos.setRowCount(0);
 	    
-	    modeloPagamentos.setRowCount(0); 
+	 // Obtém a data de hoje para comparação
+	    LocalDate hoje = LocalDate.now();
 
 	    for (Gasto g : Repositorio.getLista()) {
 	        // Regra: Se o gasto FOR agendado, ele entra nesta tabela
 	        if (g.isAgendado()) {
+	        	String statusReal = g.identificarStatus(hoje.getDayOfMonth(), hoje.getMonthValue(), hoje.getYear());
+	        	
 	            modeloPagamentos.addRow(new Object[] {
 	                String.format("%02d/%02d/%d", g.getDia(), g.getMes(), g.getAno()),
 	                g.getDescricao(),
 	                String.format("R$ %.2f", Math.abs(g.getValor())),
-	                "Pendente" 
+	                statusReal
 	            });
 	        }
 	    }
