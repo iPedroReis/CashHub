@@ -183,37 +183,71 @@ public class Telas extends JFrame {
      * Configura dimensões, centralização e inicializa os componentes de UI.
      */
     
+    /**
+     * Constrói a interface inicial de boas-vindas e identificação do usuário.
+     * Utiliza GridBagLayout para garantir o alinhamento centralizado dos componentes
+     * e CardLayout para a transição de contexto após a entrada.
+     */
     private JPanel telaIdentificacao() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(216, 216, 216));
+        
+        // Configuração inicial das restrições de posicionamento (GridBagConstraints)
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-
+        gbc.insets = new Insets(10, 10, 10, 10); // Define o espaçamento entre componentes
+        
+        // 1. Mensagem de Boas-vindas
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
         JLabel lblMsg = new JLabel("Bem-vindo! Qual o seu nome?");
         lblMsg.setFont(new Font("ABeeZee", Font.BOLD, 18));
-        gbc.gridx = 0; gbc.gridy = 0;
         panel.add(lblMsg, gbc);
 
-        JTextField txtNomeEntrada = new JTextField(15);
+        /**
+         * Reinstanciação do GBC para evitar conflitos de associação no editor visual (WindowBuilder).
+         * Garante que cada componente possua seu próprio rastro de restrições no GridBagLayout.
+         */
+        gbc = new GridBagConstraints(); 
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0; 
         gbc.gridy = 1;
+        JTextField txtNomeEntrada = new JTextField(15);
         panel.add(txtNomeEntrada, gbc);
 
+        // 2. Botão de Acesso ao Sistema
+        gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0; 
+        gbc.gridy = 2;
         JButton btnEntrar = new JButton("Entrar no Sistema");
         btnEntrar.setBackground(new Color(31, 33, 38));
         btnEntrar.setForeground(Color.WHITE);
+        btnEntrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        /**
+         * Lógica de Personalização e Navegação:
+         * Valida a entrada do usuário e replica o nome inserido em todos os labels 
+         * de perfil do sistema para manter a consistência da UI.
+         */
         btnEntrar.addActionListener(e -> {
             if (!txtNomeEntrada.getText().trim().isEmpty()) {
                 String nome = txtNomeEntrada.getText();
+                
+                // Sincroniza o nome do usuário entre as diferentes telas do sistema
                 lblUsuarioDash.setText(nome);
                 lblUsuarioExtrato.setText(nome);
                 lblUsuarioSaldo.setText(nome);
-                cardLayout.show(panelTelas, "dashboard"); // Vai para o Dashboard
+                
+                // Transição de tela via CardLayout para o Dashboard principal
+                cardLayout.show(panelTelas, "dashboard"); 
             } else {
+                // Validação de segurança para impedir o acesso sem identificação
                 JOptionPane.showMessageDialog(null, "Por favor, insira seu nome.");
             }
         });
-        gbc.gridy = 2;
-        panel.add(btnEntrar, gbc);
+        
+        // Adiciona o componente de ação ao painel principal de identificação
+        panel.add(btnEntrar, gbc); 
 
         return panel;
     }
