@@ -1,35 +1,49 @@
 package cashhub.model;
 
-public class Usuario extends EntidadeBase { // Declara a classe "Usuario" que herda da classe "EntidadeBase"
+/**
+ * Representa o operador do sistema Ca$h Hub.
+ * Armazena as informações de perfil necessárias para a personalização 
+ * da interface e identificação do proprietário dos dados financeiros[cite: 91, 334].
+ */
+public class Usuario extends EntidadeBase {
 
-	private String email; // Declara uma variável do tipo String chamada "email"
-	private String nome; // Declara uma variável do tipo String chamada "nome"
+	private String email;
+	private String nome;
 
-	
-	
-	public Usuario(int id, String email, String nome) { // Declara o construtor da classe com parâmetros "id", "email" e "nome"
-		super(id); // chama id da classe entidade
-		this.email = email; // Atribui o valor ao atributo "email"
-		this.nome = nome; // Atribui o valor ao atributo "nome"
+	/**
+	 * Construtor para inicialização do perfil do usuário.
+	 * @param id Identificador único herdado da superclasse EntidadeBase[cite: 330].
+	 * @param email Endereço de correio eletrônico para contato ou login.
+	 * @param nome Nome de exibição utilizado nos cabeçalhos do software.
+	 */
+	public Usuario(int id, String email, String nome) {
+		super(id); // Inicializa o identificador na classe raiz da hierarquia
+		this.email = email;
+		this.nome = nome;
 	}	
 	
-	public String getEmail() { // Método que retorna o valor do atributo "email"
-		return email; // Retorna o valor armazenado
+	public String getEmail() {
+		return email;
 	}
 	
-	public void setEmail(String email) { // Método que altera o valor do atributo "email"
-		this.email = email; // Atualiza o atributo com o novo valor
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
-	public String getNome() { // Método que retorna o valor do atributo "nome"
-		return nome; // Retorna o valor armazenado
+	public String getNome() {
+		return nome;
 	}
 	
-	public void setNome(String nome) { // Método que altera o valor do atributo "nome"
-		if (nome != null && !nome.isEmpty()) { // Verifica se o nome não é nulo e não está vazio
-			this.nome = nome; // Atualiza o atributo com valor válido
+	/**
+	 * Altera o nome do usuário garantindo a integridade da informação.
+	 * Aplica uma validação para impedir que campos vazios ou nulos 
+	 * comprometam a unidade visual da aplicação[cite: 275].
+	 */
+	public void setNome(String nome) {
+		if (nome != null && !nome.isEmpty()) {
+			this.nome = nome;
 		} else {
-			System.out.println("Erro: O nome não pode ser vazio."); // Exibe mensagem de erro no console
+			System.out.println("Erro: O nome não pode ser vazio.");
 		}
 	}
 }

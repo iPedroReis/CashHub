@@ -1,60 +1,88 @@
 package cashhub.model;
 
-import java.util.ArrayList; // Importa a classe ArrayList para criação de listas dinâmicas
-import java.util.List; // Importa a interface List para manipulação de coleções
+import java.util.ArrayList;
+import java.util.List;
 
-public class Repositorio { // Declara a classe "Repositorio" responsável por armazenar os gastos
+/**
+ * Camada de persistência em memória do sistema CA$H HUB.
+ * Utiliza o padrão de membros estáticos para centralizar o armazenamento de dados,
+ * garantindo que todas as telas (View) acessem a mesma base de informações[cite: 314, 337].
+ */
+public class Repositorio {
 
 
-	private static List<Gasto> listaGastos = new ArrayList<>(); // Declara uma lista estática de objetos "Gasto" inicializada como ArrayList
+	/**
+	 * Lista centralizada de registros. O modificador static assegura a consistência
+	 * dos dados entre diferentes instâncias de telas no CardLayout[cite: 314, 320].
+	 */
+	private static List<Gasto> listaGastos = new ArrayList<>();
 	
-	public static void salvar(Gasto gasto) { // Método estático que recebe um objeto "Gasto" como parâmetro
-		listaGastos.add(gasto); // Adiciona o objeto "gasto" à lista de gastos
+	/**
+	 * Registra uma nova transação na lista global.
+	 */
+	public static void salvar(Gasto gasto) {
+		listaGastos.add(gasto);
 	}
 	
-	public static List<Gasto> getLista() { // Método que retorna a lista de gastos
-		return listaGastos; // Retorna a lista completa de gastos
+	/**
+	 * Fornece acesso à coleção completa de transações para operações de listagem e filtragem.
+	 */
+	public static List<Gasto> getLista() {
+		return listaGastos;
 	}
 	
-	
-	
-	public static double calcularTotalGanhos() { // Método que calcula o total de ganhos (valores positivos)
-		double total = 0; // Declara variável "total" inicializada com zero
-		for (Gasto g : listaGastos) { // Percorre cada objeto "Gasto" na lista
-			if (!g.isAgendado() && g.getValor() > 0) {  // Verifica se o gasto NÃO é agendado e se o valor é positivo
-				total += g.getValor(); // Soma o valor ao total
+	/**
+	 * Calcula o somatório de todas as entradas confirmadas.
+	 * Filtra registros agendados para garantir que o saldo reflita apenas o fluxo real [cite: 272-273].
+	 */
+	public static double calcularTotalGanhos() {
+		double total = 0;
+		for (Gasto g : listaGastos) {
+			if (!g.isAgendado() && g.getValor() > 0) { 
+				total += g.getValor();
 			}
 		}
-		return total; // Retorna o total de ganhos
+		return total;
 	}
 	
-	public static double calcularTotalDespesas() { // Método que calcula o total de despesas (valores negativos)
-		double total = 0; // Declara variável "total" inicializada com zero
-		for (Gasto g : listaGastos) { // Percorre cada objeto "Gasto" na lista
-			if (!g.isAgendado() && g.getValor() < 0) {  // Verifica se o gasto NÃO é agendado e se o valor é negativo
-				total += g.getValor(); // Soma o valor ao total
+	/**
+	 * Calcula o somatório de todas as saídas confirmadas.
+	 * Retorna o valor absoluto para facilitar a exibição estética na interface gráfica[cite: 242].
+	 */
+	public static double calcularTotalDespesas() {
+		double total = 0;
+		for (Gasto g : listaGastos) {
+			if (!g.isAgendado() && g.getValor() < 0) { 
+				total += g.getValor();
 			}
 		}
-		return Math.abs(total); // Retorna o valor absoluto do total (positivo)
+		return Math.abs(total);
 	}
 	
-	public static Gasto getUltimoGanho() { // Método que retorna o último ganho registrado
-		List<Gasto> lista = getLista(); // Obtém a lista de gastos
-		for (int i = lista.size() - 1; i >= 0; i--) { // Percorre a lista de trás para frente
-			if (!lista.get(i).isAgendado() && lista.get(i).getValor() > 0) {  // Verifica se o gasto NÃO é agendado e se o valor é positivo
-				return lista.get(i); // Retorna o último ganho encontrado
+	/**
+	 * Localiza o ganho mais recente para exibição no resumo do Dashboard[cite: 171].
+	 * Realiza uma busca em ordem reversa para otimizar a recuperação do dado.
+	 */
+	public static Gasto getUltimoGanho() {
+		List<Gasto> lista = getLista();
+		for (int i = lista.size() - 1; i >= 0; i--) {
+			if (!lista.get(i).isAgendado() && lista.get(i).getValor() > 0) { 
+				return lista.get(i);
 			}
 		}
-		return null; // Retorna null caso não encontre nenhum ganho
+		return null;
 	}
 	
-	public static Gasto getUltimaDespesa() { // Método que retorna a última despesa registrada
-		List<Gasto> lista = getLista(); // Obtém a lista de gastos
-		for (int i = lista.size() - 1; i >= 0; i--) { // Percorre a lista de trás para frente
-			if (!lista.get(i).isAgendado() && lista.get(i).getValor() < 0) { // Verifica se o gasto NÃO é agendado e se o valor é negativo
-				return lista.get(i); // Retorna a última despesa encontrada
+	/**
+	 * Localiza a despesa mais recente para exibição no resumo do Dashboard[cite: 171].
+	 */
+	public static Gasto getUltimaDespesa() {
+		List<Gasto> lista = getLista();
+		for (int i = lista.size() - 1; i >= 0; i--) {
+			if (!lista.get(i).isAgendado() && lista.get(i).getValor() < 0) {
+				return lista.get(i);
 			}
 		}
-		return null; // Retorna null caso não encontre nenhuma despesa
+		return null;
 	}
 }

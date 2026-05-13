@@ -1,143 +1,154 @@
 package cashhub.model;
 
-public class Gasto extends EntidadeBase { // Declara a classe "Gasto" que herda da classe "EntidadeBase"
+/**
+ * Entidade que representa uma transação financeira (Entrada ou Saída).
+ * Herda as propriedades básicas da EntidadeBase e implementa a lógica central
+ * para o processamento do fluxo de caixa e alertas de vencimento.
+ */
+public class Gasto extends EntidadeBase { 
 	
-	private double valor; // Declara uma variável do tipo double chamada "valor"
-	private String descricao; // Declara uma variável do tipo String chamada "descricao"
-	private int ano; //Declara uma variável do tipo inteiro chamada "ano"
-	private int mes; // Declara uma variável do tipo inteiro chamada "mes"
-	private int dia; // Declara uma variável do tipo inteiro chamada "dia"
-	private Categoria categoria; // Declara um objeto do tipo "Categoria" 
-	private boolean pago; // Declara uma variável do tipo boolean (true, false)
+	private double valor; 
+	private String descricao;
+	private int ano;
+	private int mes;
+	private int dia;
+	private Categoria categoria; // Composição: Gasto possui um vínculo obrigatório com uma Categoria
+	private boolean pago;
+	private boolean agendado; // Controle de status para agendamentos futuros
 	
-	
-	// 10/05/26 - adicionado posteriormente à documentação (diagrama de classe)
-	private boolean agendado;
-	
+	/**
+	 * Construtor completo para a criação de um novo registro financeiro.
+	 * @param id Identificador único herdado.
+	 * @param valor Quantia monetária da transação.
+	 * @param categoria Vínculo com a classificação do gasto.
+	 */
 	public Gasto(int id, double valor, String descricao, int ano, int mes, int dia, Categoria categoria, boolean pago) { 
-	// Declara o construtor da classe com todos os atributos como parâmetros
-		super(id);  // pega o id da entidade base
-		this.valor = valor; // Atribui o valor ao atributo "valor"
-		this.descricao = descricao; // Atribui o valor ao atributo "descricao"
-		this.ano = ano; // Atribui o valor ao atributo "ano"
-		this.mes = mes; // Atribui o valor ao atributo "mes"
-		this.dia = dia; // Atribui o valor ao atributo "dia"
-		this.categoria = categoria; // Atribui o objeto ao atributo "categoria"
-		this.pago = pago; // Atribui o valor ao atributo "pago"
+		super(id);  // Inicialização do identificador via superclasse
+		this.valor = valor;
+		this.descricao = descricao;
+		this.ano = ano;
+		this.mes = mes;
+		this.dia = dia;
+		this.categoria = categoria;
+		this.pago = pago;
 	}	
 	
-	
+	/**
+	 * Sobrescrita de método que caracteriza o uso de Polimorfismo.
+	 * Personaliza a exibição do resumo conforme a natureza da classe Gasto.
+	 */
 	@Override
-	public String obterResumo() { // Sobrescreve o método "obterResumo" da entidade
-		return "Gasto [" + getDescricao() + "] - R$ " + getValor(); // Retorna um resumo do gasto com descrição e valor
+	public String obterResumo() { 
+		return "Gasto [" + getDescricao() + "] - R$ " + getValor();
 	}
 	
-	public double getValor() { // Método que retorna o valor do atributo "valor"
-		return valor;		   // Retorna o valor armazenado
+	public double getValor() {
+		return valor;
 	}
 	
-	public int getAno() { // Método que retorna o valor do atributo "ano"
-		return ano; // Retorna o valor armazenado
+	public int getAno() {
+		return ano;
 	}
 	
-	
-	public int getMes() { // Método que retorna o valor do atributo "mes"
-		return mes; // Retorna o valor armazenado
+	public int getMes() {
+		return mes;
 	}
 	
-	public int getDia() { // Método que retorna o valor do atributo "dia"
-		return dia; // Retorna o valor armazenado
+	public int getDia() {
+		return dia;
 	}
 	
+	/**
+	 * Garante a integridade dos dados através do Encapsulamento,
+	 * impedindo o registro de transações com valores zerados ou negativos.
+	 */
+	public void setValor(double valor) {
+	    if (valor == 0) {
+	        throw new IllegalArgumentException("O valor da transação não pode ser zero.");
+	    }
+	    this.valor = valor;
+	}
 	
-	public void setValor(double valor) { // Método que altera o valor do atributo "valor"
-		if (valor > 0) { // Verifica se o valor é positivo
-			this.valor = valor; // Atualiza o atributo com valor válido
+	public void setAno (int ano) {
+		if (ano >= 2026 && ano <= 2100) {
+			this.ano = ano;
 		} else {
-			System.out.println("Erro: Valor deve ser positivo."); // Exibe mensagem de erro no console
+			System.out.println("Erro: Ano inválido. O sistema aceita a partir de 2026.");
 		}
 	}
 	
-	public void setAno (int ano) { // Método que altera o valor do atributo "ano"
-		if (ano >= 2026 && ano <= 2100) { // Verifica se o ano está dentro do intervalo permitido
-			this.ano = ano; // Atualiza o atributo com valor válido
+	public void setMes (int mes) {
+		if (mes >= 1 && mes <= 12) {
+			this.mes = mes;
 		} else {
-			System.out.println("Erro: Ano inválido. O sistema aceita a partir de 2026."); // Exibe mensagem de erro no console
-		}
-	}
-	
-	public void setMes (int mes) { // Método que altera o valor do atributo "mes"
-		if (mes >= 1 && mes <= 12) { // Verifica se o mês está dentro do intervalo válido
-			this.mes = mes; // Atualiza o atributo com valor válido
-		} else {
-			System.out.println("Erro: Mês inválido."); // Exibe mensagem de erro no console
+			System.out.println("Erro: Mês inválido.");
 		}	
-		
 	}
 	
-	public void setDia (int dia) {// Método que altera o valor do atributo "dia"
-		if (dia < 1 || dia > 31) { // Verifica se o dia está fora do intervalo válido
-			throw new IllegalArgumentException("Erro: Dia inválido (deve ser entre 1 e 31)."); // Lança uma exceção informando erro
+	/**
+	 * Implementação de validação de datas considerando as variações mensais
+	 * para assegurar a consistência dos dados temporais no repositório.
+	 */
+	public void setDia (int dia) {
+		if (dia < 1 || dia > 31) {
+			throw new IllegalArgumentException("Erro: Dia inválido (deve ser entre 1 e 31).");
 		}
 		
-		if ((this.mes == 4 || this.mes == 6 || this.mes == 9 || this.mes == 11) && dia > 30) { // Verifica meses que possuem apenas 30 dias
-			throw new IllegalArgumentException("Erro: Este mês possui apenas 30 dias.");	// Lança uma exceção informando erro
+		if ((this.mes == 4 || this.mes == 6 || this.mes == 9 || this.mes == 11) && dia > 30) {
+			throw new IllegalArgumentException("Erro: Este mês possui apenas 30 dias.");
 		} 
 		
-		else if (this.mes == 2 && dia > 28) { // Verifica se é fevereiro e o dia é inválido
-			throw new IllegalArgumentException("Erro: Fevereiro possui apenas 28 dias (ou 29 em anos bissextos)."); // Lança uma exceção informando erro
-		} else { // Caso seja válido
-			this.dia = dia; // Atualiza o atributo "dia"
+		else if (this.mes == 2 && dia > 28) {
+			throw new IllegalArgumentException("Erro: Fevereiro possui apenas 28 dias.");
+		} else {
+			this.dia = dia;
 		}
 	}
 
-
-	public String getDescricao() { // Método que retorna o valor do atributo "descricao"
-		return descricao; // Retorna o valor armazenado
+	public String getDescricao() {
+		return descricao;
 	}
 
-
-	public void setDescricao(String descricao) { // Método que altera o valor do atributo "descricao"
-		this.descricao = descricao; // Atualiza o atributo
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-
-	public Categoria getCategoria() { // Método que retorna o objeto "categoria"
-
-		return categoria; // Retorna o valor armazenado
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-
-	public void setCategoria(Categoria categoria) { // Método que altera o objeto "categoria"
-		this.categoria = categoria; // Atualiza o atributo
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
-
-	public boolean isPago() { // Método que retorna o valor do atributo "pago"
-		return pago; // Retorna o valor armazenado
+	public boolean isPago() {
+		return pago;
 	}
 
-
-	public void setPago(boolean pago) { // Método que altera o valor do atributo "pago"
-		this.pago = pago; // Atualiza o atributo
+	public void setPago(boolean pago) {
+		this.pago = pago;
 	}
 	
-	public String identificarStatus (int diaAtual, int mesAtual, int anoAtual) { // Método que identifica o status do gasto com base na data atual
-		// 1. Vence Hoje:
-		if (this.ano == anoAtual && this.mes == mesAtual && this.dia == diaAtual) { // Verifica se a data do gasto é igual à data atual
-			return "Vence Hoje"; // Retorna status "Vence Hoje"
+	/**
+	 * Lógica proativa que identifica o status temporal da transação.
+	 * Atua como motor para o sistema de alertas preventivos do CA$H HUB.
+	 * @return Status textual ("Vencido", "Vence Hoje" ou "Pendente").
+	 */
+	public String identificarStatus (int diaAtual, int mesAtual, int anoAtual) {
+		// Verificação de igualdade para alerta imediato
+		if (this.ano == anoAtual && this.mes == mesAtual && this.dia == diaAtual) {
+			return "Vence Hoje";
 		}
 		
-		// 2. Vencido:
+		// Verificação retrospectiva para identificar atrasos
 		if (this.ano < anoAtual || 
 			(this.ano == anoAtual && this.mes < mesAtual ||
 			(this.ano == anoAtual && this.mes == mesAtual && this.dia < diaAtual))) {
 			return "Vencido";
-			// Verifica se a data do gasto já passou
 		}
 		
-		// 3. Pendente: (Se for no futuro)
-		return "Pendente"; // Retorna "Pendente" se a data ainda não chegou
+		// Status padrão para agendamentos futuros
+		return "Pendente";
 	}
 	
 	public boolean isAgendado() {

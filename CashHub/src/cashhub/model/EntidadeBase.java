@@ -1,22 +1,36 @@
 package cashhub.model;
 
+/**
+ * Classe abstrata que serve como base para todas as entidades do sistema.
+ * Garante que todos os objetos do modelo possuam um identificador único e
+ * define o contrato para exibição de resumos (Polimorfismo).
+ */
 public abstract class EntidadeBase {
-	private int id; // Declara uma variável do tipo inteiro chamada "id"
 	
-	public EntidadeBase(int id) { // Declara o construtor da classe com parâmetro "id"
-		this.id = id; // Atribui o valor do parâmetro "id" ao atributo da classe
+	private int id;
+	
+	/**
+	 * Construtor base para inicialização do identificador.
+	 * @param id Identificador único da entidade.
+	 */
+	public EntidadeBase(int id) {
+		this.id = id;
 	}
 	
-	
-	public int getId() { // Método que retorna o valor do atributo "id"
-		return id; // Retorna o valor armazenado em "id"
+	public int getId() {
+		return id;
 	}
 	
-	public void setId(int id) { // Método que altera o valor do atributo "id"
-		this.id = id; // Atualiza o atributo "id" com o novo valor
+	public void setId(int id) {
+		this.id = id;
 	}
 	
-	public String obterResumo() { // Método que retorna um resumo em formato de texto
-		return "ID: " + id; // Retorna uma String contendo o texto "ID: " junto com o valor do atributo "id"
+	/**
+	 * Fornece uma representação textual básica da entidade.
+	 * Este método é projetado para ser sobrescrito nas subclasses (Polimorfismo),
+	 * permitindo que cada tipo de objeto exiba seus dados específicos.
+	 */
+	public String obterResumo() {
+		return "ID: " + id;
 	}
 }
