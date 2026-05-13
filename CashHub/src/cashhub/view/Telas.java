@@ -14,15 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.time.LocalDate;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.SwingConstants;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -37,24 +34,19 @@ import javax.swing.Box;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import cashhub.model.Gasto;
 import cashhub.model.Repositorio;
-
 import javax.swing.table.DefaultTableModel;
-
 import javax.swing.ImageIcon;
 import java.awt.Image;
-
 import javax.swing.JDialog;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class Telas extends JFrame {
+public class Telas extends JFrame { // Classe principal, que controla todas as telas
 
-    private static final long serialVersionUID = 1L;
-    
+	private static final long serialVersionUID = 1L;
     private JPanel contentPane;
 	private JTextField txtR;
 	private JLabel lblValorGanhoMes;
@@ -112,7 +104,7 @@ public class Telas extends JFrame {
 	private JLabel lblLogo;
 	private JButton btnVisualizarExtratoCompleto;
 	private JButton btnAlterarSaldo;
-	
+	private JButton btnExcluir;
 	private JTextField txtRExtrato;
 	private JTable table;
 	private JLabel lblValorGanhoMesExtrato;
@@ -130,7 +122,10 @@ public class Telas extends JFrame {
 	private JLabel lblTituloPagamentosFuturos;
 	private JLabel lblPagamentosDesc;
 	private JPanel panelTextoPagamentos;
-	
+	private JPanel panelEdicao;
+	private JPanel panelAcoes;
+	private JPanel panelLadoDireito;
+	private JButton btnEditar;
 	private JTextField txtPlanoPremium;
 	private JDialog dialogConfiguracao;
 	private JPanel contentPaneConfiguracao;
@@ -144,10 +139,28 @@ public class Telas extends JFrame {
     private JTextField txtBuscaCategoria;
     private JTable tablePagamentos;
     private DefaultTableModel modeloPagamentos;
-    
     private JButton btnVoltar;
+    private JPanel panelCabecalhoConfig;
+    private JTextField txtEditarNome;
+    private JButton btnSalvarNome;
+    private JLabel lblTituloNomeConta;
+    private JLabel lblTituloMembro;
+    private JPanel panel_1;
+    private JPanel panel_2;
+    private JPanel panel_3;
+    private JPanel panel_4;
+    private JLabel lblTituloMoeda;
+    private JLabel lblTituloPreferencias;
+    private JLabel lblTituloGerenciamentoDePlano;
+    private JLabel lblTituloAlertaLimite;
+    private JLabel lblTituloGastos80;
+    private JLabel lblTituloPagamentosMensais;
+    private JLabel lblTituloLembreteContas;
+    private JLabel lblTituloNotificaesAlertas;
+    private JPanel panelBusca;
+    private JLabel lblLogoMenu;
     
-
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -168,7 +181,6 @@ public class Telas extends JFrame {
         setMinimumSize(new Dimension(700, 500));
         setLocationRelativeTo(null);
         
-
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         setContentPane(contentPane);
@@ -177,26 +189,25 @@ public class Telas extends JFrame {
         telas();
     }
 
-    private void menuLateral() {
+    private void menuLateral() { // Criação do menu lateral
     	
         panelLateral = new JPanel();
         panelLateral.setBackground(new Color(31, 33, 38));
         panelLateral.setPreferredSize(new Dimension(150, 0));
-        panelLateral.setLayout(new BoxLayout(panelLateral, BoxLayout.Y_AXIS));
+        panelLateral.setLayout(new BoxLayout(panelLateral, BoxLayout.Y_AXIS)); //Serve para organizar de forma vertical os componentes
         
-        ImageIcon iconLogo = new ImageIcon(
+        ImageIcon iconLogo = new ImageIcon( // Carrega a imagem da pasta que contem as imagens
         	    getClass().getResource("/cashhub/view/imagens/logo com fundo e cor bege.png")
         	);
-
-        	Image imgLogo = iconLogo.getImage().getScaledInstance(125, 125, Image.SCALE_SMOOTH);
-
-        	JLabel lblLogoMenu = new JLabel(new ImageIcon(imgLogo));
-        	lblLogoMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        	
+        Image imgLogo = iconLogo.getImage().getScaledInstance(125, 125, Image.SCALE_SMOOTH);
+        lblLogoMenu = new JLabel(new ImageIcon(imgLogo));
+        lblLogoMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
         	
         	
         
         btnDashboard = new JButton("Dashboard"); // Botão do Dashboard
-        btnDashboard.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnDashboard.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
         btnDashboard.setBackground(new Color(31, 33, 38));
         btnDashboard.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         btnDashboard.setForeground(new Color(216, 216, 216));
@@ -228,17 +239,16 @@ public class Telas extends JFrame {
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent e) {
 
-                int larguraJanela = getWidth();
-
-                int larguraMenu = larguraJanela / 7;
+                int larguraJanela = getWidth();	// Pega o tamanho da janela
+                int larguraMenu = larguraJanela / 7; // Calcula proporcionalmente a largura do menu lateral de acordo com o tamanho da janela
 
                 if (larguraMenu < 150) {
                     larguraMenu = 150;
-                }
+                } // Largura minima do menu lateral
 
                 if (larguraMenu > 270) {
                     larguraMenu = 270;
-                }
+                } // Largura maxima do menu lateral
 
                 panelLateral.setPreferredSize(new Dimension(larguraMenu, 0));
 
@@ -267,15 +277,16 @@ public class Telas extends JFrame {
                 contentPane.revalidate();
                 contentPane.repaint();
                 
-                int fonteBotao = larguraMenu / 12;
+                int fonteBotao = larguraMenu / 12; // Calcula proporcionalmente a largura do menu lateral de acordo com o tamanho da janela
 
                 if (fonteBotao < 14) {
                     fonteBotao = 14;
-                }
+                } // Largura minima do botão
+
 
                 if (fonteBotao > 22) {
                     fonteBotao = 22;
-                }
+                }// Largura maxima do botão
 
                 Font fonteMenu = new Font("Tahoma", Font.PLAIN, fonteBotao);
 
@@ -310,7 +321,7 @@ public class Telas extends JFrame {
 
         // BOTÃO EXTRATO
         btnExtrato = new JButton("Extrato");
-        btnExtrato.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnExtrato.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
         btnExtrato.setBackground(new Color(31, 33, 38));
         btnExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         btnExtrato.setForeground(new Color(216, 216, 216));
@@ -339,7 +350,7 @@ public class Telas extends JFrame {
 
         // BOTÃO SALDO
         btnSaldo = new JButton("Saldo");
-        btnSaldo.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnSaldo.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
         ImageIcon iconSaldo = new ImageIcon(
         	    getClass().getResource("/cashhub/view/imagens/saldo.png")
         	);
@@ -367,7 +378,7 @@ public class Telas extends JFrame {
         });
 
 
-        // CENTRALIZAÇÃO VERTICAL
+        // Centralizar os botões do menu lateral
         panelLateral.add(Box.createVerticalStrut(30));
         panelLateral.add(lblLogoMenu);
         panelLateral.add(Box.createVerticalStrut(50));
@@ -463,7 +474,7 @@ public class Telas extends JFrame {
         
 
         btnAlterarSaldo = new JButton("Alterar Saldo");
-        btnAlterarSaldo.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnAlterarSaldo.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
         btnAlterarSaldo.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) { // Define o que acontece quando o botão é clicado
                     cardLayout.show(panelTelas, "cadastro"); // Torna o panel visivel
@@ -535,7 +546,7 @@ public class Telas extends JFrame {
         panelTopoTransacoes.add(lblTituloTransacoes, BorderLayout.WEST);
 
         btnVisualizarExtratoCompleto = new JButton("Visualizar extrato completo");
-        btnVisualizarExtratoCompleto.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnVisualizarExtratoCompleto.setFocusPainted(false);// Desativa a faixa azul ao clicar no botão
         btnVisualizarExtratoCompleto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnVisualizarExtratoCompleto.setForeground(new Color(216, 216, 216));
         btnVisualizarExtratoCompleto.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -602,82 +613,125 @@ public class Telas extends JFrame {
         panelExtrato = new JPanel(new BorderLayout());
         panelExtrato.setBackground(new Color(216, 216, 216));
 
-        // --- 1. CABEÇALHO (Logo + Filtro + Perfil) ---
+     // --- 1. CABEÇALHO (Logo + Filtro + Perfil) ---
         panelCabecalho = new JPanel(new BorderLayout());
         panelCabecalho.setBackground(new Color(216, 216, 216));
         panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 10, 25));
 
-        // Painel para agrupar Logo e Filtro no canto esquerdo
-        JPanel panelLogoBusca = new JPanel();
-        panelLogoBusca.setBackground(new Color(216, 216, 216));
-        GridBagLayout gbl_panelLogoBusca = new GridBagLayout();
-        gbl_panelLogoBusca.columnWidths = new int[]{30, 49, 30, 201, 0};
-        gbl_panelLogoBusca.rowHeights = new int[]{6, 0, 3, 0};
-        gbl_panelLogoBusca.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_panelLogoBusca.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
-        panelLogoBusca.setLayout(gbl_panelLogoBusca);
+        // Painel que segura logo e barra de pesquisa
+        panelBusca = new JPanel(new BorderLayout(20, 0));
+        panelBusca.setBackground(new Color(216, 216, 216));
 
-        // Painel de Perfil (Lado Direito)
+        // Logo da tela de extrato
+        lblLogo = new JLabel("CA$H HUB");
+        lblLogo.setFont(new Font("Tahoma", Font.BOLD, 30));
+        lblLogo.setForeground(new Color(31, 33, 38));
+
+        // Painel interno que segura somente a barra de pesquisa
+        JPanel panelCampoBusca = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        panelCampoBusca.setBackground(new Color(216, 216, 216));
+
+        // Campo de pesquisa
+        txtBuscaCategoria = new JTextField();
+        txtBuscaCategoria.setText("Filtrar por categoria");
+        txtBuscaCategoria.setBackground(Color.WHITE);
+        txtBuscaCategoria.setForeground(Color.GRAY);
+        txtBuscaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+        txtBuscaCategoria.setPreferredSize(new Dimension(220, 28));
+
+        // Quando o usuário clicar no campo, remove o texto de exemplo
+        txtBuscaCategoria.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (txtBuscaCategoria.getText().equals("Filtrar por categoria")) {
+                    txtBuscaCategoria.setText("");
+                    txtBuscaCategoria.setForeground(new Color(31, 33, 38));
+                }
+            }
+
+            public void focusLost(FocusEvent e) {
+                if (txtBuscaCategoria.getText().isEmpty()) {
+                    txtBuscaCategoria.setText("Filtrar por categoria");
+                    txtBuscaCategoria.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        // Atualiza a tabela conforme o usuário digita
+        txtBuscaCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                carregarTabela();
+            }
+        });
+
+        // Ajusta o tamanho da barra de pesquisa conforme a janela muda
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent e) {
+
+                int larguraBusca = getWidth() / 5; // Calcula a largura baseada na janela
+
+                if (larguraBusca < 180) { // Define largura mínima
+                    larguraBusca = 180;
+                }
+
+                if (larguraBusca > 350) { // Define largura máxima
+                    larguraBusca = 350;
+                }
+
+                txtBuscaCategoria.setPreferredSize(new Dimension(larguraBusca, 28)); // Aplica o tamanho
+
+                txtBuscaCategoria.revalidate(); // Atualiza o campo
+                txtBuscaCategoria.repaint(); // Redesenha o campo
+            }
+        });
+
+        // Adiciona o campo de pesquisa dentro do painel
+        panelCampoBusca.add(txtBuscaCategoria);
+
+        // Adiciona a logo no lado esquerdo
+        panelBusca.add(lblLogo, BorderLayout.WEST);
+
+        // Adiciona a barra de pesquisa no centro
+        panelBusca.add(panelCampoBusca, BorderLayout.CENTER);
+
+        // Painel de perfil no lado direito
         panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelPerfil.setBackground(new Color(216, 216, 216));
-        lblUsuarioExtrato = new JLabel("Gustavo Dornellas"); 
+
+        lblUsuarioExtrato = new JLabel("Gustavo Dornellas");
         lblUsuarioExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 14));
         lblUsuarioExtrato.setForeground(new Color(31, 33, 38));
-        panelPerfil.add(lblUsuarioExtrato);
+
         btnPerfil = new JButton();
+
         ImageIcon iconConfiguracao = new ImageIcon(
             getClass().getResource("/cashhub/view/imagens/configuracoes.png")
         );
+
         Image imgConfiguracao = iconConfiguracao.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+
         btnPerfil.setIcon(new ImageIcon(imgConfiguracao));
         btnPerfil.setFocusPainted(false);
         btnPerfil.setBorderPainted(false);
         btnPerfil.setContentAreaFilled(false);
         btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         btnPerfil.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 configuracaoPopup();
             }
         });
-        
+
+        panelPerfil.add(lblUsuarioExtrato);
         panelPerfil.add(btnPerfil);
-        
-        lblUsuarioExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 
-        panelCabecalho.add(panelLogoBusca, BorderLayout.CENTER);
-        
-                // Configuração do Filtro
-                txtBuscaCategoria = new JTextField(15);
-                txtBuscaCategoria.setBackground(new Color(255, 255, 255));
-                txtBuscaCategoria.setForeground(new Color(31, 33, 38));
-                txtBuscaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-                txtBuscaCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
-                    public void keyReleased(java.awt.event.KeyEvent evt) { carregarTabela(); }
-                });
-                JLabel label = new JLabel("Filtrar:");
-                label.setForeground(new Color(31, 33, 38));
-                label.setFont(new Font("ABeeZee", Font.PLAIN, 15));
-                GridBagConstraints gbc_label = new GridBagConstraints();
-                gbc_label.anchor = GridBagConstraints.WEST;
-                gbc_label.insets = new Insets(0, 0, 5, 5);
-                gbc_label.gridx = 1;
-                gbc_label.gridy = 1;
-                panelLogoBusca.add(label, gbc_label);
-                GridBagConstraints gbc_txtBuscaCategoria = new GridBagConstraints();
-                gbc_txtBuscaCategoria.insets = new Insets(0, 0, 5, 0);
-                gbc_txtBuscaCategoria.anchor = GridBagConstraints.NORTHWEST;
-                gbc_txtBuscaCategoria.gridx = 3;
-                gbc_txtBuscaCategoria.gridy = 1;
-                panelLogoBusca.add(txtBuscaCategoria, gbc_txtBuscaCategoria);
+        // Adiciona logo + busca no centro do cabeçalho
+        panelCabecalho.add(panelBusca, BorderLayout.CENTER);
+
+        // Adiciona perfil no lado direito do cabeçalho
         panelCabecalho.add(panelPerfil, BorderLayout.EAST);
-        panelExtrato.add(panelCabecalho, BorderLayout.NORTH);
-        
-                lblLogo = new JLabel("CA$H HUB");
-                panelCabecalho.add(lblLogo, BorderLayout.WEST);
-                lblLogo.setFont(new Font("Tahoma", Font.BOLD, 30));
-                lblLogo.setForeground(new Color(31, 33, 38));
 
-        // --- 2. ÁREA CENTRAL (Tabelas e Balanço) ---
+        // Adiciona cabeçalho no topo da tela de extrato
+        panelExtrato.add(panelCabecalho, BorderLayout.NORTH);
         panelPrincipalExtrato = new JPanel(new BorderLayout(15, 0));
         panelPrincipalExtrato.setBackground(new Color(216, 216, 216));
         panelPrincipalExtrato.setBorder(BorderFactory.createEmptyBorder(5, 25, 25, 25));
@@ -723,9 +777,9 @@ public class Telas extends JFrame {
         panelCentroExtrato.add(scrollPane, BorderLayout.CENTER);
 
         // Botoes CRUD Embaixo da Tabela Principal
-        JPanel panelAcoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelAcoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelAcoes.setBackground(new Color(216, 216, 216));
-        JButton btnEditar = new JButton("Editar");
+        btnEditar = new JButton("Editar");
         btnEditar.setBackground(new Color(255, 255, 255));
         btnEditar.setFont(new Font("ABeeZee", Font.PLAIN, 12));
      // --- Lógica do Botão Editar (Substitua no método telaExtrato) ---
@@ -772,7 +826,7 @@ public class Telas extends JFrame {
                 }
 
                 // 3. Organização do Layout do formulário de edição
-                JPanel panelEdicao = new JPanel(new GridLayout(0, 1, 5, 5));
+                panelEdicao = new JPanel(new GridLayout(0, 1, 5, 5));
                 panelEdicao.add(new JLabel("Descrição:"));
                 panelEdicao.add(editDesc);
                 panelEdicao.add(new JLabel("Valor (R$):"));
@@ -833,7 +887,8 @@ public class Telas extends JFrame {
             }
         });
         	
-        JButton btnExcluir = new JButton("Excluir");
+        btnExcluir = new JButton("Excluir");
+        btnExcluir.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
         btnExcluir.setFont(new Font("ABeeZee", Font.PLAIN, 12));
         btnExcluir.addActionListener(e -> {
             // 1. Verifica qual linha está selecionada na tabela
@@ -878,7 +933,7 @@ public class Telas extends JFrame {
         panelCentroExtrato.add(panelAcoes, BorderLayout.SOUTH);
 
         // LADO DIREITO: Balanço e Agendados
-        JPanel panelLadoDireito = new JPanel(new GridLayout(2, 1, 0, 15));
+        panelLadoDireito = new JPanel(new GridLayout(2, 1, 0, 15));
         panelLadoDireito.setBackground(new Color(216, 216, 216));
         panelLadoDireito.setPreferredSize(new Dimension(230, 0));
 
@@ -1074,7 +1129,7 @@ public class Telas extends JFrame {
         btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnPerfil.addActionListener(e -> configuracaoPopup());
 
-        // Painel Perfil (Onde estava o erro: Criamos antes de adicionar os itens)
+       
         panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelPerfil.setBackground(new Color(216, 216, 216));
         panelPerfil.add(lblUsuarioSaldo);
@@ -1084,7 +1139,6 @@ public class Telas extends JFrame {
         panelCabecalho.add(panelPerfil, BorderLayout.EAST);
         panelSaldo.add(panelCabecalho, BorderLayout.NORTH);
 
-        // --- 2. CORPO E FORMULÁRIO (Exatamente seu visual original) ---
         panelCorpo = new JPanel(new BorderLayout(30, 0));
         panelCorpo.setBackground(new Color(216, 216, 216));
         panelCorpo.setBorder(BorderFactory.createEmptyBorder(10, 35, 35, 35));
@@ -1209,14 +1263,14 @@ public class Telas extends JFrame {
         panelBotoes.setBackground(new Color(216, 216, 216));
 
         btnCancelar = new JButton("Cancelar");
-        btnCancelar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnCancelar.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
         btnCancelar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnCancelar.setPreferredSize(new Dimension(100, 30));
         btnCancelar.setBackground(new Color(73, 73, 73));
         btnCancelar.setForeground(Color.WHITE);
         
         btnSalvar = new JButton("Salvar Transação");
-        btnSalvar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnSalvar.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
         btnSalvar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnSalvar.setPreferredSize(new Dimension(170, 30));
         btnSalvar.setBackground(new Color(31, 33, 38));
@@ -1243,7 +1297,6 @@ public class Telas extends JFrame {
                 atualizarDashboard(); 
                 carregarTabela();
 
-                // --- AQUI ESTÁ A MENSAGEM QUE FALTAVA ---
                 JOptionPane.showMessageDialog(null, "Registro de '" + catSel + "' salvo com sucesso!", "Ca$h Hub", JOptionPane.INFORMATION_MESSAGE);
 
                 // Volta para o dashboard
@@ -1303,21 +1356,23 @@ public class Telas extends JFrame {
         contentPaneConfiguracao.setLayout(null);
         dialogConfiguracao.setContentPane(contentPaneConfiguracao);
         
-        JPanel panelHeader = new JPanel();
-        panelHeader.setBounds(0, 0, 375, 116);
-        panelHeader.setLayout(null);
-        contentPaneConfiguracao.add(panelHeader);
+        panelCabecalhoConfig = new JPanel();
+        panelCabecalhoConfig.setBounds(0, 0, 375, 116);
+        panelCabecalhoConfig.setLayout(null);
+        contentPaneConfiguracao.add(panelCabecalhoConfig);
         
-
+       
+        
      // CAMPO PARA EDITAR O NOME
-        JTextField txtEditarNome = new JTextField(lblUsuarioDash.getText());
+        txtEditarNome = new JTextField(lblUsuarioDash.getText());
         txtEditarNome.setFont(new Font("ABeeZee", Font.PLAIN, 21));
         txtEditarNome.setBounds(121, 35, 200, 30);
-        panelHeader.add(txtEditarNome);
+        panelCabecalhoConfig.add(txtEditarNome);
         
      // Botão Salvar Nome
-        JButton btnSalvarNome = new JButton("Salvar Nome");
-        btnSalvarNome.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
+        btnSalvarNome = new JButton("Salvar Nome");
+        btnSalvarNome.setFocusPainted(false); // Desativa a faixa azul ao clicar no botão
+        btnSalvarNome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnSalvarNome.setBounds(121, 75, 110, 25);
         btnSalvarNome.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnSalvarNome.setBackground(new Color(31, 33, 38));
@@ -1332,21 +1387,21 @@ public class Telas extends JFrame {
                 JOptionPane.showMessageDialog(dialogConfiguracao, "Nome atualizado!");
             }
         });
-        panelHeader.add(btnSalvarNome);       
+        panelCabecalhoConfig.add(btnSalvarNome);       
 
-        JPanel panelPerfil = new JPanel();
+        panelPerfil = new JPanel();
         panelPerfil.setBorder(new LineBorder(new Color(31, 33, 38)));
         panelPerfil.setBackground(new Color(216, 216, 216));
         panelPerfil.setBounds(-2, -5, 375, 116);
         panelPerfil.setLayout(null);
         contentPaneConfiguracao.add(panelPerfil);
 
-        JLabel lblNewLabel_3 = new JLabel("Gustavo Dornellas");
-        lblNewLabel_3.setFont(new Font("ABeeZee", Font.PLAIN, 21));
-        lblNewLabel_3.setBounds(121, 35, 183, 19);
-        panelPerfil.add(lblNewLabel_3);
+        lblTituloNomeConta = new JLabel("Gustavo Dornellas");
+        lblTituloNomeConta.setFont(new Font("ABeeZee", Font.PLAIN, 21));
+        lblTituloNomeConta.setBounds(121, 35, 183, 19);
+        panelPerfil.add(lblTituloNomeConta);
 
-        JLabel lblTituloMembro = new JLabel("Membro desde fev 2026");
+        lblTituloMembro = new JLabel("Membro desde fev 2026");
         lblTituloMembro.setForeground(Color.GRAY);
         lblTituloMembro.setFont(new Font("ABeeZee", Font.PLAIN, 12));
         lblTituloMembro.setBounds(121, 57, 183, 14);
@@ -1354,6 +1409,8 @@ public class Telas extends JFrame {
 
         btnVoltar = new JButton();
         btnVoltar.setBounds(10, 11, 25, 25);
+        btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         ImageIcon iconVoltar = new ImageIcon(
                 getClass().getResource("/cashhub/view/imagens/seta-esquerda.png")
             );
@@ -1362,7 +1419,6 @@ public class Telas extends JFrame {
             btnVoltar.setFocusPainted(false);
             btnVoltar.setBorderPainted(false);
             btnVoltar.setContentAreaFilled(false);
-            btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialogConfiguracao.dispose();
@@ -1370,26 +1426,26 @@ public class Telas extends JFrame {
         });
         panelPerfil.add(btnVoltar);
 
-        JPanel panel_1 = new JPanel();
+        panel_1 = new JPanel();
         panel_1.setLayout(null);
         panel_1.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         panel_1.setBackground(new Color(216, 216, 216));
         panel_1.setBounds(3, 110, 367, 362);
         contentPaneConfiguracao.add(panel_1);
 
-        JLabel lblTituloPreferencias = new JLabel("Preferências do Usuário");
+        lblTituloPreferencias = new JLabel("Preferências do Usuário");
         lblTituloPreferencias.setForeground(new Color(31, 33, 38));
         lblTituloPreferencias.setFont(new Font("ABeeZee", Font.BOLD, 15));
         lblTituloPreferencias.setBounds(10, 23, 205, 14);
         panel_1.add(lblTituloPreferencias);
 
-        JPanel panel_3 = new JPanel();
+        panel_3 = new JPanel();
         panel_3.setBackground(new Color(216, 216, 216));
         panel_3.setBounds(10, 48, 347, 68);
         panel_1.add(panel_3);
         panel_3.setLayout(null);
 
-        JLabel lblTituloMoeda = new JLabel("Moeda Base");
+        lblTituloMoeda = new JLabel("Moeda Base");
         lblTituloMoeda.setForeground(new Color(31, 33, 38));
         lblTituloMoeda.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         lblTituloMoeda.setBounds(10, 21, 83, 14);
@@ -1409,25 +1465,25 @@ public class Telas extends JFrame {
         boxMoedaBase.setBackground(new Color(216, 216, 216));
         panel_3.add(boxMoedaBase);
 
-        JPanel panel_2 = new JPanel();
+        panel_2 = new JPanel();
         panel_2.setBackground(new Color(216, 216, 216));
         panel_2.setBounds(10, 132, 347, 99);
         panel_1.add(panel_2);
         panel_2.setLayout(null);
 
-        JLabel lblTituloNotificaesAlertas = new JLabel("Notificações & Alertas");
+        lblTituloNotificaesAlertas = new JLabel("Notificações & Alertas");
         lblTituloNotificaesAlertas.setBounds(10, 11, 167, 18);
         lblTituloNotificaesAlertas.setForeground(new Color(31, 33, 38));
         lblTituloNotificaesAlertas.setFont(new Font("ABeeZee", Font.BOLD, 15));
         panel_2.add(lblTituloNotificaesAlertas);
 
-        JLabel lblTituloLembreteContas = new JLabel("Lembrete de contas");
+        lblTituloLembreteContas = new JLabel("Lembrete de contas");
         lblTituloLembreteContas.setForeground(new Color(31, 33, 38));
         lblTituloLembreteContas.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         lblTituloLembreteContas.setBounds(10, 37, 132, 14);
         panel_2.add(lblTituloLembreteContas);
 
-        JLabel lblTituloPagamentosMensais = new JLabel("Notifique pagamentos mensais");
+        lblTituloPagamentosMensais = new JLabel("Notifique pagamentos mensais");
         lblTituloPagamentosMensais.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         lblTituloPagamentosMensais.setForeground(Color.GRAY);
         lblTituloPagamentosMensais.setBounds(10, 51, 202, 14);
@@ -1440,13 +1496,13 @@ public class Telas extends JFrame {
         checkbxLembrete.setSelected(true);
         panel_2.add(checkbxLembrete);
 
-        JLabel lblTituloAlertaLimite = new JLabel("Alerta de limite de orçamento");
+        lblTituloAlertaLimite = new JLabel("Alerta de limite de orçamento");
         lblTituloAlertaLimite.setForeground(new Color(31, 33, 38));
         lblTituloAlertaLimite.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         lblTituloAlertaLimite.setBounds(10, 71, 187, 14);
         panel_2.add(lblTituloAlertaLimite);
 
-        JLabel lblTituloGastos80 = new JLabel("Notifique quando gastos excederem 80%");
+        lblTituloGastos80 = new JLabel("Notifique quando gastos excederem 80%");
         lblTituloGastos80.setForeground(Color.GRAY);
         lblTituloGastos80.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         lblTituloGastos80.setBounds(10, 85, 223, 14);
@@ -1458,13 +1514,13 @@ public class Telas extends JFrame {
         checkbxLimite.setBounds(307, 67, 23, 23);
         panel_2.add(checkbxLimite);
 
-        JPanel panel_4 = new JPanel();
+        panel_4 = new JPanel();
         panel_4.setBackground(new Color(216, 216, 216));
         panel_4.setBounds(10, 242, 347, 109);
         panel_1.add(panel_4);
         panel_4.setLayout(null);
 
-        JLabel lblTituloGerenciamentoDePlano = new JLabel("Gerenciamento de Plano");
+        lblTituloGerenciamentoDePlano = new JLabel("Gerenciamento de Plano");
         lblTituloGerenciamentoDePlano.setBounds(10, 11, 184, 18);
         lblTituloGerenciamentoDePlano.setForeground(new Color(31, 33, 38));
         lblTituloGerenciamentoDePlano.setFont(new Font("ABeeZee", Font.BOLD, 15));
@@ -1545,8 +1601,11 @@ public class Telas extends JFrame {
 	    modelo.setRowCount(0);
 
 	    // Recupera o filtro de busca
-	    String busca = (txtBuscaCategoria != null) ? txtBuscaCategoria.getText().toLowerCase() : "";
+	    String busca = "";
 
+	    if (txtBuscaCategoria != null && !txtBuscaCategoria.getText().equals("Filtrar por categoria")) {
+	        busca = txtBuscaCategoria.getText().toLowerCase();
+	    }
 	    for (Gasto g : Repositorio.getLista()) {
 	        // FILTRO: Se NÃO for agendado, entra aqui
 	        if (!g.isAgendado()) { 
