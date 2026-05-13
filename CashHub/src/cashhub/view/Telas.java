@@ -47,6 +47,9 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 
 import javax.swing.JDialog;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class Telas extends JFrame {
 
@@ -182,10 +185,10 @@ public class Telas extends JFrame {
         panelLateral.setLayout(new BoxLayout(panelLateral, BoxLayout.Y_AXIS));
         
         ImageIcon iconLogo = new ImageIcon(
-        	    getClass().getResource("/cashhub/view/imagens/CashHub (3).png")
+        	    getClass().getResource("/cashhub/view/imagens/logo com fundo e cor bege.png")
         	);
 
-        	Image imgLogo = iconLogo.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        	Image imgLogo = iconLogo.getImage().getScaledInstance(125, 125, Image.SCALE_SMOOTH);
 
         	JLabel lblLogoMenu = new JLabel(new ImageIcon(imgLogo));
         	lblLogoMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -605,23 +608,14 @@ public class Telas extends JFrame {
         panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 10, 25));
 
         // Painel para agrupar Logo e Filtro no canto esquerdo
-        JPanel panelLogoBusca = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 0));
+        JPanel panelLogoBusca = new JPanel();
         panelLogoBusca.setBackground(new Color(216, 216, 216));
-
-        lblLogo = new JLabel("CA$H HUB");
-        lblLogo.setFont(new Font("Tahoma", Font.BOLD, 28));
-        lblLogo.setForeground(new Color(31, 33, 38));
-
-        // Configuração do Filtro
-        txtBuscaCategoria = new JTextField(15);
-        txtBuscaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 14));
-        txtBuscaCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) { carregarTabela(); }
-        });
-
-        panelLogoBusca.add(lblLogo);
-        panelLogoBusca.add(new JLabel("Filtrar:"));
-        panelLogoBusca.add(txtBuscaCategoria);
+        GridBagLayout gbl_panelLogoBusca = new GridBagLayout();
+        gbl_panelLogoBusca.columnWidths = new int[]{30, 49, 30, 201, 0};
+        gbl_panelLogoBusca.rowHeights = new int[]{6, 0, 3, 0};
+        gbl_panelLogoBusca.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_panelLogoBusca.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+        panelLogoBusca.setLayout(gbl_panelLogoBusca);
 
         // Painel de Perfil (Lado Direito)
         panelPerfil = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
@@ -650,9 +644,38 @@ public class Telas extends JFrame {
         
         lblUsuarioExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 14));
 
-        panelCabecalho.add(panelLogoBusca, BorderLayout.WEST);
+        panelCabecalho.add(panelLogoBusca, BorderLayout.CENTER);
+        
+                // Configuração do Filtro
+                txtBuscaCategoria = new JTextField(15);
+                txtBuscaCategoria.setBackground(new Color(255, 255, 255));
+                txtBuscaCategoria.setForeground(new Color(31, 33, 38));
+                txtBuscaCategoria.setFont(new Font("ABeeZee", Font.PLAIN, 14));
+                txtBuscaCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyReleased(java.awt.event.KeyEvent evt) { carregarTabela(); }
+                });
+                JLabel label = new JLabel("Filtrar:");
+                label.setForeground(new Color(31, 33, 38));
+                label.setFont(new Font("ABeeZee", Font.PLAIN, 15));
+                GridBagConstraints gbc_label = new GridBagConstraints();
+                gbc_label.anchor = GridBagConstraints.WEST;
+                gbc_label.insets = new Insets(0, 0, 5, 5);
+                gbc_label.gridx = 1;
+                gbc_label.gridy = 1;
+                panelLogoBusca.add(label, gbc_label);
+                GridBagConstraints gbc_txtBuscaCategoria = new GridBagConstraints();
+                gbc_txtBuscaCategoria.insets = new Insets(0, 0, 5, 0);
+                gbc_txtBuscaCategoria.anchor = GridBagConstraints.NORTHWEST;
+                gbc_txtBuscaCategoria.gridx = 3;
+                gbc_txtBuscaCategoria.gridy = 1;
+                panelLogoBusca.add(txtBuscaCategoria, gbc_txtBuscaCategoria);
         panelCabecalho.add(panelPerfil, BorderLayout.EAST);
         panelExtrato.add(panelCabecalho, BorderLayout.NORTH);
+        
+                lblLogo = new JLabel("CA$H HUB");
+                panelCabecalho.add(lblLogo, BorderLayout.WEST);
+                lblLogo.setFont(new Font("Tahoma", Font.BOLD, 30));
+                lblLogo.setForeground(new Color(31, 33, 38));
 
         // --- 2. ÁREA CENTRAL (Tabelas e Balanço) ---
         panelPrincipalExtrato = new JPanel(new BorderLayout(15, 0));
@@ -666,8 +689,11 @@ public class Telas extends JFrame {
         JPanel panelTitulo = new JPanel(new BorderLayout());
         panelTitulo.setBackground(new Color(216, 216, 216));
         lblTituloExtrato = new JLabel("Histórico de Transações");
+        lblTituloExtrato.setForeground(new Color(31, 33, 38));
         lblTituloExtrato.setFont(new Font("ABeeZee", Font.BOLD, 30));
         lblSubtituloExtrato = new JLabel("Acompanhe todas as entradas e saídas registradas.");
+        lblSubtituloExtrato.setForeground(new Color(31, 33, 38));
+        lblSubtituloExtrato.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         panelTitulo.add(lblTituloExtrato, BorderLayout.NORTH);
         panelTitulo.add(lblSubtituloExtrato, BorderLayout.SOUTH);
         panelCentroExtrato.add(panelTitulo, BorderLayout.NORTH);
@@ -701,7 +727,7 @@ public class Telas extends JFrame {
         panelAcoes.setBackground(new Color(216, 216, 216));
         JButton btnEditar = new JButton("Editar");
         btnEditar.setBackground(new Color(255, 255, 255));
-        btnEditar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnEditar.setFont(new Font("ABeeZee", Font.PLAIN, 12));
      // --- Lógica do Botão Editar (Substitua no método telaExtrato) ---
         btnEditar.addActionListener(e -> {
             int linhaSelecionada = table.getSelectedRow();
@@ -808,7 +834,7 @@ public class Telas extends JFrame {
         });
         	
         JButton btnExcluir = new JButton("Excluir");
-        btnExcluir.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnExcluir.setFont(new Font("ABeeZee", Font.PLAIN, 12));
         btnExcluir.addActionListener(e -> {
             // 1. Verifica qual linha está selecionada na tabela
         	int linhaSelecionada = table.getSelectedRow();
@@ -959,14 +985,17 @@ public class Telas extends JFrame {
         panelTextoPagamentos = new JPanel(new GridLayout(2, 1));
         panelTextoPagamentos.setBackground(new Color(31, 33, 38));
         lblTituloPagamentosFuturos = new JLabel("Pagamentos Futuros");
+        lblTituloPagamentosFuturos.setFont(new Font("ABeeZee", Font.PLAIN, 13));
         lblTituloPagamentosFuturos.setForeground(Color.WHITE);
         lblPagamentosDesc = new JLabel("Gerencie seus pagamentos");
+        lblPagamentosDesc.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         lblPagamentosDesc.setForeground(Color.GRAY);
         panelTextoPagamentos.add(lblTituloPagamentosFuturos);
         panelTextoPagamentos.add(lblPagamentosDesc);
 
         btnPagarAgora = new JButton("Pagar agora");
-        btnPagarAgora.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnPagarAgora.setForeground(new Color(31, 33, 38));
+        btnPagarAgora.setFont(new Font("ABeeZee", Font.PLAIN, 14));
         btnPagarAgora.setBackground(new Color(255, 255, 255));
         
         btnPagarAgora.addActionListener(e -> {
@@ -1027,7 +1056,7 @@ public class Telas extends JFrame {
         panelCabecalho.setBorder(BorderFactory.createEmptyBorder(15, 25, 15, 25));
 
         lblLogo = new JLabel("CA$H HUB");
-        lblLogo.setFont(new Font("Tahoma", Font.BOLD, 28));
+        lblLogo.setFont(new Font("Tahoma", Font.BOLD, 30));
         lblLogo.setForeground(new Color(31, 33, 38));
 
         // Criamos o label do usuário (Apenas uma vez aqui)
@@ -1180,12 +1209,14 @@ public class Telas extends JFrame {
         panelBotoes.setBackground(new Color(216, 216, 216));
 
         btnCancelar = new JButton("Cancelar");
+        btnCancelar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
         btnCancelar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnCancelar.setPreferredSize(new Dimension(100, 30));
         btnCancelar.setBackground(new Color(73, 73, 73));
         btnCancelar.setForeground(Color.WHITE);
-
+        
         btnSalvar = new JButton("Salvar Transação");
+        btnSalvar.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
         btnSalvar.setFont(new Font("ABeeZee", Font.PLAIN, 11));
         btnSalvar.setPreferredSize(new Dimension(170, 30));
         btnSalvar.setBackground(new Color(31, 33, 38));
@@ -1286,8 +1317,11 @@ public class Telas extends JFrame {
         
      // Botão Salvar Nome
         JButton btnSalvarNome = new JButton("Salvar Nome");
+        btnSalvarNome.setFocusPainted(false); // Desativa a faixa azul quando inicia o sistema
         btnSalvarNome.setBounds(121, 75, 110, 25);
         btnSalvarNome.setFont(new Font("ABeeZee", Font.PLAIN, 11));
+        btnSalvarNome.setBackground(new Color(31, 33, 38));
+        btnSalvarNome.setForeground(Color.WHITE);
         btnSalvarNome.addActionListener(e -> {
             String novoNome = txtEditarNome.getText();
             if (!novoNome.trim().isEmpty()) {
